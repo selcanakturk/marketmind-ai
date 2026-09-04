@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+
+# Virtual environments and local configuration
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating systems
+.DS_Store
+Thumbs.db
+
+# Local datasets (retain documentation)
+data/raw/**
+data/interim/**
+data/processed/**
+!data/README.md
+
+# Generated model artifacts (retain documentation)
+models/**
+!models/README.md
+
+# Generated report figures
+reports/figures/**
+

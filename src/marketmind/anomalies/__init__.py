@@ -1,0 +1,2 @@
+"""Sales anomaly detection functionality."""
+

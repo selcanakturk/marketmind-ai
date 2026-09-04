@@ -1,0 +1,2 @@
+"""Product recommendation functionality."""
+
