@@ -36,6 +36,18 @@ The authentic M5 headers and calendar were checked directly: all boundaries exis
 
 After baselines, test one lightweight global model across all 70 series first. It can share statistical strength, retain store/department categorical identity, and remain a single maintainable deployment artifact.
 
+## First learned experiment status
+
+Step 3 tested the recommendation with one fixed, untuned, horizon-conditioned direct `HistGradientBoostingRegressor`. Actual features were origin-anchored lags 1/7/14/28/56; rolling mean and population standard deviation over 7/28/56 days; forecast horizon; store/department/state; and target-date weekday, day, month, year, trend, primary event name/type, and applicable SNAP indicator. Fold-local ordinal encoding was used; prices were excluded.
+
+Across development folds, macro RMSSE was **0.77916**, a 0.28774 absolute and 26.97% relative improvement over historical mean. The model beat historical mean and seasonal naïve in all six folds, with six of 70 series regressing versus historical mean. The result satisfies the predeclared promising criterion but does **not** freeze the final model family or feature set. See [`first_global_model_results.md`](first_global_model_results.md). There are **no lockbox results**.
+
+## Step 4 ablation and strategy status
+
+Four fixed-parameter direct feature sets and one one-step recursive challenger were evaluated on the same folds. Removing rolling summaries worsened macro RMSSE by 0.05720 (7.34%); removing rich target-date calendar fields worsened it by 0.10384 (13.33%); the minimal feature set worsened it by 0.19662 (25.23%). Each ablation lost to Full Direct in all six folds and regressed most series. The **Full feature scope is the current selected feature scope** for the next controlled comparison, but individual features and the final pipeline are not frozen.
+
+Recursive Global achieved macro RMSSE 0.76957 versus 0.77916 for Full Direct, won four of six folds, and improved 44 of 70 series, but its advantage was only 1.23%, it regressed 26 series, and 28-step inference was sequential. **Full Direct and Recursive remain strategy finalists; neither strategy is frozen.** The result does not justify selecting Direct as superior or opening the lockbox. See [`ablation_strategy_results.md`](ablation_strategy_results.md).
+
 ## Open
 
 The model algorithm, target transformation, direct/recursive/multi-output strategy, final features, categorical encoding, hyperparameter budget, price-unavailability treatment, challenger architectures, prediction intervals, hierarchy reconciliation/WRMSSE, and downstream anomaly or inventory rules remain experimental decisions.
