@@ -102,15 +102,16 @@ None of the candidates should be assumed to contain operational inventory. Retai
 
 If current stock, supplier lead time and inbound replenishment are absent, the eventual Inventory Intelligence module should accept them as operational/user-provided inputs and combine them with forecasts and transparent rules. It must not fabricate inventory history or infer stock solely from sales.
 
-## Empirical Audit Update — Phase 0B/0C/0D
+## Empirical Audit Update — Phase 0B/0C/0D/0E
 
-The matrix and comparisons above preserve the documentation-based preliminary assessment. Three candidates have now been inspected directly:
+The matrix and comparisons above preserve the documentation-based preliminary assessment. All four candidates have now been inspected directly:
 
 | Dataset | Audit status | Key empirical correction or confirmation |
 |---|---|---|
 | Olist | Phase 0B complete | Segmentation remains useful but is **Moderate** after observing 96.96% single-order customers. Return risk and recommendation are **Weak**: only 3.04% repeat, 94.28% purchase one distinct product, and the interaction matrix is 99.9967% sparse. |
 | Complete Journey 2.0 | Phase 0C complete | Longitudinal depth is confirmed and stronger than the preliminary rating suggested: 98.74% have ≥2 baskets, median 43 baskets, median 348-day active span, and 88.86% are active in ≥6 months. Segmentation and future return-risk feasibility are **Strong**, subject to frequent-shopper selection and non-contractual terminology. |
 | RetailRocket | Phase 0D complete | Recommendation is empirically **Strong** for implicit-feedback and cold-start methodology: 2.15M distinct event pairs and thousands of warm temporal candidates. Identity remains shallow—71.15% have one event—and 94.28% of future visitors are unseen at the 60% cutoff. |
+| M5 Forecasting — Accuracy | Phase 0E complete | Forecasting and aggregate residual-monitoring feasibility are empirically **Strong**. The 30,490 bottom series are intermittent (median 73.31% zero days), while all 70 department-store and 30 category-store series are dense under the audit bands. Local wide-table processing is practical. |
 
 The audited Complete Journey release is specifically the CC0 `completejourney` package 1.1.1 representation of **Complete Journey 2.0**: 2,469 frequent-shopper households over one year. It must not be mixed with or described as the legacy 2,500-household/102-week CSV release.
 
@@ -152,6 +153,26 @@ No recommendation dataset has been selected automatically.
 
 RetailRocket adds a recommendation problem that Complete Journey cannot reproduce: anonymous short-term intent across views, carts, and purchases. Conversely, it cannot replace Complete Journey for longitudinal customer behavior. A three-dataset architecture is therefore methodologically coherent if each source has a sharply bounded role, but it carries additional provenance, processing, explanation, and maintenance cost. Final selection remains pending.
 
+## Proposed Final Dataset Architecture
+
+The M5 audit supports the previously proposed architecture. It is now the strongest empirically supported Phase 0 mapping, but remains **proposed rather than frozen** until project review approves the remaining design choices.
+
+| Dataset | Proposed MarketMind role | Empirical rationale | Required boundary |
+|---|---|---|---|
+| M5 Forecasting — Accuracy | Demand Forecasting; Sales Anomaly Detection; forecast input to Inventory Decision Support | 1,941 daily observations, prices/calendar, 30,490 hierarchical series, ample backtesting history; dense aggregate levels | Walmart retail, not e-commerce; no operational inventory; prefer scoped multi-level grain over blind all-series deployment |
+| Complete Journey 2.0 | Customer Segmentation; Customer Return Risk | 98.74% repeat households, median 43 baskets, median 348-day active span, rich product/value/discount/store history | Grocery-retail frequent-shopper households; call output return risk, not contractual churn |
+| RetailRocket | Recommendation Engine | View/cart/transaction stream, 2.15M distinct event pairs, temporal warm-user cohorts, realistic cold-start pressure | Anonymous short-lived visitors; report warm/cold coverage separately; not a customer-return source |
+| Olist | Phase 0 empirical rejection evidence | Demonstrates why schema richness and e-commerce relevance do not overcome 96.96% single-order behavior for longitudinal ML | Retain audit and rationale; do not force weak churn/recommendation/product forecasting modules |
+
+### M5 forecasting-grain status
+
+- **All 30,490 item-store series:** highest benchmark fidelity, but 47.24% have at least 75% zero days and each origin produces 853,720 values.
+- **Selected item-store series:** useful for transparent intermittency examples, provided selection rules are predeclared and not metric-driven.
+- **Department-store (70) or category-store (30):** empirically dense, lightweight, interpretable, and suitable for repeated backtests.
+- **Scoped multi-level demonstration:** currently best supported—dense aggregate core plus a defensibly selected bottom-level set—while the exact grain remains a Phase 1 design decision.
+
+M5 forecasting can later feed inventory decision support, but no dataset supplies current stock, lead time, inbound replenishment, or safety stock. These must be explicit user/operational inputs, never inferred or fabricated from sales.
+
 ### Empirical Olist vs Complete Journey comparison
 
 - **Scale:** Olist covers 94,990 valid-purchase customers; Complete Journey covers 2,469 households.
@@ -172,7 +193,8 @@ This evidence narrows the remaining decision but does not resolve whether custom
 - Should RetailRocket be framed strictly as anonymous/session-like intent rather than durable customer personalization?
 - Is the methodological value of RetailRocket's implicit-feedback and cold-start problem worth the third dataset's processing and narrative complexity?
 - Should recommendation share the segmentation/churn source, or should each problem use its strongest source?
-- Is M5 computationally manageable locally at the intended hierarchy without unnecessary infrastructure?
+- Which M5 grain and bottom-level eligibility rules should be frozen before experimentation?
+- Which M5 28-day validation origins, final lockbox, metrics, and price-horizon policy should be approved?
 - Which datasets and derived artifacts can be published comfortably under their licenses in a public GitHub portfolio?
 - What are the exact repeat-customer, sparsity, cancellation/return, missingness and temporal-coverage statistics after inspection?
 - At which aggregation levels do Olist and Complete Journey support stable forecasting/anomaly baselines?
