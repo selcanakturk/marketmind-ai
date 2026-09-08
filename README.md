@@ -1,12 +1,14 @@
 # MarketMind AI — E-Commerce Intelligence Platform
 
-MarketMind AI is a planned production-oriented ML engineering portfolio project for turning e-commerce data into predictive insights and operational decision support. The repository is currently focused on determining which public data can support each proposed capability with defensible methodology.
+MarketMind AI is a planned production-oriented ML engineering portfolio project for turning retail and e-commerce data into predictive insights and operational decision support. Phase 0 established an empirical dataset-to-module architecture; Phase 1 now defines the demand-forecasting methodology before experiments begin.
 
 ## Current status
 
-**Phase 0 — Dataset Research & Feasibility**
+**Phase 0 — Dataset Research & Feasibility: Complete**
 
-No final dataset has been selected. No models or application services have been developed. Proposed modules will only move forward when dataset audits show that their targets, features, and validation strategies can be constructed responsibly.
+**Phase 1 — Demand Forecasting: Methodology Definition**
+
+M5 is selected for demand forecasting, later sales-anomaly work, and forecast input to inventory decision support; Complete Journey 2.0 is selected for customer segmentation and customer return risk; RetailRocket is selected for recommendation. Olist remains documented rejection evidence. Forecasting models and application services have not yet been developed.
 
 ## Planned modules
 
@@ -32,7 +34,7 @@ If supported by the selected data, the project may eventually include reusable P
 
 Future work will begin with explicit problem definitions and dataset audits. Time-dependent problems will preserve temporal ordering, prevent leakage, and maintain separate train, validation, and final test periods. Simple baselines will precede more complex approaches, metrics will match the decision problem, and error analysis will inform methodology choices. Outputs will not be described as probabilities, causal effects, or business impact unless the evidence and estimator semantics justify those claims.
 
-See [methodology principles](docs/methodology_principles.md) for the full working standard.
+See the [methodology principles](docs/methodology_principles.md) and frozen [forecasting methodology](docs/forecasting_methodology.md) for the working standards.
 
 ## Deployment constraint
 
@@ -41,10 +43,9 @@ The intended system should remain lightweight enough to preserve options for fre
 ## Repository map
 
 - `data/`: local raw, intermediate, and processed datasets (ignored by Git)
-- `notebooks/`: future dataset audits and experiments
+- `notebooks/`: dataset audits and future experiments
 - `src/marketmind/`: future reusable package code, organized by capability
 - `models/`: future exported model artifacts and metadata (ignored by Git)
-- `reports/`: future research notes and generated figures
+- `reports/`: research notes, decision records, and generated figures
 - `docs/`: scope, methodology, and dataset requirements
 - `tests/`: future automated tests
-
