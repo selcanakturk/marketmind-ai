@@ -1,0 +1,148 @@
+{
+  "module": "demand_forecasting",
+  "model_name": "MarketMind Frozen Global HGBR",
+  "model_family": "sklearn.ensemble.HistGradientBoostingRegressor",
+  "model_version": "1.0.0",
+  "schema_version": "1.0.0",
+  "artifact_role": "production_retrained_artifact",
+  "validated_research_candidate": "HGBR-4 Full Direct trained through d_1913",
+  "strategy": "global_horizon_conditioned_full_direct",
+  "forecast_grain": [
+    "department",
+    "store",
+    "day"
+  ],
+  "forecast_horizon": 28,
+  "research_training_cutoff": "d_1913",
+  "production_training_cutoff": "d_1941",
+  "training_date": "2026-09-08T11:09:31.072192+00:00",
+  "feature_schema": {
+    "store_id": "str",
+    "dept_id": "str",
+    "state_id": "str",
+    "event_name": "str",
+    "event_type": "str",
+    "forecast_horizon": "int8",
+    "lag_1": "float32",
+    "lag_7": "float32",
+    "lag_14": "float32",
+    "lag_28": "float32",
+    "lag_56": "float32",
+    "rolling_mean_7": "float32",
+    "rolling_std_7": "float32",
+    "rolling_mean_28": "float32",
+    "rolling_std_28": "float32",
+    "rolling_mean_56": "float32",
+    "rolling_std_56": "float32",
+    "day_of_week": "int8",
+    "day_of_month": "int8",
+    "month": "int8",
+    "year": "int16",
+    "day_index": "int16",
+    "snap": "int8"
+  },
+  "feature_columns": [
+    "store_id",
+    "dept_id",
+    "state_id",
+    "event_name",
+    "event_type",
+    "forecast_horizon",
+    "lag_1",
+    "lag_7",
+    "lag_14",
+    "lag_28",
+    "lag_56",
+    "rolling_mean_7",
+    "rolling_std_7",
+    "rolling_mean_28",
+    "rolling_std_28",
+    "rolling_mean_56",
+    "rolling_std_56",
+    "day_of_week",
+    "day_of_month",
+    "month",
+    "year",
+    "day_index",
+    "snap"
+  ],
+  "categorical_features": [
+    "store_id",
+    "dept_id",
+    "state_id",
+    "event_name",
+    "event_type"
+  ],
+  "historical_lags": [
+    1,
+    7,
+    14,
+    28,
+    56
+  ],
+  "rolling_windows": [
+    7,
+    28,
+    56
+  ],
+  "calendar_features": [
+    "day_of_week",
+    "day_of_month",
+    "month",
+    "year",
+    "day_index",
+    "event_name",
+    "event_type",
+    "snap"
+  ],
+  "target_definition": "observed daily unit sales aggregated by store and department",
+  "postprocessing": "clip predictions below zero to zero",
+  "hyperparameters": {
+    "loss": "squared_error",
+    "learning_rate": 0.05,
+    "max_iter": 160,
+    "max_leaf_nodes": 63,
+    "max_depth": null,
+    "min_samples_leaf": 100,
+    "l2_regularization": 1.0,
+    "early_stopping": false,
+    "random_state": 42
+  },
+  "library_versions": {
+    "python": "3.13.2",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "scikit_learn": "1.9.0",
+    "joblib": "1.6.0"
+  },
+  "development_validation_protocol": "six frozen expanding-window 28-day folds within d_1-d_1913",
+  "development_metrics": {
+    "macro_rmsse": 0.74604,
+    "macro_mae": 57.35,
+    "pooled_wape": 0.1029,
+    "pooled_bias": -0.0037
+  },
+  "final_lockbox_metrics": {
+    "period": "d_1914-d_1941",
+    "macro_rmsse": 0.80073,
+    "macro_mae": 60.13,
+    "pooled_wape": 0.0957,
+    "pooled_bias": -0.0476
+  },
+  "lockbox_status": "consumed",
+  "training_statistics": {
+    "training_origins": 266,
+    "training_rows": 521360,
+    "training_memory_mb": 161.9231243133545,
+    "build_seconds": 4.501607374986634,
+    "fit_seconds": 6.533743833890185
+  },
+  "known_limitations": [
+    "Observed sales are not unconstrained latent demand.",
+    "Price features are excluded; future realized prices are never assumed available.",
+    "Late-horizon underforecast bias was observed in the consumed lockbox.",
+    "Operational inventory state is unavailable.",
+    "The model operates at department-store grain.",
+    "Production retraining through d_1941 has no new unbiased test estimate."
+  ]
+}

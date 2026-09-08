@@ -4,9 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-
-LAGS = (1, 7, 14, 28, 56)
-ROLLING_WINDOWS = (7, 28, 56)
+from .config import LAGS, ROLLING_WINDOWS
 
 
 def historical_features(values: np.ndarray, origin: int) -> dict[str, np.ndarray]:

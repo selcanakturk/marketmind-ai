@@ -3,4 +3,5 @@ numpy
 matplotlib
 jupyter
 scikit-learn
+joblib
 pyreadr

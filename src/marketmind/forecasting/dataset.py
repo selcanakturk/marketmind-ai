@@ -8,16 +8,17 @@ import numpy as np
 import pandas as pd
 
 from .features import historical_features
+from .config import (
+    CATEGORICAL_FEATURES,
+    FORECAST_HORIZON,
+    IDENTITY_COLUMNS as CONFIG_IDENTITY_COLUMNS,
+    NUMERIC_FEATURES,
+)
 
 
-IDENTITY_COLUMNS = ["store_id", "dept_id", "state_id"]
-CATEGORICAL_COLUMNS = [*IDENTITY_COLUMNS, "event_name", "event_type"]
-NUMERIC_COLUMNS = [
-    "forecast_horizon", "lag_1", "lag_7", "lag_14", "lag_28", "lag_56",
-    "rolling_mean_7", "rolling_std_7", "rolling_mean_28", "rolling_std_28",
-    "rolling_mean_56", "rolling_std_56", "day_of_week", "day_of_month",
-    "month", "year", "day_index", "snap",
-]
+IDENTITY_COLUMNS = list(CONFIG_IDENTITY_COLUMNS)
+CATEGORICAL_COLUMNS = list(CATEGORICAL_FEATURES)
+NUMERIC_COLUMNS = list(NUMERIC_FEATURES)
 
 
 def weekly_training_origins(train_end: int, minimum_origin: int = 56) -> np.ndarray:
@@ -51,7 +52,7 @@ def _origin_frame(
     if origin + 28 > values.shape[1] and include_target:
         raise ValueError("target horizon extends beyond supplied sales values")
     hist = historical_features(values, origin)
-    n_series, horizon = len(series), 28
+    n_series, horizon = len(series), FORECAST_HORIZON
     target_days = np.tile(np.arange(origin + 1, origin + horizon + 1), n_series)
     target_calendar = calendar.loc[target_days]
     state = np.repeat(series["state_id"].to_numpy(), horizon)
@@ -104,9 +105,20 @@ def build_prediction_table(
     training_values: np.ndarray,
     calendar: pd.DataFrame,
     origin: int,
+    target_start_day: int | None = None,
 ) -> pd.DataFrame:
     """Build the 70 × 28 issuance table without accessing future targets."""
-    features, _ = _origin_frame(series, training_values, calendar, origin, False)
+    if target_start_day is None or target_start_day == origin + 1:
+        features, _ = _origin_frame(series, training_values, calendar, origin, False)
+        return features
+    # Production inputs may provide only the required recent history while M5
+    # day identifiers continue from a later absolute day number.
+    shifted = calendar.copy()
+    offset = target_start_day - (origin + 1)
+    shifted.index = shifted.index - offset
+    shifted["day_index"] = shifted["day_index"] - offset
+    features, _ = _origin_frame(series, training_values, shifted, origin, False)
+    features["day_index"] = features["day_index"] + offset
     return features
 
 
