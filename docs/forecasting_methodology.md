@@ -187,3 +187,9 @@ The frozen structural choices were rechecked programmatically against the authen
 - Every frozen backtest validation boundary exists in the development timeline; Fold 6 ends exactly at `d_1913`, before the lockbox.
 
 No conflict was found. This validation inspected structure and descriptive eligibility only; it did not evaluate a forecast or the lockbox.
+
+## Final evaluation status
+
+Step 6 trained the frozen HGBR-4 horizon-conditioned Full Direct candidate unchanged on `d_1`–`d_1913`, generated all 1,960 forecasts before target access, and performed the first and final planned evaluation on `d_1914`–`d_1941`. Lockbox macro RMSSE was 0.80073 versus 0.74604 in development; the model continued to beat the frozen baselines broadly. Full results are recorded in `reports/forecasting/final_lockbox_results.md`.
+
+**`d_1914`–`d_1941` IS NOW CONSUMED.** It must never again be used for model, feature, preprocessing, threshold, baseline, or methodology selection. Any observed weakness is a limitation or a hypothesis requiring genuinely new future data, not permission to tune against this interval.

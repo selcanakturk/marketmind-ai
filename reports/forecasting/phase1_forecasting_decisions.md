@@ -48,8 +48,36 @@ Four fixed-parameter direct feature sets and one one-step recursive challenger w
 
 Recursive Global achieved macro RMSSE 0.76957 versus 0.77916 for Full Direct, won four of six folds, and improved 44 of 70 series, but its advantage was only 1.23%, it regressed 26 series, and 28-step inference was sequential. **Full Direct and Recursive remain strategy finalists; neither strategy is frozen.** The result does not justify selecting Direct as superior or opening the lockbox. See [`ablation_strategy_results.md`](ablation_strategy_results.md).
 
+## Step 5 model comparison and pre-lockbox freeze
+
+The six predeclared HGBR configurations were tested with Direct and Recursive strategies. ExtraTrees Direct was also tested using the predeclared resource cap; its RMSSE 0.73317 triggered Recursive ExtraTrees under the 3% rule. ExtraTrees Recursive reached 0.74749. A matched-weekly-origin sensitivity degraded HGBR-1 Recursive from 0.76957 to 1.32646, demonstrating that dense daily one-step sampling is essential and partly confounds pure strategy comparison.
+
+ExtraTrees Direct has the best development RMSSE, but its approximately 1,050 MB serialized model is about 819 times larger than the 1.28 MB HGBR-4 Direct artifact. Under the predeclared combined accuracy/stability/operational policy, MarketMind accepts HGBR-4's transparent 1.72% RMSSE cost to preserve lightweight deployment. Direct is also the leading tuned strategy within both HGBR and ExtraTrees families.
+
+### CURRENT FORECASTING MODEL CANDIDATE — FROZEN BEFORE LOCKBOX
+
+- Family: `sklearn.ensemble.HistGradientBoostingRegressor`.
+- Strategy: one global, horizon-conditioned Full Direct model.
+- Feature scope: the Full Step 4 feature set; prices excluded.
+- Parameters: `loss="squared_error"`, `learning_rate=0.05`, `max_iter=160`, `max_leaf_nodes=63`, `max_depth=None`, `min_samples_leaf=100`, `l2_regularization=1.0`, `early_stopping=False`, `random_state=42`.
+- Target: raw unit sales; predictions clipped at zero if negative.
+- Sampling: weekly training origins aligned backward from `training_end − 28`, with minimum origin 56.
+- Development result: macro RMSSE 0.74604, MAE 57.35, pooled WAPE 10.29%, pooled bias -0.37%.
+
+These elements are frozen before any lockbox evaluation. The lockbox remains untouched. Remaining concerns—especially ExtraTrees' better development score and generalization uncertainty—must be reported with any later lockbox result. See [`model_comparison_results.md`](model_comparison_results.md).
+
+## Step 6 final lockbox evaluation
+
+The frozen HGBR-4 Full Direct candidate was trained unchanged on `d_1`–`d_1913` and evaluated once on `d_1914`–`d_1941`. It achieved macro RMSSE **0.80073**, macro MAE **60.13**, pooled WAPE **9.57%**, and pooled bias **-4.76%**. Relative to the six-fold development RMSSE of 0.74604, the absolute generalization gap is +0.05469, or +7.33%.
+
+The model beat historical mean on 65 of 70 series and seasonal naïve on 62 of 70. Its lockbox RMSSE improves on historical mean by 30.58% and seasonal naïve by 22.06%. Generalization is assessed as **strong overall, with documented late-horizon underforecast bias and department/series weaknesses**. No result was used to alter the frozen candidate. See [`final_lockbox_results.md`](final_lockbox_results.md) and [`artifacts/lockbox_forecasts.csv`](artifacts/lockbox_forecasts.csv).
+
+### LOCKBOX CONSUMED
+
+**`d_1914`–`d_1941` IS NOW CONSUMED.** This was the first and final planned evaluation on those targets. They must never again be treated as model-selection validation data or used to revise the forecasting methodology.
+
 ## Open
 
-The model algorithm, target transformation, direct/recursive/multi-output strategy, final features, categorical encoding, hyperparameter budget, price-unavailability treatment, challenger architectures, prediction intervals, hierarchy reconciliation/WRMSSE, and downstream anomaly or inventory rules remain experimental decisions.
+The pre-lockbox candidate is frozen and its final evaluation is complete. Future work remains open only for genuinely new-data assessment, deployment packaging, prediction intervals, hierarchy reconciliation/WRMSSE, and downstream anomaly or inventory rules. Lockbox findings may be recorded as limitations or hypotheses but may not reopen model selection.
 
 See [`docs/forecasting_methodology.md`](../../docs/forecasting_methodology.md) for definitions, metric formulas, dates, leakage protections, and downstream boundaries.
