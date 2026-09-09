@@ -1,6 +1,6 @@
 # Customer Return Risk Methodology
 
-This is the source of truth for MarketMind AI Customer Return Risk. Step 1 froze the temporal target and cohort contract; Step 2 completed leakage-safe behavioral and Logistic baselines. No final classifier, threshold, calibrated probability, or production service exists.
+This is the source of truth for MarketMind AI Customer Return Risk. Step 1 froze the temporal target and cohort contract; Step 2 completed leakage-safe behavioral and Logistic baselines; Step 3 evaluated a controlled HGB challenger. No final classifier, threshold, calibrated probability, or production service exists.
 
 Complete Journey 2.0 is a **grocery-retail household panel**, not contractual subscription data and not an individual e-commerce customer table. The outcome is therefore observed return behavior within a fixed window, never automatic “churn.”
 
@@ -94,11 +94,15 @@ The first learned baseline uses 16 ordered features: recency; lifetime basket fr
 
 Fixed `log1p` transforms apply only to nonnegative magnitude features. Bounded ratios and signed changes remain unchanged, followed by a training-fitted `RobustScaler`. The behavioral references are recency rank and exactly one equal-weight recency/log-frequency heuristic. Logistic comparisons are limited to unweighted and balanced fixed configurations. No segmentation feature, resampling, tuning, or calibration fit is part of Step 2.
 
+### Step 3 nonlinear challenger status
+
+Exactly five predeclared, unweighted `HistGradientBoostingClassifier` configurations were evaluated on the raw frozen 16 features. HGB-1 was strongest at pooled PR-AUC 0.4672, ROC-AUC 0.8574, Brier 0.0913, and log loss 0.2932. It did not exceed the mandatory heuristic PR-AUC benchmark of 0.4688, so the family is not frozen. No features, threshold, calibrator, or production artifact were added.
+
 ## Open decisions
 
 - whether the baseline feature set changes only through a separately predeclared nonlinear extension;
-- a narrowly specified nonlinear model and tuning protocol;
-- validation model-selection rule and any expanded uncertainty analysis;
+- whether to retain the heuristic, authorize a methodologically motivated feature study, or stop nonlinear development;
+- any later model/tuning protocol and expanded uncertainty analysis;
 - intervention capacity, costs, and operating threshold;
 - whether calibration is adequate for probability language and which calibrator is appropriate;
 - whether a household-disjoint sensitivity test or point-in-time segment-feature ablation adds useful evidence;

@@ -1,6 +1,6 @@
 # Phase 3 Return Risk Decisions
 
-Status: Step 2 leakage-safe baselines complete; no final classifier or production model is frozen.
+Status: Step 3 controlled HGB challenger complete; no final classifier or production model is frozen.
 
 | Decision | Frozen outcome |
 |---|---|
@@ -42,6 +42,25 @@ Status: Step 2 leakage-safe baselines complete; no final classifier or productio
 
 Features and eligibility end at `T`; the target starts strictly after `T`. Distinct baskets—not transaction lines—define return. Censored horizons are unknown and rejected. No random split, future basket/spend, overlapping target activity, full-year/future segment assignment, future-fitted preprocessing, pre-split balancing, duplicate household-snapshot row, threshold/calibration on lockbox, or repeated lockbox use is allowed.
 
+## Step 3 nonlinear challenger decisions
+
+| Decision | Outcome |
+|---|---|
+| Family | `HistGradientBoostingClassifier` only; raw frozen features, unweighted |
+| Candidates | exactly HGB-1 through HGB-5 as specified in `models.py`; no expansion |
+| Best candidate | HGB-1: LR 0.05, 150 iterations, 15 leaves, min leaf 50, L2 1.0 |
+| HGB-1 September | PR-AUC 0.4844; ROC-AUC 0.8663; Brier 0.0890; log loss 0.2859 |
+| HGB-1 October | PR-AUC 0.4531; ROC-AUC 0.8487; Brier 0.0936; log loss 0.3004 |
+| HGB-1 pooled | PR-AUC 0.4672; ROC-AUC 0.8574; Brier 0.0913; log loss 0.2932 |
+| Heuristic gate | not beaten: −0.001585 absolute / −0.338% relative PR-AUC |
+| Logistic comparison | HGB-1 improves pooled PR-AUC by 0.00858 and ROC-AUC by 0.00660 |
+| Bootstrap | HGB-1 PR-AUC `[0.4219,0.5092]`; ROC-AUC `[0.8413,0.8711]` |
+| Model-family status | not frozen because the mandatory heuristic PR-AUC gate failed |
+| Feature extension | not currently justified solely to chase the narrow shortfall |
+| Calibration | diagnostics only; HGB raw output remains uncalibrated |
+| Threshold | unresolved and not frozen |
+| Lockbox | November outcomes remain sealed |
+
 ## Open modeling decisions
 
-Nonlinear candidate specification, narrow tuning scope, model-selection rule, intervention capacity/costs, operating threshold, calibration method, monitoring, and production artifact contract remain open. Final model family is unresolved. None may be resolved using the lockbox.
+Whether to retain the heuristic, authorize a business-motivated feature study, or stop nonlinear development remains open. Final model family, intervention capacity/costs, threshold, calibration, monitoring, and production contracts are unresolved. None may be resolved using the lockbox.
