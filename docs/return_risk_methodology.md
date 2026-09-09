@@ -1,6 +1,6 @@
 # Customer Return Risk Methodology
 
-This is the source of truth for MarketMind AI Customer Return Risk. Step 1 froze the temporal target and cohort contract; Step 2 completed leakage-safe behavioral and Logistic baselines; Step 3 evaluated a controlled HGB challenger. No final classifier, threshold, calibrated probability, or production service exists.
+This is the source of truth for MarketMind AI Customer Return Risk. Step 1 froze the temporal target and cohort contract; Step 2 completed leakage-safe behavioral and Logistic baselines; Step 3 evaluated HGB; Step 4 closed family search and selected Extra Trees / ET-2. No calibrated model, threshold, production artifact, or production service exists.
 
 Complete Journey 2.0 is a **grocery-retail household panel**, not contractual subscription data and not an individual e-commerce customer table. The outcome is therefore observed return behavior within a fixed window, never automatic “churn.”
 
@@ -98,11 +98,15 @@ Fixed `log1p` transforms apply only to nonnegative magnitude features. Bounded r
 
 Exactly five predeclared, unweighted `HistGradientBoostingClassifier` configurations were evaluated on the raw frozen 16 features. HGB-1 was strongest at pooled PR-AUC 0.4672, ROC-AUC 0.8574, Brier 0.0913, and log loss 0.2932. It did not exceed the mandatory heuristic PR-AUC benchmark of 0.4688, so the family is not frozen. No features, threshold, calibrator, or production artifact were added.
 
+### Step 4 final family resolution
+
+Exactly three predeclared unweighted `ExtraTreesClassifier` candidates closed the model-family search. ET-2—300 estimators, depth 12, minimum leaf 10, `max_features="sqrt"`, random state 42—achieved pooled PR-AUC 0.4827 and passed the heuristic benchmark by 2.959% relative. Extra Trees / ET-2 is frozen as the learned ranking approach; the heuristic remains the simple benchmark/fallback and HGB-1 the learned research reference. No additional family or feature search is permitted absent a methodological defect.
+
 ## Open decisions
 
 - whether the baseline feature set changes only through a separately predeclared nonlinear extension;
-- whether to retain the heuristic, authorize a methodologically motivated feature study, or stop nonlinear development;
-- any later model/tuning protocol and expanded uncertainty analysis;
+- development-only calibration strategy for ET-2 and evidence required before probability language;
+- operating capacity, threshold, and cost policy;
 - intervention capacity, costs, and operating threshold;
 - whether calibration is adequate for probability language and which calibrator is appropriate;
 - whether a household-disjoint sensitivity test or point-in-time segment-feature ablation adds useful evidence;

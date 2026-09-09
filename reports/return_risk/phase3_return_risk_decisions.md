@@ -1,6 +1,6 @@
 # Phase 3 Return Risk Decisions
 
-Status: Step 3 controlled HGB challenger complete; no final classifier or production model is frozen.
+Status: Step 4 final family resolution complete; Extra Trees / ET-2 is frozen as the learned ranking approach, but no calibrated model, threshold, or production artifact exists.
 
 | Decision | Frozen outcome |
 |---|---|
@@ -61,6 +61,23 @@ Features and eligibility end at `T`; the target starts strictly after `T`. Disti
 | Threshold | unresolved and not frozen |
 | Lockbox | November outcomes remain sealed |
 
+## Step 4 final family resolution
+
+| Decision | Frozen outcome |
+|---|---|
+| Final challenger | exactly ET-1, ET-2, ET-3 using raw frozen features; no weights or resampling |
+| Best Extra Trees | ET-2: 300 trees, depth 12, leaf 10, sqrt features, unweighted, random state 42 |
+| ET-2 September | PR-AUC 0.4989; ROC-AUC 0.8647; Brier 0.0901; log loss 0.2894 |
+| ET-2 October | PR-AUC 0.4695; ROC-AUC 0.8506; Brier 0.0932; log loss 0.2993 |
+| ET-2 pooled | PR-AUC 0.4827; ROC-AUC 0.8576; Brier 0.0916; log loss 0.2944 |
+| Heuristic comparison | +0.013871 absolute / +2.959% relative PR-AUC; gate passed |
+| HGB comparison | +0.015456 absolute / +3.31% relative PR-AUC |
+| Selected family/config | Extra Trees / ET-2; model-family search closed |
+| Simple fallback | frozen recency-frequency heuristic remains benchmark and fallback |
+| Output | uncalibrated return-risk score / estimate for ranking, not calibrated probability |
+| Threshold/calibration | both remain open; 0.5 diagnostics are not decisions |
+| Lockbox | November outcomes remain sealed |
+
 ## Open modeling decisions
 
-Whether to retain the heuristic, authorize a business-motivated feature study, or stop nonlinear development remains open. Final model family, intervention capacity/costs, threshold, calibration, monitoring, and production contracts are unresolved. None may be resolved using the lockbox.
+Development-only calibration strategy, intervention capacity/costs, operating threshold, monitoring, and production contracts remain unresolved. No further family/feature search is authorized absent a methodological defect. None may be resolved using the lockbox.

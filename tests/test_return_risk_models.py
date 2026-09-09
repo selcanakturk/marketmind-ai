@@ -5,11 +5,14 @@ import pandas as pd
 
 from marketmind.return_risk.features import BASELINE_FEATURE_ORDER
 from marketmind.return_risk.models import (
+    EXTRA_TREES_CANDIDATE_PARAMETERS,
     HGB_CANDIDATE_PARAMETERS,
     LOCKBOX_SNAPSHOT,
     TRAINING_SNAPSHOTS,
     VALIDATION_SNAPSHOTS,
     fit_hgb_candidate,
+    fit_extra_trees_candidate,
+    make_extra_trees_candidate,
     make_hgb_candidate,
 )
 
@@ -51,6 +54,25 @@ class ReturnRiskModelTests(unittest.TestCase):
         X = _features()[list(reversed(BASELINE_FEATURE_ORDER))]
         with self.assertRaises(ValueError):
             fit_hgb_candidate("HGB-1", X, np.tile([0, 1], 20), [TRAINING_SNAPSHOTS[0]] * len(X))
+
+    def test_exactly_three_extra_trees_configs_are_deterministic(self):
+        self.assertEqual(tuple(EXTRA_TREES_CANDIDATE_PARAMETERS), ("ET-1", "ET-2", "ET-3"))
+        for name, expected in EXTRA_TREES_CANDIDATE_PARAMETERS.items():
+            first, second = make_extra_trees_candidate(name), make_extra_trees_candidate(name)
+            self.assertEqual(first.get_params(), second.get_params())
+            for parameter, value in expected.items():
+                self.assertEqual(first.get_params()[parameter], value)
+
+    def test_extra_trees_fit_scope_and_scores(self):
+        X = _features()
+        y = np.tile([0, 1], 20)  # Positive 1 remains no return.
+        model = fit_extra_trees_candidate("ET-1", X, y, [TRAINING_SNAPSHOTS[0]] * len(X))
+        scores = model.predict_proba(X.iloc[:9])[:, 1]
+        self.assertEqual(scores.shape, (9,))
+        self.assertTrue(np.isfinite(scores).all())
+        self.assertTrue(((scores >= 0) & (scores <= 1)).all())
+        with self.assertRaises(ValueError):
+            fit_extra_trees_candidate("ET-1", X, y, [LOCKBOX_SNAPSHOT] * len(X))
 
 
 if __name__ == "__main__":

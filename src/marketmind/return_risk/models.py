@@ -7,6 +7,7 @@ from collections.abc import Mapping
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import HistGradientBoostingClassifier
+from sklearn.ensemble import ExtraTreesClassifier
 
 from marketmind.return_risk.features import BASELINE_FEATURE_ORDER
 
@@ -51,6 +52,24 @@ HGB_CANDIDATE_PARAMETERS: Mapping[str, dict[str, object]] = {
     },
 }
 
+EXTRA_TREES_CANDIDATE_PARAMETERS: Mapping[str, dict[str, object]] = {
+    "ET-1": {
+        "n_estimators": 300, "max_depth": None, "min_samples_leaf": 5,
+        "max_features": "sqrt", "class_weight": None, "n_jobs": -1,
+        "random_state": 42,
+    },
+    "ET-2": {
+        "n_estimators": 300, "max_depth": 12, "min_samples_leaf": 10,
+        "max_features": "sqrt", "class_weight": None, "n_jobs": -1,
+        "random_state": 42,
+    },
+    "ET-3": {
+        "n_estimators": 300, "max_depth": 12, "min_samples_leaf": 5,
+        "max_features": 0.8, "class_weight": None, "n_jobs": -1,
+        "random_state": 42,
+    },
+}
+
 
 def make_hgb_candidate(name: str) -> HistGradientBoostingClassifier:
     """Construct exactly one predeclared, unweighted HGB candidate."""
@@ -58,6 +77,14 @@ def make_hgb_candidate(name: str) -> HistGradientBoostingClassifier:
     if name not in HGB_CANDIDATE_PARAMETERS:
         raise ValueError(f"unknown HGB candidate: {name}")
     return HistGradientBoostingClassifier(**HGB_CANDIDATE_PARAMETERS[name])
+
+
+def make_extra_trees_candidate(name: str) -> ExtraTreesClassifier:
+    """Construct exactly one predeclared, unweighted Extra Trees candidate."""
+
+    if name not in EXTRA_TREES_CANDIDATE_PARAMETERS:
+        raise ValueError(f"unknown Extra Trees candidate: {name}")
+    return ExtraTreesClassifier(**EXTRA_TREES_CANDIDATE_PARAMETERS[name])
 
 
 def validate_model_frame(features: pd.DataFrame) -> pd.DataFrame:
@@ -87,3 +114,21 @@ def fit_hgb_candidate(
     if len(X) != len(y) or set(np.unique(y)).difference({0, 1}):
         raise ValueError("target must be aligned binary return_risk_target")
     return make_hgb_candidate(name).fit(X, y)
+
+
+def fit_extra_trees_candidate(
+    name: str,
+    features: pd.DataFrame,
+    target,
+    snapshot_at,
+) -> ExtraTreesClassifier:
+    """Fit Extra Trees only on the frozen April-August training snapshots."""
+
+    X = validate_model_frame(features)
+    snapshots = pd.to_datetime(pd.Series(snapshot_at)).unique()
+    if not set(pd.Timestamp(value) for value in snapshots).issubset(TRAINING_SNAPSHOTS):
+        raise ValueError("Extra Trees fit may use only April-August training snapshots")
+    y = np.asarray(target, dtype=int)
+    if len(X) != len(y) or set(np.unique(y)).difference({0, 1}):
+        raise ValueError("target must be aligned binary return_risk_target")
+    return make_extra_trees_candidate(name).fit(X, y)
