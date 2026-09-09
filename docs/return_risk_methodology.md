@@ -1,6 +1,6 @@
 # Customer Return Risk Methodology
 
-This is the source of truth for MarketMind AI Customer Return Risk Phase 3 Step 1. It defines the temporal target and cohort contract only. No classifier, predictive feature matrix, threshold, calibrated probability, or production service exists.
+This is the source of truth for MarketMind AI Customer Return Risk. Step 1 froze the temporal target and cohort contract; Step 2 completed leakage-safe behavioral and Logistic baselines. No final classifier, threshold, calibrated probability, or production service exists.
 
 Complete Journey 2.0 is a **grocery-retail household panel**, not contractual subscription data and not an individual e-commerce customer table. The outcome is therefore observed return behavior within a fixed window, never automatic “churn.”
 
@@ -88,12 +88,17 @@ Future baselines, in order, are: (A) a simple recency rule, (B) a predeclared re
 - Censored rows are unknown and cannot be converted to target 1.
 - Repeated rows are keyed by `(household_id, snapshot_at)` and grouped uncertainty is required.
 
+### Step 2 baseline contract
+
+The first learned baseline uses 16 ordered features: recency; lifetime basket frequency, spend, and average basket value; 7/28-day baskets and 28-day spend; median and standard-deviation cadence; active span; unique departments and department HHI; discount share and coupon-basket rate; and signed 28-day basket/spend changes. Strong training-only redundancy removed 14/56-day basket variants, 56-day spend, mean cadence, active-day/week/month counts, unique products, and discounted-basket rate.
+
+Fixed `log1p` transforms apply only to nonnegative magnitude features. Bounded ratios and signed changes remain unchanged, followed by a training-fitted `RobustScaler`. The behavioral references are recency rank and exactly one equal-weight recency/log-frequency heuristic. Logistic comparisons are limited to unweighted and balanced fixed configurations. No segmentation feature, resampling, tuning, or calibration fit is part of Step 2.
+
 ## Open decisions
 
-- exact final historical feature definitions, transformations, redundancy pruning, and missing-value policy;
-- whether class weighting is beneficial;
-- Logistic Regression and any later tree-model specifications and tuning protocol;
-- validation selection metric confirmation and uncertainty intervals;
+- whether the baseline feature set changes only through a separately predeclared nonlinear extension;
+- a narrowly specified nonlinear model and tuning protocol;
+- validation model-selection rule and any expanded uncertainty analysis;
 - intervention capacity, costs, and operating threshold;
 - whether calibration is adequate for probability language and which calibrator is appropriate;
 - whether a household-disjoint sensitivity test or point-in-time segment-feature ablation adds useful evidence;

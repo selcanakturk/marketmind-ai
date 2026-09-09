@@ -1,0 +1,3 @@
+return_risk_target,recency_days,basket_frequency_lifetime,monetary_lifetime,average_basket_value,baskets_last_7d,baskets_last_28d,spend_last_28d,median_days_between_baskets,std_days_between_baskets,active_span_days,unique_departments,department_spend_hhi,discount_share_of_gross,coupon_basket_rate,baskets_28d_change,spend_28d_change
+0,4.0,43.0,1223.875,27.459735221674876,1.0,4.0,111.955,4.439059606481481,6.126994541430559,269.0,11.0,0.3341113481360739,0.14936750633696266,0.03125,0.0,0.0
+1,25.0,15.0,368.25,23.05888888888889,0.0,1.0,5.0,9.211707175925927,15.747309330792229,232.0,8.0,0.34719020716670546,0.15058193952712323,0.0,0.0,0.0

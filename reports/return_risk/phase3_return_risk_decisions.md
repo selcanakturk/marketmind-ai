@@ -1,6 +1,6 @@
 # Phase 3 Return Risk Decisions
 
-Status: target and cohort design frozen; no model exists.
+Status: Step 2 leakage-safe baselines complete; no final classifier or production model is frozen.
 
 | Decision | Frozen outcome |
 |---|---|
@@ -16,7 +16,27 @@ Status: target and cohort design frozen; no model exists.
 | Repeated households | allowed across time; no random rows; cohort metrics plus household-clustered uncertainty |
 | Segment feature | excluded initially; point-in-time-safe post-model analysis only |
 | Metrics | PR-AUC primary candidate; ROC-AUC secondary; precision/recall/F1/capacity metrics; later Brier/calibration |
-| Baselines | recency rule, recency/frequency heuristic, Logistic Regression; none trained yet |
+| Baselines | recency rule, one recency/frequency heuristic, and unweighted/balanced Logistic evaluated in Step 2 |
+
+## Step 2 baseline decisions
+
+| Decision | Current outcome |
+|---|---|
+| Baseline features | 16 ordered features: recency; lifetime baskets/spend/average basket; 7/28-day baskets and 28-day spend; median/std cadence; active span; unique departments and department HHI; discount share and coupon-basket rate; 28-day basket/spend change |
+| Transform | fixed `log1p` for nonnegative magnitude features; ratios and signed changes unchanged |
+| Scaling | `RobustScaler`, fitted on April–August only |
+| Behavioral baselines | training-rank recency; exactly one equal-weight `z(recency)-z(log-frequency)` heuristic |
+| Logistic variants | default-C `lbfgs`, max_iter 2000, random state 42; unweighted and balanced only |
+| Pooled recency | PR-AUC 0.4316; ROC-AUC 0.7870 |
+| Pooled heuristic | PR-AUC 0.4688; ROC-AUC 0.8459 |
+| Pooled unweighted Logistic | PR-AUC 0.4586; ROC-AUC 0.8508; Brier 0.0929 |
+| Pooled balanced Logistic | PR-AUC 0.4531; ROC-AUC 0.8500; Brier 0.1823 |
+| Temporal finding | all learned/combined scores weaken in October; October remains included |
+| Logistic reference | unweighted preferred over balanced, but not frozen as final classifier |
+| Calibration | diagnostic only; no calibrator; balanced scores substantially overstate prevalence |
+| Threshold | unresolved; 0.5 and top-capacity analyses are descriptive only |
+| Household dependence | snapshot metrics plus deterministic 300-replicate household-clustered bootstrap |
+| Lockbox | November outcome not accessed |
 
 ## Non-negotiable leakage rules
 
@@ -24,4 +44,4 @@ Features and eligibility end at `T`; the target starts strictly after `T`. Disti
 
 ## Open modeling decisions
 
-Final features and transforms, missing-value policy, model candidates/tuning, class weighting, uncertainty method, intervention capacity/costs, operating threshold, calibration method, monitoring, and production artifact contract remain open. None may be resolved using the lockbox.
+Nonlinear candidate specification, narrow tuning scope, model-selection rule, intervention capacity/costs, operating threshold, calibration method, monitoring, and production artifact contract remain open. Final model family is unresolved. None may be resolved using the lockbox.
