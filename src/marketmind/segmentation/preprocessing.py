@@ -8,32 +8,15 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import RobustScaler
 
-
-FINAL_FEATURES: tuple[str, ...] = (
-    "recency_days",
-    "basket_frequency",
-    "monetary_value",
-    "avg_basket_value",
-    "unique_departments",
-    "department_spend_hhi",
-    "discount_share_of_gross",
-    "coupon_basket_rate",
-    "private_label_spend_share",
+from marketmind.segmentation.config import (
+    BOUNDED_RATIO_FEATURES,
+    FEATURE_ORDER,
+    LOG_FEATURES,
 )
 
-LOG1P_FEATURES: tuple[str, ...] = (
-    "recency_days",
-    "basket_frequency",
-    "monetary_value",
-    "avg_basket_value",
-)
-
-BOUNDED_RATIO_FEATURES: tuple[str, ...] = (
-    "department_spend_hhi",
-    "discount_share_of_gross",
-    "coupon_basket_rate",
-    "private_label_spend_share",
-)
+# Backward-compatible aliases used by the completed research notebooks.
+FINAL_FEATURES = FEATURE_ORDER
+LOG1P_FEATURES = LOG_FEATURES
 
 
 @dataclass(frozen=True)
@@ -48,15 +31,15 @@ class PreparedFeatures:
 def transform_features(features: pd.DataFrame) -> pd.DataFrame:
     """Select deterministic columns and apply the frozen `log1p` policy."""
 
-    missing = set(FINAL_FEATURES).difference(features.columns)
+    missing = set(FEATURE_ORDER).difference(features.columns)
     if missing:
         raise ValueError(f"Missing final clustering features: {sorted(missing)}")
-    selected = features.loc[:, FINAL_FEATURES].astype(float).copy()
+    selected = features.loc[:, FEATURE_ORDER].astype(float).copy()
     if selected.isna().any().any():
         raise ValueError("Clustering features must not contain missing values")
-    if (selected.loc[:, LOG1P_FEATURES] < 0).any().any():
+    if (selected.loc[:, LOG_FEATURES] < 0).any().any():
         raise ValueError("log1p features must be nonnegative")
-    for column in LOG1P_FEATURES:
+    for column in LOG_FEATURES:
         selected[column] = np.log1p(selected[column])
     for column in BOUNDED_RATIO_FEATURES:
         if not selected[column].between(0, 1, inclusive="both").all():

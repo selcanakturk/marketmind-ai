@@ -84,21 +84,20 @@ class SegmentationSnapshotTests(unittest.TestCase):
         self.assertAlmostEqual(row["coupon_basket_rate"], 1 / 3)
         self.assertAlmostEqual(row["private_label_spend_share"], 2 / 3)
 
-    def test_duplicate_lines_do_not_inflate_distinct_basket_frequency(self):
+    def test_duplicate_basket_product_lines_are_rejected(self):
         transactions = _transactions().query("household_id == 'eligible'")
         transactions = pd.concat(
             [transactions, transactions.iloc[[0]]], ignore_index=True
         )
-        result = build_household_snapshot(
-            transactions,
-            self.products,
-            snapshot_at="2020-03-31 23:59:59",
-            min_observed_history_days=0,
-            min_baskets=1,
-            min_active_span_days=0,
-        )
-
-        self.assertEqual(result.features.loc["eligible", "basket_frequency"], 3)
+        with self.assertRaisesRegex(ValueError, "duplicate basket-product"):
+            build_household_snapshot(
+                transactions,
+                self.products,
+                snapshot_at="2020-03-31 23:59:59",
+                min_observed_history_days=0,
+                min_baskets=1,
+                min_active_span_days=0,
+            )
 
     def test_authentic_frozen_snapshot_contains_2247_households(self):
         root = Path(__file__).resolve().parents[1]

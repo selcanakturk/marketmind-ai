@@ -1,0 +1,138 @@
+{
+  "module": "customer_segmentation",
+  "model_name": "MarketMind Frozen Household KMeans-3",
+  "model_family": "sklearn.cluster.KMeans",
+  "model_version": "segmentation-kmeans3-2017-09-v1",
+  "schema_version": "1.0",
+  "algorithm": "KMeans",
+  "n_clusters": 3,
+  "reference_snapshot": "2017-09-30 23:59:59",
+  "training_date": "2026-09-09T08:38:56.491502+00:00",
+  "entity_grain": "Complete Journey grocery-retail household",
+  "eligibility_policy": {
+    "min_observed_history_days": 90,
+    "min_baskets": 5,
+    "min_active_span_days": 30
+  },
+  "feature_order": [
+    "recency_days",
+    "basket_frequency",
+    "monetary_value",
+    "avg_basket_value",
+    "unique_departments",
+    "department_spend_hhi",
+    "discount_share_of_gross",
+    "coupon_basket_rate",
+    "private_label_spend_share"
+  ],
+  "transformations": {
+    "log1p": [
+      "recency_days",
+      "basket_frequency",
+      "monetary_value",
+      "avg_basket_value"
+    ],
+    "unchanged": [
+      "unique_departments",
+      "department_spend_hhi",
+      "discount_share_of_gross",
+      "coupon_basket_rate",
+      "private_label_spend_share"
+    ]
+  },
+  "scaler": "sklearn.preprocessing.RobustScaler",
+  "kmeans_parameters": {
+    "n_clusters": 3,
+    "init": "k-means++",
+    "n_init": 20,
+    "max_iter": 300,
+    "tol": 0.0001,
+    "algorithm": "lloyd",
+    "random_state": 42
+  },
+  "semantic_mapping": {
+    "1": {
+      "segment_code": "HIGH_ENGAGEMENT_BROAD",
+      "display_name": "High-Engagement Broad Shoppers",
+      "description": "Recent, frequent, high-spend households purchasing across a broad assortment."
+    },
+    "0": {
+      "segment_code": "PROMOTION_BASKET_BUILDERS",
+      "display_name": "Promotion-Oriented Basket Builders",
+      "description": "Moderate-frequency households with larger baskets and stronger observed discount/coupon use."
+    },
+    "2": {
+      "segment_code": "LOWER_ENGAGEMENT_FOCUSED",
+      "display_name": "Lower-Engagement Focused Shoppers",
+      "description": "Less-recent, lower-frequency and lower-spend households with narrower assortments."
+    }
+  },
+  "reference_cluster_sizes": {
+    "0": 293,
+    "1": 1077,
+    "2": 877
+  },
+  "reference_cluster_percentages": {
+    "0": 0.1303960836671117,
+    "1": 0.47930574098798395,
+    "2": 0.3902981753449043
+  },
+  "reference_internal_metrics": {
+    "silhouette": 0.20312844392672355,
+    "davies_bouldin": 1.5647334449404775,
+    "calinski_harabasz": 559.6854955211734
+  },
+  "temporal_stability_summary": {
+    "snapshots": [
+      "2017-06-30",
+      "2017-07-31",
+      "2017-08-31",
+      "2017-09-30"
+    ],
+    "consecutive_ari": [
+      0.7133,
+      0.7001,
+      0.7175
+    ],
+    "monthly_unchanged_assignment_share": "approximately 90-91%",
+    "interpretation": "descriptive temporal credibility, not supervised performance"
+  },
+  "assignment_policy": {
+    "eligible": "frozen features -> transformations -> scaler.transform -> nearest KMeans centroid -> semantic mapping",
+    "ineligible_status": "insufficient_history",
+    "distance_semantics": "Euclidean distance in transformed/scaled space; geometric atypicality only"
+  },
+  "refresh_policy": {
+    "eligibility_and_assignment": "monthly at calendar month-end",
+    "model_review": "quarterly",
+    "model_refit": "not automatic; evidence-triggered after review"
+  },
+  "drift_monitoring_policy": [
+    "feature median and quantile shifts",
+    "eligibility and segment-share shifts",
+    "aligned centroid/profile movement",
+    "centroid-distance distribution growth",
+    "semantic-ordering breakdown"
+  ],
+  "library_versions": {
+    "python": "3.13.2",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "scikit_learn": "1.9.0",
+    "joblib": "1.6.0",
+    "pyreadr": "0.5.6"
+  },
+  "training_statistics": {
+    "fit_seconds": 7.9553599171340466
+  },
+  "known_limitations": [
+    "The dataset represents grocery-retail households, not individual e-commerce customers.",
+    "Segments are descriptive and do not establish causal effects.",
+    "Cluster assignment is not a probability.",
+    "Centroid distance is not confidence or certainty.",
+    "Only four historical snapshots were evaluated.",
+    "No second-year seasonal replication exists.",
+    "Cumulative behavior features depend on observation history.",
+    "The model is not automatically valid for unrelated retailers or domains."
+  ]
+}

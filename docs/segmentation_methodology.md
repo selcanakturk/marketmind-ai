@@ -147,3 +147,13 @@ Any household failing ≥90 history days, ≥5 baskets, or ≥30 active-span day
 The recommended operating policy is monthly month-end eligibility/assignment, quarterly model review after deployment, and evidence-triggered rather than automatic refitting. Monitoring must cover feature quantiles, eligible/ineligible share, semantic segment shares, aligned profile/centroid movement, assignment-distance distributions, and preservation of defining profile orderings. Thresholds remain open until a production baseline and business tolerances exist.
 
 Step 3 establishes temporal credibility and a semantic/assignment contract; it does not authorize or complete productionization. Serialization, versioned mapping artifacts, post-September forward validation, monitoring baselines, and governance remain open. Customer Return Risk remains separate.
+
+## Step 4 production engine
+
+Model version `segmentation-kmeans3-2017-09-v1` implements the frozen methodology as a self-contained joblib bundle. It contains the fitted RobustScaler and KMeans-3 estimator, ordered feature and transformation schemas, eligibility policy, explicit raw-ID-to-semantic mapping, reference snapshot/profiles, parameters, and library versions. Training and assignment do not depend on notebook state.
+
+The canonical CLI build must reproduce 2,247 eligible households, raw cluster counts 293/1,077/877, and the three frozen internal metrics within floating-point tolerance or fail. Semantic mapping is re-derived from reference profiles and must uniquely resolve all three approved codes.
+
+Production assignment validates raw input, reconstructs point-in-time features and eligibility, calls only the fitted scaler's `transform` and KMeans `predict`, and returns the frozen seven-field assignment schema. Ineligible households retain null assignments with `insufficient_history`. No fourth cluster or confidence/probability surrogate is permitted.
+
+The lightweight monitoring baseline freezes reference feature quartiles, segment shares/profiles, centroid-distance quantiles, and eligibility proportions without inventing alert thresholds. Refit remains review-controlled and evidence-triggered. The engine is ready for a later serving layer, but FastAPI and Customer Return Risk remain outside Phase 2 Step 4.

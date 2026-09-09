@@ -1,0 +1,141 @@
+{
+  "model_version": "segmentation-kmeans3-2017-09-v1",
+  "reference_snapshot": "2017-09-30 23:59:59",
+  "feature_quantiles_original_units": {
+    "recency_days": {
+      "q25": 1.0,
+      "median": 5.0,
+      "q75": 14.0
+    },
+    "basket_frequency": {
+      "q25": 18.0,
+      "median": 36.0,
+      "q75": 66.0
+    },
+    "monetary_value": {
+      "q25": 443.555,
+      "median": 1010.84,
+      "q75": 2036.615
+    },
+    "avg_basket_value": {
+      "q25": 17.89017391304348,
+      "median": 26.98888888888889,
+      "q75": 40.53275
+    },
+    "unique_departments": {
+      "q25": 8.0,
+      "median": 11.0,
+      "q75": 13.0
+    },
+    "department_spend_hhi": {
+      "q25": 0.2789881525230981,
+      "median": 0.33747446165161415,
+      "q75": 0.4091824251751131
+    },
+    "discount_share_of_gross": {
+      "q25": 0.11586471450778024,
+      "median": 0.14986610687228347,
+      "q75": 0.19032830628740927
+    },
+    "coupon_basket_rate": {
+      "q25": 0.0,
+      "median": 0.0273972602739726,
+      "q75": 0.08333333333333333
+    },
+    "private_label_spend_share": {
+      "q25": 0.1839725647904898,
+      "median": 0.2636510332621935,
+      "q75": 0.3547773339790883
+    }
+  },
+  "segment_profiles": [
+    {
+      "raw_cluster_id": 0,
+      "segment_code": "PROMOTION_BASKET_BUILDERS",
+      "display_name": "Promotion-Oriented Basket Builders",
+      "description": "Moderate-frequency households with larger baskets and stronger observed discount/coupon use.",
+      "household_count": 293,
+      "household_percentage": 0.1303960836671117,
+      "recency_days": 5.0,
+      "basket_frequency": 34.0,
+      "monetary_value": 1412.95,
+      "avg_basket_value": 43.3225,
+      "unique_departments": 11.0,
+      "department_spend_hhi": 0.34873803851158536,
+      "discount_share_of_gross": 0.19465769271216743,
+      "coupon_basket_rate": 0.21428571428571427,
+      "private_label_spend_share": 0.23959505896272337
+    },
+    {
+      "raw_cluster_id": 1,
+      "segment_code": "HIGH_ENGAGEMENT_BROAD",
+      "display_name": "High-Engagement Broad Shoppers",
+      "description": "Recent, frequent, high-spend households purchasing across a broad assortment.",
+      "household_count": 1077,
+      "household_percentage": 0.47930574098798395,
+      "recency_days": 2.0,
+      "basket_frequency": 61.0,
+      "monetary_value": 1830.3,
+      "avg_basket_value": 30.00816513761468,
+      "unique_departments": 13.0,
+      "department_spend_hhi": 0.30874741622725094,
+      "discount_share_of_gross": 0.14095449500554938,
+      "coupon_basket_rate": 0.032,
+      "private_label_spend_share": 0.27893790149892933
+    },
+    {
+      "raw_cluster_id": 2,
+      "segment_code": "LOWER_ENGAGEMENT_FOCUSED",
+      "display_name": "Lower-Engagement Focused Shoppers",
+      "description": "Less-recent, lower-frequency and lower-spend households with narrower assortments.",
+      "household_count": 877,
+      "household_percentage": 0.3902981753449043,
+      "recency_days": 13.0,
+      "basket_frequency": 17.0,
+      "monetary_value": 378.33,
+      "avg_basket_value": 19.651929824561407,
+      "unique_departments": 8.0,
+      "department_spend_hhi": 0.3757868963321182,
+      "discount_share_of_gross": 0.15005721914934197,
+      "coupon_basket_rate": 0.0,
+      "private_label_spend_share": 0.2591940943601905
+    }
+  ],
+  "centroid_distance_transformed_scaled_space": {
+    "overall": {
+      "median": 1.6880553637440345,
+      "q75": 2.069458374709013,
+      "q90": 2.543280349817534,
+      "q95": 2.898000279454863
+    },
+    "by_raw_cluster": {
+      "0": {
+        "median": 2.0130005911560622,
+        "q75": 2.4941746734418397,
+        "q90": 3.031777271145413,
+        "q95": 3.5947284831803072
+      },
+      "1": {
+        "median": 1.5437503799612071,
+        "q75": 1.8286913318571638,
+        "q90": 2.1671557015107217,
+        "q95": 2.3894902533148095
+      },
+      "2": {
+        "median": 1.7866703398731503,
+        "q75": 2.2417936461508936,
+        "q90": 2.7588929381895726,
+        "q95": 3.242104122626551
+      }
+    }
+  },
+  "eligibility": {
+    "observed_households": 2446,
+    "eligible_households": 2247,
+    "eligible_percentage": 0.9186426819296811,
+    "insufficient_history_households": 199,
+    "insufficient_history_percentage": 0.08135731807031889
+  },
+  "thresholds": null,
+  "note": "Reference statistics only; no automatic alert thresholds are defined."
+}

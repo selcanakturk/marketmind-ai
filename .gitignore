@@ -45,6 +45,12 @@ models/**
 models/forecasting/*
 !models/forecasting/README.md
 !models/forecasting/metadata.json
+!models/segmentation/
+models/segmentation/*
+!models/segmentation/README.md
+!models/segmentation/metadata.json
+!models/segmentation/reference_profiles.csv
+!models/segmentation/monitoring_baseline.json
 
 # Generated report figures
 reports/figures/**

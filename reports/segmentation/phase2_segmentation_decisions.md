@@ -1,6 +1,6 @@
 # Phase 2 Segmentation Decisions
 
-Status: Step 3 temporal stability and naming review complete; not productionized.
+Status: Step 4 frozen segmentation engine productionized.
 
 | Decision | Frozen outcome | Evidence / boundary |
 |---|---|---|
@@ -13,7 +13,7 @@ Status: Step 3 temporal stability and naming review complete; not productionized
 | Stability | ten seeds; 45 pairwise ARIs per algorithm/K | label-permutation safe |
 | Selected research solution | KMeans K=3 | best balance under frozen multi-criterion policy |
 | Naming | semantic names defined in Step 3 | numeric IDs remain arbitrary and version-specific |
-| Production | not authorized | operational principles defined; no serialization, serving, or monitoring implementation |
+| Production | frozen engine implemented | versioned bundle, assignment contract, metadata, and drift baseline; no API |
 
 ## Frozen feature order
 
@@ -61,4 +61,10 @@ Raw IDs are model-version-specific. Semantic mapping is derived from profiles: h
 - Review the model quarterly once deployed; refit only after sustained multi-signal drift or semantic deterioration, not automatically by calendar.
 - Monitor feature distributions, segment shares, centroid/profile movement, assignment-distance distributions, eligibility rates, and semantic ordering.
 
-Productionization still requires model serialization/versioning, mapping persistence, forward validation, monitoring baselines, and governance. Customer Return Risk remains a separate future phase.
+## Step 4 production contract
+
+Model version `segmentation-kmeans3-2017-09-v1` serializes the fitted RobustScaler, KMeans estimator, exact feature/transform/eligibility contracts, explicit semantic mapping, profiles, and library versions. Canonical training reproduces 2,247 eligible households, raw cluster counts 293/1,077/877, and frozen internal metrics exactly within floating-point tolerance.
+
+Assignments expose semantic codes as the stable business contract; raw IDs remain version-specific. Insufficient-history households receive null assignments and are not a fourth cluster. Centroid distance is Euclidean distance in transformed/scaled feature space and is only geometric atypicality.
+
+Reviewable metadata, reference profiles, and drift baselines are persisted under `models/segmentation/`; the generated binary remains ignored. Monthly assignment, quarterly review, and evidence-triggered refitting remain frozen. Customer Return Risk is a separate future phase, and no API was created.

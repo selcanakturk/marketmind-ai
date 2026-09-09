@@ -11,6 +11,18 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
+from marketmind.segmentation.config import (
+    ELIGIBILITY_MIN_ACTIVE_SPAN_DAYS,
+    ELIGIBILITY_MIN_BASKETS,
+    ELIGIBILITY_MIN_HISTORY_DAYS,
+)
+
+TRANSACTION_REQUIRED_COLUMNS = (
+    "household_id", "store_id", "basket_id", "product_id", "sales_value",
+    "retail_disc", "coupon_disc", "coupon_match_disc", "transaction_timestamp",
+)
+PRODUCT_REQUIRED_COLUMNS = ("product_id", "department", "brand")
+
 
 @dataclass(frozen=True)
 class EligibilityAudit:
@@ -37,45 +49,51 @@ def _require_columns(frame: pd.DataFrame, required: set[str], name: str) -> None
         raise ValueError(f"{name} is missing required columns: {sorted(missing)}")
 
 
-def build_household_snapshot(
+def validate_snapshot_inputs(
+    transactions: pd.DataFrame, products: pd.DataFrame
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Validate the frozen Complete Journey input contract without imputation."""
+
+    _require_columns(transactions, set(TRANSACTION_REQUIRED_COLUMNS), "transactions")
+    _require_columns(products, set(PRODUCT_REQUIRED_COLUMNS), "products")
+    tx = transactions.copy()
+    product = products.copy()
+    if tx[list(TRANSACTION_REQUIRED_COLUMNS)].isna().any().any():
+        raise ValueError("transactions contains missing mandatory values")
+    if product["product_id"].isna().any():
+        raise ValueError("products contains missing product_id values")
+    tx["transaction_timestamp"] = pd.to_datetime(
+        tx["transaction_timestamp"], errors="raise"
+    )
+    numeric = ["sales_value", "retail_disc", "coupon_disc", "coupon_match_disc"]
+    values = tx[numeric].apply(pd.to_numeric, errors="raise").to_numpy(float)
+    if not np.isfinite(values).all() or (values < 0).any():
+        raise ValueError("sales and discount inputs must be finite and nonnegative")
+    if tx.duplicated(["basket_id", "product_id"]).any():
+        raise ValueError("transactions contains duplicate basket-product rows")
+    if (tx.groupby("basket_id")["household_id"].nunique() > 1).any():
+        raise ValueError("a basket_id may not map to multiple households")
+    if (tx.groupby("basket_id")["store_id"].nunique() > 1).any():
+        raise ValueError("a basket_id may not map to multiple stores")
+    if product["product_id"].duplicated().any():
+        raise ValueError("products contains duplicate product_id rows")
+    return tx, product
+
+
+def household_eligibility_table(
     transactions: pd.DataFrame,
-    products: pd.DataFrame,
     *,
     snapshot_at: str | pd.Timestamp,
-    min_observed_history_days: int = 90,
-    min_baskets: int = 5,
-    min_active_span_days: int = 30,
-) -> SnapshotResult:
-    """Build the Phase 2 candidate feature matrix as known at ``snapshot_at``.
-
-    Eligibility filters are applied sequentially in the order documented by the
-    methodology: observed history, basket count, then active span. All monetary
-    values are in the source dataset's nominal currency units.
-    """
-
-    tx_required = {
-        "household_id",
-        "store_id",
-        "basket_id",
-        "product_id",
-        "sales_value",
-        "retail_disc",
-        "coupon_disc",
-        "coupon_match_disc",
-        "transaction_timestamp",
-    }
-    product_required = {"product_id", "department", "brand"}
-    _require_columns(transactions, tx_required, "transactions")
-    _require_columns(products, product_required, "products")
+    min_observed_history_days: int = ELIGIBILITY_MIN_HISTORY_DAYS,
+    min_baskets: int = ELIGIBILITY_MIN_BASKETS,
+    min_active_span_days: int = ELIGIBILITY_MIN_ACTIVE_SPAN_DAYS,
+) -> pd.DataFrame:
+    """Return one deterministic eligibility row per household observed by T."""
 
     cutoff = pd.Timestamp(snapshot_at)
-    tx = transactions.loc[
-        pd.to_datetime(transactions["transaction_timestamp"]) <= cutoff
-    ].copy()
+    tx = transactions.loc[transactions["transaction_timestamp"] <= cutoff]
     if tx.empty:
         raise ValueError("No transactions exist on or before snapshot_at")
-    tx["transaction_timestamp"] = pd.to_datetime(tx["transaction_timestamp"])
-
     household = tx.groupby("household_id", observed=True).agg(
         first_transaction=("transaction_timestamp", "min"),
         last_transaction=("transaction_timestamp", "max"),
@@ -89,6 +107,43 @@ def build_household_snapshot(
         household["last_transaction"].dt.normalize()
         - household["first_transaction"].dt.normalize()
     ).dt.days
+    household["eligible"] = (
+        (household["observed_history_days"] >= min_observed_history_days)
+        & (household["basket_frequency"] >= min_baskets)
+        & (household["active_span_days"] >= min_active_span_days)
+    )
+    return household
+
+
+def build_household_snapshot(
+    transactions: pd.DataFrame,
+    products: pd.DataFrame,
+    *,
+    snapshot_at: str | pd.Timestamp,
+    min_observed_history_days: int = ELIGIBILITY_MIN_HISTORY_DAYS,
+    min_baskets: int = ELIGIBILITY_MIN_BASKETS,
+    min_active_span_days: int = ELIGIBILITY_MIN_ACTIVE_SPAN_DAYS,
+) -> SnapshotResult:
+    """Build the Phase 2 candidate feature matrix as known at ``snapshot_at``.
+
+    Eligibility filters are applied sequentially in the order documented by the
+    methodology: observed history, basket count, then active span. All monetary
+    values are in the source dataset's nominal currency units.
+    """
+
+    cutoff = pd.Timestamp(snapshot_at)
+    transactions, products = validate_snapshot_inputs(transactions, products)
+    tx = transactions.loc[transactions["transaction_timestamp"] <= cutoff].copy()
+    if tx.empty:
+        raise ValueError("No transactions exist on or before snapshot_at")
+    household = household_eligibility_table(
+        transactions,
+        snapshot_at=cutoff,
+        min_observed_history_days=min_observed_history_days,
+        min_baskets=min_baskets,
+        min_active_span_days=min_active_span_days,
+    )
+    cutoff_day = cutoff.normalize()
 
     history_ok = household["observed_history_days"] >= min_observed_history_days
     baskets_ok = household["basket_frequency"] >= min_baskets

@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 from scipy.optimize import linear_sum_assignment
 
-from marketmind.segmentation.preprocessing import FINAL_FEATURES
+from marketmind.segmentation.config import FEATURE_ORDER, SEGMENTS
 
 
 @dataclass(frozen=True)
@@ -23,18 +23,18 @@ class SegmentDefinition:
 SEGMENT_DEFINITIONS = {
     "HIGH_ENGAGEMENT_BROAD": SegmentDefinition(
         "HIGH_ENGAGEMENT_BROAD",
-        "High-Engagement Broad Shoppers",
-        "Recent, frequent, high-spend households purchasing across a broad assortment.",
+        SEGMENTS["HIGH_ENGAGEMENT_BROAD"]["display_name"],
+        SEGMENTS["HIGH_ENGAGEMENT_BROAD"]["description"],
     ),
     "PROMOTION_BASKET_BUILDERS": SegmentDefinition(
         "PROMOTION_BASKET_BUILDERS",
-        "Promotion-Oriented Basket Builders",
-        "Moderate-frequency households with larger baskets and stronger observed discount/coupon use.",
+        SEGMENTS["PROMOTION_BASKET_BUILDERS"]["display_name"],
+        SEGMENTS["PROMOTION_BASKET_BUILDERS"]["description"],
     ),
     "LOWER_ENGAGEMENT_FOCUSED": SegmentDefinition(
         "LOWER_ENGAGEMENT_FOCUSED",
-        "Lower-Engagement Focused Shoppers",
-        "Less-recent, lower-frequency and lower-spend households with narrower assortments.",
+        SEGMENTS["LOWER_ENGAGEMENT_FOCUSED"]["display_name"],
+        SEGMENTS["LOWER_ENGAGEMENT_FOCUSED"]["description"],
     ),
 }
 
@@ -43,7 +43,7 @@ def relative_profile_signatures(
     features: pd.DataFrame,
     labels: np.ndarray,
     *,
-    columns: tuple[str, ...] = FINAL_FEATURES,
+    columns: tuple[str, ...] = FEATURE_ORDER,
 ) -> pd.DataFrame:
     """Return cluster medians relative to the snapshot population median/IQR.
 
