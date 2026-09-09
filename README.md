@@ -8,7 +8,7 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 1 — Demand Forecasting: Production engine complete**
 
-**Phase 2 — Customer Segmentation: Step 1 snapshot/feature design in progress (no clustering yet)**
+**Phase 2 — Customer Segmentation: clustering methodology selected; naming and productionization not started**
 
 Demand Forecasting status:
 
@@ -18,7 +18,7 @@ Demand Forecasting status:
 - one-time final lockbox evaluation complete and consumed;
 - frozen HGBR forecasting pipeline, serialized bundle, metadata, CLI, and inference contract complete.
 
-M5 supports forecasting, later sales-anomaly work, and forecast input to inventory decision support; Complete Journey 2.0 supports the current household-segmentation design and later return-risk work; RetailRocket supports future recommendation work. Olist remains documented rejection evidence. No clustering, API, frontend, anomaly, inventory, return-risk, or recommendation implementation is claimed complete.
+M5 supports forecasting, later sales-anomaly work, and forecast input to inventory decision support; Complete Journey 2.0 supports the selected household-clustering methodology and later return-risk work; RetailRocket supports future recommendation work. Olist remains documented rejection evidence. Segmentation is not productionized, and no API, frontend, anomaly, inventory, return-risk, or recommendation implementation is claimed complete.
 
 ## Planned modules
 

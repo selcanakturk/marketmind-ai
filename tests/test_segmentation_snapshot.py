@@ -1,6 +1,8 @@
 import unittest
+from pathlib import Path
 
 import pandas as pd
+import pyreadr
 
 from marketmind.segmentation.snapshot import build_household_snapshot
 
@@ -97,6 +99,22 @@ class SegmentationSnapshotTests(unittest.TestCase):
         )
 
         self.assertEqual(result.features.loc["eligible", "basket_frequency"], 3)
+
+    def test_authentic_frozen_snapshot_contains_2247_households(self):
+        root = Path(__file__).resolve().parents[1]
+        raw = root / "data" / "raw" / "complete_journey"
+        if not (raw / "transactions.rds").exists():
+            self.skipTest("ignored authentic Complete Journey files are unavailable")
+        transactions = pyreadr.read_r(str(raw / "transactions.rds"))[None]
+        products = pyreadr.read_r(str(raw / "products.rda"))["products"]
+        result = build_household_snapshot(
+            transactions,
+            products,
+            snapshot_at="2017-09-30 23:59:59",
+        )
+        self.assertEqual(len(result.features), 2247)
+        self.assertEqual(result.features.index.nunique(), 2247)
+        self.assertEqual(result.eligibility.eligible_households, 2247)
 
 
 if __name__ == "__main__":

@@ -102,3 +102,30 @@ Customer Segmentation is unsupervised descriptive grouping. Customer Return Risk
 - future return-risk horizon, target, eligibility, and evaluation—explicitly outside this phase.
 
 No clustering may begin until the preprocessing variants, redundancy decisions, stability criteria, and interpretation rubric are reviewed.
+
+## Step 2 frozen experiment decisions
+
+The first clustering experiment reconstructed the same 2,247-household snapshot and froze the following **before** comparing algorithm metrics.
+
+- Final clustering features, in deterministic order: `recency_days`, `basket_frequency`, `monetary_value`, `avg_basket_value`, `unique_departments`, `department_spend_hhi`, `discount_share_of_gross`, `coupon_basket_rate`, and `private_label_spend_share`.
+- `log1p` transformations: recency, basket frequency, monetary value, and average basket value.
+- Unchanged features: unique departments and the four naturally bounded ratios.
+- Scaling: `RobustScaler`, fit only on the frozen eligible snapshot. Legitimate extremes remain included.
+- Algorithms: KMeans and full-covariance GaussianMixture only.
+- Cluster-count range: K=2 through K=8, without post-result expansion.
+- Base fit: random state 42; KMeans uses 20 initializations and GMM uses 5.
+- Stability: ten deterministic seed refits per algorithm/K and all 45 pairwise Adjusted Rand Indices. ARI handles label permutation.
+- Selection policy, in order: stability, separation, non-pathological sizes, behavioral interpretability, and operational simplicity. No single metric decides.
+- PCA is visualization-only; clustering is performed in the nine-dimensional transformed and scaled space.
+
+The following were excluded from the first comparison for predeclared conceptual reasons: `active_days` and median cadence duplicate frequency; `active_span_days` is boundary-compressed and partly reflects tenure/eligibility; `unique_products` is strongly entangled with monetary value; discounted-basket rate has ceiling mass and overlaps normalized discount intensity; dominant-store share may encode geography or panel structure; median basket value adds another trip-size proxy.
+
+## Step 2 selected research solution
+
+The selected methodology candidate is **KMeans with K=3**. It has the best KMeans silhouette (0.20313) and Davies–Bouldin value (1.56473), near-perfect seed stability (mean pairwise ARI 0.99378; minimum 0.98808), and cluster shares of 13.04%, 47.93%, and 39.03%. K=2 has a slightly higher Calinski–Harabasz score but weaker silhouette and Davies–Bouldin separation. K>=4 loses separation; K=8 creates a 2.98% group and is materially less stable.
+
+GMM K=3 is also highly seed-stable (mean ARI 0.99943) with non-small components, but its hard-assignment silhouette is only 0.09889. GMM AIC keeps decreasing through K=8 and BIC reaches its minimum at K=7, while separation turns near-zero/negative and stability falls from K=4 onward. Information criteria therefore do not override the full selection policy. KMeans-3 is preferred for stronger separation and simpler operation.
+
+Cluster numbers are arbitrary identifiers. Current descriptions are deliberately neutral: a promotion/coupon-associated larger-basket group; a frequent, high-spend, broad-assortment group; and a lower-frequency, lower-spend, narrower-assortment group. Business-friendly naming remains a separate review step. KMeans centroid distance is not a probability; GMM posterior responsibility is assignment under mixture assumptions, not customer confidence.
+
+The clustering methodology is ready for segment-naming review and subsequent production-design planning, but it is **not productionized**. Repeated-snapshot stability, naming governance, monitoring, retraining/assignment policy, and artifact/version contracts remain open. Customer Return Risk remains out of scope.
