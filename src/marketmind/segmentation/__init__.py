@@ -7,11 +7,13 @@ from marketmind.segmentation.snapshot import (
     build_household_snapshot,
 )
 from marketmind.segmentation.preprocessing import FINAL_FEATURES, prepare_features
+from marketmind.segmentation.assignment import assign_eligible_households
 
 __all__ = [
     "EligibilityAudit",
     "FINAL_FEATURES",
     "SnapshotResult",
     "build_household_snapshot",
+    "assign_eligible_households",
     "prepare_features",
 ]

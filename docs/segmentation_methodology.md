@@ -90,18 +90,14 @@ Customer Segmentation is unsupervised descriptive grouping. Customer Return Risk
 
 ## Open / experimental decisions
 
-- final subset among core and secondary candidates;
-- transformations, scaler, and weighting/balancing of feature families;
 - whether exposure-adjusted rates or multiple history windows improve comparability;
-- treatment of household tenure/active span in the modeling matrix;
-- whether coupon sparsity is informative enough for the primary set;
-- whether store concentration is behavioral or geographic/collection structure;
-- clustering algorithm, number of clusters (if applicable), random-state protocol, and model-selection evidence;
-- stability protocol across resamples, seeds, feature variants, and later snapshots;
-- interpretability criteria, cluster naming rules, minimum viable segment size, and business-use review;
+- subsample and seasonally comparable second-year stability beyond the completed seed/month-end checks;
+- stakeholder approval of display names and descriptions;
+- production artifact/version schema, new-model semantic remapping governance, and monitoring baselines;
+- whether assignment remains reliable beyond September with cumulative magnitude features;
 - future return-risk horizon, target, eligibility, and evaluation—explicitly outside this phase.
 
-No clustering may begin until the preprocessing variants, redundancy decisions, stability criteria, and interpretation rubric are reviewed.
+These questions do not reopen the frozen Step 2 algorithm, K, feature, transform, or scaling decisions without a separately authorized methodology review.
 
 ## Step 2 frozen experiment decisions
 
@@ -128,4 +124,26 @@ GMM K=3 is also highly seed-stable (mean ARI 0.99943) with non-small components,
 
 Cluster numbers are arbitrary identifiers. Current descriptions are deliberately neutral: a promotion/coupon-associated larger-basket group; a frequent, high-spend, broad-assortment group; and a lower-frequency, lower-spend, narrower-assortment group. Business-friendly naming remains a separate review step. KMeans centroid distance is not a probability; GMM posterior responsibility is assignment under mixture assumptions, not customer confidence.
 
-The clustering methodology is ready for segment-naming review and subsequent production-design planning, but it is **not productionized**. Repeated-snapshot stability, naming governance, monitoring, retraining/assignment policy, and artifact/version contracts remain open. Customer Return Risk remains out of scope.
+At the end of Step 2, the clustering methodology was ready for temporal and naming review but was **not productionized**. Step 3 below records the later temporal evidence and semantic contract. Customer Return Risk remains out of scope.
+
+## Step 3 temporal and semantic decisions
+
+Independent fits at 2017-06-30, 2017-07-31, 2017-08-31, and 2017-09-30 preserve the frozen methodology. Eligible populations are 2,085, 2,172, 2,219, and 2,247. Silhouette remains 0.2031–0.2069, no aligned segment collapses, and 90.38%–90.67% of common households remain in the same aligned segment month to month. The predeclared temporal-credibility policy is satisfied.
+
+Cluster identity alignment uses snapshot-relative median profiles across the nine frozen original-unit features: subtract the snapshot household median, divide by snapshot IQR, calculate Euclidean cluster-profile distances to the September reference, and solve one-to-one matching with Hungarian assignment. Raw integer IDs must never be compared or exposed as stable semantics without this versioned mapping.
+
+The approved semantic codes and display names are:
+
+- `HIGH_ENGAGEMENT_BROAD` — **High-Engagement Broad Shoppers**;
+- `PROMOTION_BASKET_BUILDERS` — **Promotion-Oriented Basket Builders**;
+- `LOWER_ENGAGEMENT_FOCUSED` — **Lower-Engagement Focused Shoppers**.
+
+Semantic identity is derived from behavioral profiles, not integer order. Names describe observed shopping behavior and do not imply loyalty, profitability, risk, causal promotion response, or individual-customer identity.
+
+An eligible household is assigned by frozen ordered feature construction, frozen transformations, the already-fitted RobustScaler, and nearest frozen KMeans centroid. The resulting raw cluster ID is mapped through a model-versioned semantic mapping. `distance_to_centroid` is a geometric atypicality diagnostic, not probability or confidence.
+
+Any household failing ≥90 history days, ≥5 baskets, or ≥30 active-span days receives `insufficient_history`. This is an eligibility status, not a fourth learned segment.
+
+The recommended operating policy is monthly month-end eligibility/assignment, quarterly model review after deployment, and evidence-triggered rather than automatic refitting. Monitoring must cover feature quantiles, eligible/ineligible share, semantic segment shares, aligned profile/centroid movement, assignment-distance distributions, and preservation of defining profile orderings. Thresholds remain open until a production baseline and business tolerances exist.
+
+Step 3 establishes temporal credibility and a semantic/assignment contract; it does not authorize or complete productionization. Serialization, versioned mapping artifacts, post-September forward validation, monitoring baselines, and governance remain open. Customer Return Risk remains separate.

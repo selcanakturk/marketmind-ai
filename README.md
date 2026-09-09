@@ -8,7 +8,7 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 1 — Demand Forecasting: Production engine complete**
 
-**Phase 2 — Customer Segmentation: clustering methodology selected; naming and productionization not started**
+**Phase 2 — Customer Segmentation: temporal stability and naming review complete; not productionized**
 
 Demand Forecasting status:
 
