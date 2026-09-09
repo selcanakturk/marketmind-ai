@@ -10,6 +10,8 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 2 — Customer Segmentation: Production engine complete**
 
+**Phase 3 — Customer Return Risk: Target/cohort design complete; no risk model exists**
+
 Demand Forecasting status:
 
 - dataset research complete;
@@ -18,7 +20,7 @@ Demand Forecasting status:
 - one-time final lockbox evaluation complete and consumed;
 - frozen HGBR forecasting pipeline, serialized bundle, metadata, CLI, and inference contract complete.
 
-M5 supports forecasting, later sales-anomaly work, and forecast input to inventory decision support; Complete Journey 2.0 supports the productionized household-segmentation engine and later return-risk work; RetailRocket supports future recommendation work. Olist remains documented rejection evidence. Customer Return Risk and Recommendation are not started, and no API, frontend, anomaly, or inventory implementation is claimed complete.
+M5 supports forecasting, later sales-anomaly work, and forecast input to inventory decision support; Complete Journey 2.0 supports the productionized household-segmentation engine and the frozen return-risk target/cohort design; RetailRocket supports future recommendation work. Olist remains documented rejection evidence. No Customer Return Risk model has been trained, Recommendation is not started, and no API, frontend, anomaly, or inventory implementation is claimed complete.
 
 ## Planned modules
 
@@ -26,7 +28,7 @@ M5 supports forecasting, later sales-anomaly work, and forecast input to invento
 
 - Demand Forecasting
 - Customer Segmentation
-- Churn Prediction
+- Customer Return Risk (target/cohort design only)
 - Recommendation Engine
 
 ### Decision Support
@@ -44,7 +46,7 @@ The repository now includes reusable Python forecasting and segmentation pipelin
 
 Future work will begin with explicit problem definitions and dataset audits. Time-dependent problems will preserve temporal ordering, prevent leakage, and maintain separate train, validation, and final test periods. Simple baselines will precede more complex approaches, metrics will match the decision problem, and error analysis will inform methodology choices. Outputs will not be described as probabilities, causal effects, or business impact unless the evidence and estimator semantics justify those claims.
 
-See the [methodology principles](docs/methodology_principles.md), frozen [forecasting methodology](docs/forecasting_methodology.md), and [segmentation methodology](docs/segmentation_methodology.md) for the working standards.
+See the [methodology principles](docs/methodology_principles.md), frozen [forecasting methodology](docs/forecasting_methodology.md), [segmentation methodology](docs/segmentation_methodology.md), and [return-risk methodology](docs/return_risk_methodology.md) for the working standards.
 
 ## Deployment constraint
 
@@ -54,8 +56,8 @@ The intended system should remain lightweight enough to preserve options for fre
 
 - `data/`: local raw, intermediate, and processed datasets (ignored by Git)
 - `notebooks/`: dataset audits and future experiments
-- `src/marketmind/`: reusable package code organized by capability; forecasting and segmentation engines are implemented
+- `src/marketmind/`: reusable package code organized by capability; forecasting and segmentation engines plus return-risk cohort utilities are implemented
 - `models/`: generated forecasting/segmentation bundles (ignored) and reviewable artifact metadata
 - `reports/`: research notes, decision records, and generated figures
 - `docs/`: scope, methodology, and dataset requirements
-- `tests/`: automated unit and integration-oriented forecasting/segmentation tests
+- `tests/`: automated forecasting, segmentation, and return-risk cohort-contract tests
