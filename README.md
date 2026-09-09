@@ -1,12 +1,14 @@
 # MarketMind AI — E-Commerce Intelligence Platform
 
-MarketMind AI is a production-oriented ML engineering portfolio project for turning retail and e-commerce data into predictive insights and operational decision support. Phase 0 established the empirical dataset-to-module architecture. The Demand Forecasting research lifecycle and reusable forecasting engine are now complete; other MarketMind modules remain future work.
+MarketMind AI is a production-oriented ML engineering portfolio project for turning retail and e-commerce data into predictive insights and operational decision support. Phase 0 established the empirical dataset-to-module architecture. The Demand Forecasting research lifecycle and reusable forecasting engine are complete; Customer Segmentation is now in snapshot and feature design.
 
 ## Current status
 
 **Phase 0 — Dataset Research & Feasibility: Complete**
 
 **Phase 1 — Demand Forecasting: Production engine complete**
+
+**Phase 2 — Customer Segmentation: Step 1 snapshot/feature design in progress (no clustering yet)**
 
 Demand Forecasting status:
 
@@ -16,7 +18,7 @@ Demand Forecasting status:
 - one-time final lockbox evaluation complete and consumed;
 - frozen HGBR forecasting pipeline, serialized bundle, metadata, CLI, and inference contract complete.
 
-M5 supports forecasting, later sales-anomaly work, and forecast input to inventory decision support; Complete Journey 2.0 supports future customer segmentation and return-risk work; RetailRocket supports future recommendation work. Olist remains documented rejection evidence. No API, frontend, anomaly, inventory, segmentation, return-risk, or recommendation implementation is claimed complete.
+M5 supports forecasting, later sales-anomaly work, and forecast input to inventory decision support; Complete Journey 2.0 supports the current household-segmentation design and later return-risk work; RetailRocket supports future recommendation work. Olist remains documented rejection evidence. No clustering, API, frontend, anomaly, inventory, return-risk, or recommendation implementation is claimed complete.
 
 ## Planned modules
 
@@ -42,7 +44,7 @@ The repository now includes a reusable Python forecasting pipeline, versioned me
 
 Future work will begin with explicit problem definitions and dataset audits. Time-dependent problems will preserve temporal ordering, prevent leakage, and maintain separate train, validation, and final test periods. Simple baselines will precede more complex approaches, metrics will match the decision problem, and error analysis will inform methodology choices. Outputs will not be described as probabilities, causal effects, or business impact unless the evidence and estimator semantics justify those claims.
 
-See the [methodology principles](docs/methodology_principles.md) and frozen [forecasting methodology](docs/forecasting_methodology.md) for the working standards.
+See the [methodology principles](docs/methodology_principles.md), frozen [forecasting methodology](docs/forecasting_methodology.md), and [segmentation methodology](docs/segmentation_methodology.md) for the working standards.
 
 ## Deployment constraint
 
