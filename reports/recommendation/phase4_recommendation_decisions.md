@@ -54,6 +54,25 @@ Unresolved: Step 2 baseline family, limited event-weight candidates, and full-ca
 | Family decision | **ITEM-CF REMAINS PREFERRED** |
 | Search policy | no further family search justified before explicit review |
 | Lockbox | recommendation rankings and performance remain completely untouched |
+
+## Step 5 final freeze and one-time lockbox
+
+| Decision/evidence | Final outcome |
+|---|---|
+| Final research recommender | Item-CF, binary interactions, exact cosine, top 50 neighbors |
+| Scoring | summed similarity across distinct history items; self-similarity retained; seen items allowed |
+| Fallback | time-safe cumulative all-event popularity, item-ID tie-break |
+| Pre-lockbox refit | all 1,907,798 binary pairs strictly before 2015-09-01; no new selection metric |
+| Ordering | target-free top-20 artifact saved before target join and metric calculation |
+| Lockbox cohort | 9,085 instances; 8,560 warm; 525 cold; 2,047 repeat; 7,038 novel |
+| Lockbox Item-CF | NDCG@10 0.171158; HitRate@10 0.223996; HitRate@20 0.235223 |
+| Lockbox popularity | NDCG@10 0.003090; Item-CF advantage +0.168068 / +5,438.63% |
+| Development gap | NDCG@10 −10.6086%; HitRate@10 −10.6780%; coverage@20 +2.6786% |
+| Repeat/novel | NDCG@10 0.739078 / 0.005979; repeat-heavy behavior persisted |
+| Coverage@20 | 54,168 items / 24.2774%; no complete popularity fallback |
+| Generalization | **STRONG GENERALIZATION** |
+| Search | closed; no post-lockbox tuning or model change |
+| Lockbox | **permanently consumed after first and final planned evaluation** |
 | Next question | whether a simple personalized collaborative baseline improves validation ranking and coverage |
 
 No collaborative model is selected, and event weighting remains unresolved.

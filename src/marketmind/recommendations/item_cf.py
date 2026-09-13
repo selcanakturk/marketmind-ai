@@ -72,6 +72,7 @@ def recommend(
     *,
     neighbors: int,
     k: int = 20,
+    candidate_items=None,
 ) -> tuple[list[int], dict[str, float]]:
     """Sum cosine neighbors, then deterministically fill with popularity."""
 
@@ -80,6 +81,10 @@ def recommend(
     if k <= 0:
         raise ValueError("k must be positive")
     item_to_index = model.item_to_index
+    if isinstance(candidate_items, set):
+        candidate_set = candidate_items
+    else:
+        candidate_set = set(int(value) for value in (model.item_ids if candidate_items is None else candidate_items))
     scores: dict[int, float] = {}
     for item in sorted(set(int(value) for value in history_items)):
         source = item_to_index.get(item)
@@ -89,14 +94,15 @@ def recommend(
         for candidate, similarity in zip(indices[:neighbors], similarities[:neighbors]):
             if similarity > 0:
                 candidate_id = int(model.item_ids[candidate])
-                scores[candidate_id] = scores.get(candidate_id, 0.0) + float(similarity)
+                if candidate_id in candidate_set:
+                    scores[candidate_id] = scores.get(candidate_id, 0.0) + float(similarity)
     collaborative = sorted(scores, key=lambda item: (-scores[item], item))
     ranking = collaborative[:k]
     selected = set(ranking)
     if len(ranking) < k:
         for item in popularity_items:
             item = int(item)
-            if item in item_to_index and item not in selected:
+            if item in candidate_set and item not in selected:
                 ranking.append(item)
                 selected.add(item)
                 if len(ranking) == k:

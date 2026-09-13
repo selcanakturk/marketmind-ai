@@ -64,7 +64,8 @@ def instance_metrics(recommendations, target, ks=(5, 10, 20)) -> dict[str, float
 def aggregate_metrics(frame: pd.DataFrame) -> dict[str, float]:
     """Macro-average every recognized per-instance metric column."""
 
-    columns = [column for column in frame if "_at_" in column]
+    prefixes = ("hit_rate_at_", "recall_at_", "ndcg_at_", "mrr_at_", "precision_at_")
+    columns = [column for column in frame if column.startswith(prefixes)]
     if not columns:
         raise ValueError("no per-instance metric columns found")
     return {column: float(frame[column].mean()) for column in columns}

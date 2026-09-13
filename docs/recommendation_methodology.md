@@ -58,4 +58,10 @@ No session ID exists. The first recommender addresses longer-term visitor prefer
 
 ## Open decisions
 
-Step 2 may compare time-safe popularity and simple collaborative baselines, predeclare limited event-weight candidates, and verify full-catalog runtime. Property encoding, session extensions, metadata-based item cold start, new-visitor fallback implementation, and serving remain open.
+Model-family search is closed. Production artifact design, monitoring, metadata-based cold start, new-visitor fallback implementation, and serving remain open; they require a separate productionization step and cannot reuse the consumed lockbox for model decisions.
+
+## Final research outcome
+
+Subsequent controlled research compared frozen popularity, Item-CF, and implicit ALS. Item-CF was selected and frozen with binary interactions, exact cosine, 50 neighbors, summed similarity, retained self-similarity, seen items allowed, and time-safe popularity fill. The model-search sequence and its validation history remain recorded rather than rewritten as an a priori decision.
+
+The final graph was refit on all history strictly before 2015-09-01, and target-free rankings were saved before the first and only lockbox target join. Lockbox NDCG@10 was 0.171158 versus 0.003090 for popularity, supporting strong generalization without changing the system. The recommendation lockbox is now permanently consumed and cannot be reused as fresh evidence. Production artifact design remains future work.
