@@ -87,12 +87,20 @@ def next_item_instances(
     history = frame.loc[frame.event_at.le(start)]
     future = frame.loc[frame.event_at.gt(start) & frame.event_at.lt(end)]
     first = future.drop_duplicates("visitorid", keep="first")
-    counts = history.groupby("visitorid", observed=True).size().rename("prior_interactions")
-    instances = first.merge(counts, left_on="visitorid", right_index=True, how="inner")
-    instances = instances.loc[instances.prior_interactions.ge(min_prior_interactions)].copy()
+    history_summary = history.groupby("visitorid", observed=True).agg(
+        history_interaction_count=("event", "size"),
+        history_unique_item_count=("itemid", "nunique"),
+    )
+    instances = first.merge(history_summary, left_on="visitorid", right_index=True, how="inner")
+    instances = instances.loc[instances.history_interaction_count.ge(min_prior_interactions)].copy()
     seen_pairs = history[["visitorid", "itemid"]].drop_duplicates().assign(target_previously_seen=True)
     instances = instances.merge(seen_pairs, on=["visitorid", "itemid"], how="left")
     instances["target_previously_seen"] = instances["target_previously_seen"].fillna(False).astype(bool)
     instances["candidate_item_known"] = instances["itemid"].isin(history["itemid"])
-    instances = instances.rename(columns={"event_at": "target_at", "itemid": "target_itemid", "event": "target_event"})
-    return instances[["visitorid", "target_at", "target_itemid", "target_event", "prior_interactions", "target_previously_seen", "candidate_item_known"]].sort_values("visitorid").reset_index(drop=True)
+    instances = instances.rename(columns={"event_at": "target_timestamp", "itemid": "target_itemid", "event": "target_event"})
+    instances["recommendation_timestamp"] = start
+    return instances[[
+        "visitorid", "recommendation_timestamp", "target_timestamp",
+        "target_itemid", "target_event", "history_interaction_count",
+        "history_unique_item_count", "target_previously_seen", "candidate_item_known",
+    ]].sort_values("visitorid").reset_index(drop=True)

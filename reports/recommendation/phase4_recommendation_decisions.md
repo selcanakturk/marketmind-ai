@@ -21,3 +21,20 @@
 | Split | global chronology only; no random interaction split |
 
 Unresolved: Step 2 baseline family, limited event-weight candidates, and full-catalog runtime; later property encoding, session-aware modeling, metadata cold start, visitor fallback implementation, and serving.
+
+## Step 2 popularity baseline
+
+| Decision/evidence | Outcome |
+|---|---|
+| Canonical validation pipeline | established with exactly 8,083 single-target instances |
+| Frozen baseline | executed unchanged: cumulative all-event count through `T`, item-ID tie-break |
+| Primary result | macro NDCG@10 = 0.003121 |
+| Recall/HitRate | @5 0.004083; @10 0.005815; @20 0.010516 |
+| Cold targets | 456/8,083 (5.6415%), retained as zero-result misses |
+| Warm diagnostic | NDCG@10 0.003308; HitRate@10 0.006162 |
+| Coverage | 5/10/20 unique items at K=5/10/20; 0.002360%/0.004719%/0.009438% |
+| Full catalog | feasible without dense matrix; approximately 9.76 seconds and 1,085 MB peak process RSS |
+| Lockbox | recommendation rankings and performance remain untouched |
+| Next question | whether a simple personalized collaborative baseline improves validation ranking and coverage |
+
+No collaborative model is selected, and event weighting remains unresolved.

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import math
 
+import pandas as pd
+
 
 def _rank(recommendations, target, k: int) -> int | None:
     if k <= 0:
@@ -44,3 +46,37 @@ def precision_at_k(recommendations, target, k: int) -> float:
     """Single-target Precision@K with a fixed display-list denominator K."""
 
     return recall_at_k(recommendations, target, k) / k
+
+
+def instance_metrics(recommendations, target, ks=(5, 10, 20)) -> dict[str, float]:
+    """Return explicit metric columns for one single-target instance."""
+
+    result = {}
+    for k in ks:
+        result[f"hit_rate_at_{k}"] = hit_rate_at_k(recommendations, target, k)
+        result[f"recall_at_{k}"] = result[f"hit_rate_at_{k}"]
+        result[f"ndcg_at_{k}"] = ndcg_at_k(recommendations, target, k)
+        result[f"mrr_at_{k}"] = mrr_at_k(recommendations, target, k)
+        result[f"precision_at_{k}"] = precision_at_k(recommendations, target, k)
+    return result
+
+
+def aggregate_metrics(frame: pd.DataFrame) -> dict[str, float]:
+    """Macro-average every recognized per-instance metric column."""
+
+    columns = [column for column in frame if "_at_" in column]
+    if not columns:
+        raise ValueError("no per-instance metric columns found")
+    return {column: float(frame[column].mean()) for column in columns}
+
+
+def catalog_coverage(recommendations, eligible_catalog, k: int) -> tuple[int, float]:
+    """Unique first-K recommended items divided by the eligible catalog."""
+
+    catalog = set(eligible_catalog)
+    if not catalog:
+        raise ValueError("eligible catalog must be nonempty")
+    recommended = {item for ranking in recommendations for item in list(ranking)[:k]}
+    if not recommended.issubset(catalog):
+        raise ValueError("recommendations contain an ineligible item")
+    return len(recommended), len(recommended) / len(catalog)
