@@ -1,0 +1,5 @@
+block,policy,alerts,alert_rate,spikes,drops,series_with_alerts,zero_alert_series,max_alerts_one_series,top5_series_share,top10_series_share,max_alerts_one_date,zero_alert_days,alerts_per_day_median
+validation,absolute_score_gte_3,25,0.012755102040816327,19,6,16,54,5,0.52,0.76,4,11,1.0
+validation,absolute_score_gte_4,8,0.004081632653061225,5,3,7,63,2,0.75,1.0,1,20,0.0
+validation,top_5_per_day,140,0.07142857142857142,80,60,52,18,10,0.2857142857142857,0.44285714285714284,5,0,5.0
+validation,top_10_per_day,280,0.14285714285714285,148,132,63,7,14,0.20357142857142857,0.34285714285714286,10,0,10.0

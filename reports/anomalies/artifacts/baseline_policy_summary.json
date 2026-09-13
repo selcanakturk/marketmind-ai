@@ -1,0 +1,342 @@
+{
+  "policy_freeze": {
+    "status": "DEVELOPMENT-SELECTED DECISION \u2014 FROZEN BEFORE VALIDATION INSPECTION",
+    "selected_threshold": 3,
+    "selected_capacity": 5,
+    "statistical_policy": "absolute robust anomaly score >= 3",
+    "operational_review_policy": "top 5 defined absolute scores per day",
+    "selection_scope": "development_2 through development_5 only",
+    "scale_update": "per-series median and 1.4826*MAD frozen at block start; append residuals only after complete block scoring",
+    "validation_status_at_freeze": "OOS forecasts generated and sealed; anomaly scores and diagnostics not inspected",
+    "anomaly_lockbox_status": "untouched"
+  },
+  "development_policies": [
+    {
+      "policy": "absolute_score_gte_3",
+      "alerts": 270,
+      "mean_block_rate": 0.03443877551020405,
+      "spikes": 214,
+      "drops": 56
+    },
+    {
+      "policy": "absolute_score_gte_4",
+      "alerts": 109,
+      "mean_block_rate": 0.013903061224489725,
+      "spikes": 99,
+      "drops": 10
+    },
+    {
+      "policy": "top_10_per_day",
+      "alerts": 1120,
+      "mean_block_rate": 0.1428571428571428,
+      "spikes": 680,
+      "drops": 440
+    },
+    {
+      "policy": "top_5_per_day",
+      "alerts": 560,
+      "mean_block_rate": 0.0714285714285714,
+      "spikes": 379,
+      "drops": 181
+    }
+  ],
+  "validation_policies": [
+    {
+      "block": "validation",
+      "policy": "absolute_score_gte_3",
+      "alerts": 25,
+      "alert_rate": 0.0127551020408163,
+      "spikes": 19,
+      "drops": 6,
+      "series_with_alerts": 16,
+      "zero_alert_series": 54,
+      "max_alerts_one_series": 5,
+      "top5_series_share": 0.52,
+      "top10_series_share": 0.76,
+      "max_alerts_one_date": 4,
+      "zero_alert_days": 11,
+      "alerts_per_day_median": 1.0
+    },
+    {
+      "block": "validation",
+      "policy": "absolute_score_gte_4",
+      "alerts": 8,
+      "alert_rate": 0.0040816326530612,
+      "spikes": 5,
+      "drops": 3,
+      "series_with_alerts": 7,
+      "zero_alert_series": 63,
+      "max_alerts_one_series": 2,
+      "top5_series_share": 0.75,
+      "top10_series_share": 1.0,
+      "max_alerts_one_date": 1,
+      "zero_alert_days": 20,
+      "alerts_per_day_median": 0.0
+    },
+    {
+      "block": "validation",
+      "policy": "top_5_per_day",
+      "alerts": 140,
+      "alert_rate": 0.0714285714285714,
+      "spikes": 80,
+      "drops": 60,
+      "series_with_alerts": 52,
+      "zero_alert_series": 18,
+      "max_alerts_one_series": 10,
+      "top5_series_share": 0.2857142857142857,
+      "top10_series_share": 0.4428571428571428,
+      "max_alerts_one_date": 5,
+      "zero_alert_days": 0,
+      "alerts_per_day_median": 5.0
+    },
+    {
+      "block": "validation",
+      "policy": "top_10_per_day",
+      "alerts": 280,
+      "alert_rate": 0.1428571428571428,
+      "spikes": 148,
+      "drops": 132,
+      "series_with_alerts": 63,
+      "zero_alert_series": 7,
+      "max_alerts_one_series": 14,
+      "top5_series_share": 0.2035714285714285,
+      "top10_series_share": 0.3428571428571428,
+      "max_alerts_one_date": 10,
+      "zero_alert_days": 0,
+      "alerts_per_day_median": 10.0
+    }
+  ],
+  "synthetic_development": [
+    {
+      "family": "one_day_negative_drop",
+      "magnitude": 2,
+      "rows": 40,
+      "detection_selected": 0.525,
+      "direction_correct": 0.975,
+      "mean_abs_before": 1.1081043047427515,
+      "mean_abs_after": 3.476863979489049,
+      "detection_at_4": 0.35
+    },
+    {
+      "family": "one_day_negative_drop",
+      "magnitude": 4,
+      "rows": 40,
+      "detection_selected": 0.925,
+      "direction_correct": 1.0,
+      "mean_abs_before": 1.1081043047427515,
+      "mean_abs_after": 6.394873290494166,
+      "detection_at_4": 0.775
+    },
+    {
+      "family": "one_day_positive_spike",
+      "magnitude": 2,
+      "rows": 40,
+      "detection_selected": 0.65,
+      "direction_correct": 1.0,
+      "mean_abs_before": 1.0318921654522453,
+      "mean_abs_after": 4.242590844575434,
+      "detection_at_4": 0.45
+    },
+    {
+      "family": "one_day_positive_spike",
+      "magnitude": 4,
+      "rows": 40,
+      "detection_selected": 0.975,
+      "direction_correct": 1.0,
+      "mean_abs_before": 1.0318921654522453,
+      "mean_abs_after": 8.0223313555217,
+      "detection_at_4": 0.9
+    },
+    {
+      "family": "three_day_negative_sustained_drop",
+      "magnitude": 2,
+      "rows": 120,
+      "detection_selected": 0.5833333333333334,
+      "direction_correct": 0.9666666666666667,
+      "mean_abs_before": 1.0447096747206006,
+      "mean_abs_after": 3.531194536441988,
+      "detection_at_4": 0.30833333333333335
+    },
+    {
+      "family": "three_day_negative_sustained_drop",
+      "magnitude": 4,
+      "rows": 120,
+      "detection_selected": 0.925,
+      "direction_correct": 0.9916666666666667,
+      "mean_abs_before": 1.0447096747206006,
+      "mean_abs_after": 6.45609172695863,
+      "detection_at_4": 0.825
+    },
+    {
+      "family": "three_day_positive_sustained_spike",
+      "magnitude": 2,
+      "rows": 120,
+      "detection_selected": 0.65,
+      "direction_correct": 0.9916666666666667,
+      "mean_abs_before": 1.2575136834944984,
+      "mean_abs_after": 4.291829942488082,
+      "detection_at_4": 0.44166666666666665
+    },
+    {
+      "family": "three_day_positive_sustained_spike",
+      "magnitude": 4,
+      "rows": 120,
+      "detection_selected": 0.975,
+      "direction_correct": 1.0,
+      "mean_abs_before": 1.2575136834944984,
+      "mean_abs_after": 8.065907298440559,
+      "detection_at_4": 0.9
+    },
+    {
+      "family": "two_day_negative_sustained_drop",
+      "magnitude": 2,
+      "rows": 80,
+      "detection_selected": 0.5625,
+      "direction_correct": 0.95,
+      "mean_abs_before": 1.2817294231260554,
+      "mean_abs_after": 3.3745737172492767,
+      "detection_at_4": 0.375
+    },
+    {
+      "family": "two_day_negative_sustained_drop",
+      "magnitude": 4,
+      "rows": 80,
+      "detection_selected": 0.925,
+      "direction_correct": 0.9875,
+      "mean_abs_before": 1.2817294231260554,
+      "mean_abs_after": 6.6279545053407976,
+      "detection_at_4": 0.8
+    },
+    {
+      "family": "two_day_positive_sustained_spike",
+      "magnitude": 2,
+      "rows": 80,
+      "detection_selected": 0.675,
+      "direction_correct": 0.9875,
+      "mean_abs_before": 0.899229006263383,
+      "mean_abs_after": 3.948386760332629,
+      "detection_at_4": 0.4125
+    },
+    {
+      "family": "two_day_positive_sustained_spike",
+      "magnitude": 4,
+      "rows": 80,
+      "detection_selected": 0.9625,
+      "direction_correct": 1.0,
+      "mean_abs_before": 0.899229006263383,
+      "mean_abs_after": 7.706402444848339,
+      "detection_at_4": 0.8875
+    }
+  ],
+  "synthetic_validation": [
+    {
+      "family": "one_day_negative_drop",
+      "magnitude": 2,
+      "rows": 10,
+      "detection_selected": 0.6,
+      "direction_correct": 1.0,
+      "mean_abs_before": 0.8670924749372082,
+      "mean_abs_after": 3.9937643698151426
+    },
+    {
+      "family": "one_day_negative_drop",
+      "magnitude": 4,
+      "rows": 10,
+      "detection_selected": 0.8,
+      "direction_correct": 1.0,
+      "mean_abs_before": 0.8670924749372082,
+      "mean_abs_after": 6.618922264251914
+    },
+    {
+      "family": "one_day_positive_spike",
+      "magnitude": 2,
+      "rows": 10,
+      "detection_selected": 0.7,
+      "direction_correct": 1.0,
+      "mean_abs_before": 0.9047976020358695,
+      "mean_abs_after": 5.503956641122793
+    },
+    {
+      "family": "one_day_positive_spike",
+      "magnitude": 4,
+      "rows": 10,
+      "detection_selected": 1.0,
+      "direction_correct": 1.0,
+      "mean_abs_before": 0.9047976020358695,
+      "mean_abs_after": 10.635459443278444
+    },
+    {
+      "family": "three_day_negative_sustained_drop",
+      "magnitude": 2,
+      "rows": 30,
+      "detection_selected": 0.8333333333333334,
+      "direction_correct": 1.0,
+      "mean_abs_before": 0.7953265684497133,
+      "mean_abs_after": 4.7577153606228695
+    },
+    {
+      "family": "three_day_negative_sustained_drop",
+      "magnitude": 4,
+      "rows": 30,
+      "detection_selected": 0.9666666666666667,
+      "direction_correct": 1.0,
+      "mean_abs_before": 0.7953265684497133,
+      "mean_abs_after": 7.457451119266904
+    },
+    {
+      "family": "three_day_positive_sustained_spike",
+      "magnitude": 2,
+      "rows": 30,
+      "detection_selected": 0.7,
+      "direction_correct": 1.0,
+      "mean_abs_before": 0.7940580672532653,
+      "mean_abs_after": 5.109324816903121
+    },
+    {
+      "family": "three_day_positive_sustained_spike",
+      "magnitude": 4,
+      "rows": 30,
+      "detection_selected": 1.0,
+      "direction_correct": 1.0,
+      "mean_abs_before": 0.7940580672532653,
+      "mean_abs_after": 10.240827619058772
+    },
+    {
+      "family": "two_day_negative_sustained_drop",
+      "magnitude": 2,
+      "rows": 20,
+      "detection_selected": 0.75,
+      "direction_correct": 1.0,
+      "mean_abs_before": 1.1305084508122154,
+      "mean_abs_after": 4.924883836013103
+    },
+    {
+      "family": "two_day_negative_sustained_drop",
+      "magnitude": 4,
+      "rows": 20,
+      "detection_selected": 1.0,
+      "direction_correct": 1.0,
+      "mean_abs_before": 1.1305084508122154,
+      "mean_abs_after": 8.156180579952135
+    },
+    {
+      "family": "two_day_positive_sustained_spike",
+      "magnitude": 2,
+      "rows": 20,
+      "detection_selected": 0.75,
+      "direction_correct": 1.0,
+      "mean_abs_before": 0.6054044712787595,
+      "mean_abs_after": 5.368871477138744
+    },
+    {
+      "family": "two_day_positive_sustained_spike",
+      "magnitude": 4,
+      "rows": 20,
+      "detection_selected": 1.0,
+      "direction_correct": 1.0,
+      "mean_abs_before": 0.6054044712787595,
+      "mean_abs_after": 10.500374279294395
+    }
+  ],
+  "lockbox_status": "untouched; no lockbox artifact exists"
+}

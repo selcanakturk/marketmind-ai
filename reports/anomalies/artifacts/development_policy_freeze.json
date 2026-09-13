@@ -1,0 +1,11 @@
+{
+  "status": "DEVELOPMENT-SELECTED DECISION — FROZEN BEFORE VALIDATION INSPECTION",
+  "selected_threshold": 3,
+  "selected_capacity": 5,
+  "statistical_policy": "absolute robust anomaly score >= 3",
+  "operational_review_policy": "top 5 defined absolute scores per day",
+  "selection_scope": "development_2 through development_5 only",
+  "scale_update": "per-series median and 1.4826*MAD frozen at block start; append residuals only after complete block scoring",
+  "validation_status_at_freeze": "OOS forecasts generated and sealed; anomaly scores and diagnostics not inspected",
+  "anomaly_lockbox_status": "untouched"
+}

@@ -14,7 +14,7 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 4 — Product Recommendation: Final Item-CF selected, strong lockbox generalization, production engine complete**
 
-**Phase 5 — Sales Anomaly Detection: Methodology and feasibility design complete; no detector trained**
+**Phase 5 — Sales Anomaly Detection: Interpretable robust-residual baseline established; no challenger or production engine yet**
 
 Demand Forecasting status:
 
@@ -38,7 +38,7 @@ M5 supports forecasting, the designed sales-anomaly research protocol, and forec
 ### Decision Support
 
 - Inventory Intelligence
-- Sales Anomaly Detection (methodology and temporal protocol complete; detector not yet implemented)
+- Sales Anomaly Detection (robust-residual baseline and alert policy established; challenger not yet tested)
 
 Price Intelligence is a possible V2 capability and is outside the proposed V1 scope.
 
