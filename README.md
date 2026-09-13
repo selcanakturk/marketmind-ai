@@ -1,6 +1,6 @@
 # MarketMind AI — E-Commerce Intelligence Platform
 
-MarketMind AI is a production-oriented ML engineering portfolio project for turning retail and e-commerce data into predictive insights and operational decision support. Phase 0 established the empirical dataset-to-module architecture. Forecasting, segmentation, return risk, and recommendation have production engines; sales-anomaly methodology is now frozen for baseline work.
+MarketMind AI is a production-oriented ML engineering portfolio project for turning retail and e-commerce data into predictive insights and operational decision support. Phase 0 established the empirical dataset-to-module architecture. Forecasting, segmentation, return risk, recommendation, and sales anomaly detection now have production engines.
 
 ## Current status
 
@@ -14,7 +14,7 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 4 — Product Recommendation: Final Item-CF selected, strong lockbox generalization, production engine complete**
 
-**Phase 5 — Sales Anomaly Detection: Final robust research system selected; strong one-time lockbox generalization; lockbox consumed; not productionized**
+**Phase 5 — Sales Anomaly Detection: Research complete; strong one-time lockbox generalization; lockbox consumed; production engine complete**
 
 Demand Forecasting status:
 
@@ -24,7 +24,7 @@ Demand Forecasting status:
 - one-time final lockbox evaluation complete and consumed;
 - frozen HGBR forecasting pipeline, serialized bundle, metadata, CLI, and inference contract complete.
 
-M5 supports forecasting, the designed sales-anomaly research protocol, and forecast input to inventory decision support; Complete Journey 2.0 supports the productionized household-segmentation and return-risk engines; RetailRocket supports the productionized Item-CF recommendation engine. Olist remains documented rejection evidence. No API, frontend, anomaly detector, or inventory implementation is claimed complete.
+M5 supports the productionized forecasting and sales-anomaly engines and forecast input to inventory decision support; Complete Journey 2.0 supports the productionized household-segmentation and return-risk engines; RetailRocket supports the productionized Item-CF recommendation engine. Olist remains documented rejection evidence. No API, frontend, or inventory implementation is claimed complete.
 
 ## Planned modules
 
@@ -38,13 +38,13 @@ M5 supports forecasting, the designed sales-anomaly research protocol, and forec
 ### Decision Support
 
 - Inventory Intelligence
-- Sales Anomaly Detection (final robust research detector selected; lockbox complete and consumed; productionization not started)
+- Sales Anomaly Detection (frozen robust production engine complete; lockbox consumed)
 
 Price Intelligence is a possible V2 capability and is outside the proposed V1 scope.
 
 ## Future architecture
 
-The repository now includes reusable Python forecasting, segmentation, return-risk, and recommendation pipelines, versioned metadata, compact local model bundles, and validated inference/assignment contracts. Future phases may add API-based inference through FastAPI, relational storage using PostgreSQL or Supabase, and a React/TypeScript interface. Docker may support reproducible packaging. None of those application components are initialized yet.
+The repository now includes reusable Python forecasting, segmentation, return-risk, recommendation, and sales-anomaly pipelines, versioned metadata, compact local model bundles, and validated inference/assignment contracts. Future phases may add API-based inference through FastAPI, relational storage using PostgreSQL or Supabase, and a React/TypeScript interface. Docker may support reproducible packaging. None of those application components are initialized yet.
 
 ## Methodology
 
@@ -60,8 +60,8 @@ The intended system should remain lightweight enough to preserve options for fre
 
 - `data/`: local raw, intermediate, and processed datasets (ignored by Git)
 - `notebooks/`: dataset audits and future experiments
-- `src/marketmind/`: reusable package code organized by capability; forecasting, segmentation, return-risk, and recommendation engines are implemented
+- `src/marketmind/`: reusable package code organized by capability; forecasting, segmentation, return-risk, recommendation, and anomaly engines are implemented
 - `models/`: generated forecasting/segmentation bundles (ignored) and reviewable artifact metadata
 - `reports/`: research notes, decision records, and generated figures
 - `docs/`: scope, methodology, and dataset requirements
-- `tests/`: automated forecasting, segmentation, return-risk, and recommendation-methodology contract tests
+- `tests/`: automated forecasting, segmentation, return-risk, recommendation, and anomaly contract tests

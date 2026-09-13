@@ -61,6 +61,12 @@ models/recommendations/*
 !models/recommendations/README.md
 !models/recommendations/metadata.json
 !models/recommendations/training_summary.json
+!models/anomalies/
+models/anomalies/*
+!models/anomalies/README.md
+!models/anomalies/metadata.json
+!models/anomalies/training_summary.json
+!models/anomalies/robust_residual_state.csv
 
 # Generated report figures
 reports/figures/**

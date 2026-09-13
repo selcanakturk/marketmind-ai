@@ -5,8 +5,10 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-SCALE_FACTOR = 1.4826
-MIN_PRIOR_RESIDUALS = 28
+from marketmind.anomalies.config import MAD_MULTIPLIER, MIN_RESIDUAL_COUNT
+
+SCALE_FACTOR = MAD_MULTIPLIER
+MIN_PRIOR_RESIDUALS = MIN_RESIDUAL_COUNT
 
 
 def score_block(block: pd.DataFrame, prior: pd.DataFrame) -> pd.DataFrame:

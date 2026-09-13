@@ -88,3 +88,7 @@ After IF-3 was frozen, it was fit on the 9,800 prior seed/development rows and s
 The frozen HGBR-4 expectation was fit through `d_1913`; one frozen robust reference used exactly 11,760 earlier OOS residuals. The 1,960-row `d_1914–d_1941` lockbox produced 60 threshold-3 alerts (3.0612%): 58 spikes and 2 drops across 30 series. All scores were defined. Robust engineered detection was 77.50% at 2× and 97.50% at 4×. IF-3 remained a responsive but concentrated secondary diagnostic.
 
 **Final primary assessment: STRONG GENERALIZATION**, with positive residual shift and spike imbalance documented as limitations. Detector/model search is closed, no setting changed, and the anomaly lockbox is **permanently consumed**.
+
+## Step 5 — productionization
+
+The frozen robust detector, threshold 3, top-five capacity, 70-series grain, forecast dependency, and research decisions are unchanged. State initializes from 13,720 legitimately OOS residuals through `d_1941`, including the consumed lockbox only as historical state—not fresh evidence. Exact histories support correct median/MAD updates. Live T batches score from state through T−1 and update only after the date is complete. IF-3 is optional secondary diagnostic, fit on that OOS corpus without outcome metrics. No evaluation, detector comparison, or policy selection occurred.

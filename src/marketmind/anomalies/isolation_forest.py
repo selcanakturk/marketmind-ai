@@ -10,14 +10,13 @@ import numpy as np
 import pandas as pd
 from sklearn.ensemble import IsolationForest
 
-FEATURE_COLUMNS = (
-    "robust_residual_score", "residual", "absolute_residual", "expected_sales",
-    "day_of_week_sin", "day_of_week_cos", "event_present", "snap",
-)
+from marketmind.anomalies.config import IF_FEATURE_COLUMNS, IF_PARAMETERS
+
+FEATURE_COLUMNS = IF_FEATURE_COLUMNS
 CONFIGURATIONS = {
     "IF-1": {"n_estimators": 200, "max_samples": "auto", "contamination": "auto", "max_features": 1.0, "bootstrap": False, "random_state": 42, "n_jobs": 1},
     "IF-2": {"n_estimators": 300, "max_samples": 512, "contamination": "auto", "max_features": 1.0, "bootstrap": False, "random_state": 42, "n_jobs": 1},
-    "IF-3": {"n_estimators": 300, "max_samples": 1024, "contamination": "auto", "max_features": 1.0, "bootstrap": False, "random_state": 42, "n_jobs": 1},
+    "IF-3": dict(IF_PARAMETERS),
 }
 
 

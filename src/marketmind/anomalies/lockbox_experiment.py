@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 
 from marketmind.anomalies.isolation_forest import CONFIGURATIONS
+from marketmind.anomalies.config import IF_CONFIG_NAME, REVIEW_CAPACITY_PER_DAY, ROBUST_THRESHOLD as PRODUCTION_THRESHOLD
 from marketmind.anomalies.isolation_forest_experiment import _run_block
 from marketmind.anomalies.policy import fixed_threshold, severity_rank
 from marketmind.anomalies.residuals import forecast_residual_block
@@ -18,9 +19,9 @@ from marketmind.anomalies.scoring import score_block
 from marketmind.anomalies.splits import ANOMALY_LOCKBOX
 from marketmind.anomalies.synthetic import engineered_cases
 
-ROBUST_THRESHOLD = 3
-REVIEW_CAPACITY = 5
-IF_CONFIG = "IF-3"
+ROBUST_THRESHOLD = PRODUCTION_THRESHOLD
+REVIEW_CAPACITY = REVIEW_CAPACITY_PER_DAY
+IF_CONFIG = IF_CONFIG_NAME
 REFERENCE_BLOCKS = (
     "development_1_scale_seed", "development_2", "development_3",
     "development_4", "development_5", "validation",

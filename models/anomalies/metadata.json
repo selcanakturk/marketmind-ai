@@ -1,0 +1,49 @@
+{
+  "model_family": "per-series robust standardized forecast residual",
+  "version": "m5-robust-residual-anomaly-v1",
+  "schema_version": "1.0",
+  "grain": [
+    "department",
+    "store",
+    "day"
+  ],
+  "forecast_model_reference": "models/forecasting/model.joblib (frozen Phase 1 HGBR-4 production forecast)",
+  "residual_definition": "actual_sales - expected_sales",
+  "scale_definition": "1.4826 * historical residual MAD",
+  "mad_multiplier": 1.4826,
+  "threshold": 3.0,
+  "review_capacity": 5,
+  "direction_semantics": {
+    "positive": "spike",
+    "negative": "drop",
+    "zero": "neutral",
+    "missing": "undefined"
+  },
+  "state_update_semantics": "score complete date from state through T-1, freeze output, then append all T residuals",
+  "IF_role": "secondary_diagnostic",
+  "IF_config": {
+    "name": "IF-3",
+    "n_estimators": 300,
+    "max_samples": 1024,
+    "contamination": "auto",
+    "max_features": 1.0,
+    "bootstrap": false,
+    "random_state": 42,
+    "n_jobs": 1,
+    "feature_order": [
+      "robust_residual_score",
+      "residual",
+      "absolute_residual",
+      "expected_sales",
+      "day_of_week_sin",
+      "day_of_week_cos",
+      "event_present",
+      "snap"
+    ]
+  },
+  "training_cutoff": "d_1941 / 2016-05-22",
+  "research_validation_reference": "reports/anomalies/robust_residual_baseline_results.md",
+  "research_lockbox_reference": "reports/anomalies/final_lockbox_results.md",
+  "lockbox_status": "consumed",
+  "created_at": "2026-09-13T19:10:10.090269+00:00"
+}

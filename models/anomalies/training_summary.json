@@ -1,0 +1,24 @@
+{
+  "residual_state_source": "finalized research OOS residual blocks d_1466-d_1941 (196 observed dates; lockbox consumed)",
+  "residual_rows": 13720,
+  "series_count": 70,
+  "observed_dates": 196,
+  "date_range": [
+    "2015-02-02",
+    "2016-05-22"
+  ],
+  "day_range": [
+    "d_1466",
+    "d_1941"
+  ],
+  "if_training_rows": 13720,
+  "if_fit_seconds": 0.29802862484939396,
+  "if_serialized_bytes": 11221389,
+  "state_serialized_bytes": 116905,
+  "build_seconds": 0.4457232910208404,
+  "training_cutoff": "d_1941",
+  "artifact_sizes_bytes": {
+    "model.joblib": 3369626,
+    "robust_residual_state.csv": 6281
+  }
+}

@@ -89,3 +89,7 @@ The intended flow is frozen forecast specification → point-in-time expected sa
 ## Open for Step 2
 
 Step 2 may generate development-block forecasts, build the earlier-only residual archive, execute the robust baseline, compare the two thresholds and capacity policies, and run the frozen engineered tests. Final threshold/policy choice, whether one challenger is justified, minimum residual-history handling beyond undefined scores, and optional neutral severity bands remain open. Lockbox access is not authorized.
+
+## Production status (appended after research completion)
+
+Research subsequently selected robust threshold 3 and top-five/day, retained IF-3 only as secondary, completed one final lockbox evaluation, and permanently consumed it. Production now persists exact OOS residual history through `d_1941` and applies score-then-update daily semantics. Earlier chronology remains unchanged; see `docs/anomaly_production.md`.
