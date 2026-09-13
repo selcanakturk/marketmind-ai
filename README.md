@@ -1,6 +1,6 @@
 # MarketMind AI — E-Commerce Intelligence Platform
 
-MarketMind AI is a production-oriented ML engineering portfolio project for turning retail and e-commerce data into predictive insights and operational decision support. Phase 0 established the empirical dataset-to-module architecture. Forecasting, segmentation, and return risk have production engines; recommendation methodology is now frozen for baseline work.
+MarketMind AI is a production-oriented ML engineering portfolio project for turning retail and e-commerce data into predictive insights and operational decision support. Phase 0 established the empirical dataset-to-module architecture. Forecasting, segmentation, return risk, and recommendation have production engines; sales-anomaly methodology is now frozen for baseline work.
 
 ## Current status
 
@@ -14,6 +14,8 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 4 — Product Recommendation: Final Item-CF selected, strong lockbox generalization, production engine complete**
 
+**Phase 5 — Sales Anomaly Detection: Methodology and feasibility design complete; no detector trained**
+
 Demand Forecasting status:
 
 - dataset research complete;
@@ -22,7 +24,7 @@ Demand Forecasting status:
 - one-time final lockbox evaluation complete and consumed;
 - frozen HGBR forecasting pipeline, serialized bundle, metadata, CLI, and inference contract complete.
 
-M5 supports forecasting, later sales-anomaly work, and forecast input to inventory decision support; Complete Journey 2.0 supports the productionized household-segmentation and return-risk engines; RetailRocket supports the productionized Item-CF recommendation engine. Olist remains documented rejection evidence. No API, frontend, anomaly, or inventory implementation is claimed complete.
+M5 supports forecasting, the designed sales-anomaly research protocol, and forecast input to inventory decision support; Complete Journey 2.0 supports the productionized household-segmentation and return-risk engines; RetailRocket supports the productionized Item-CF recommendation engine. Olist remains documented rejection evidence. No API, frontend, anomaly detector, or inventory implementation is claimed complete.
 
 ## Planned modules
 
@@ -36,7 +38,7 @@ M5 supports forecasting, later sales-anomaly work, and forecast input to invento
 ### Decision Support
 
 - Inventory Intelligence
-- Sales Anomaly Detection
+- Sales Anomaly Detection (methodology and temporal protocol complete; detector not yet implemented)
 
 Price Intelligence is a possible V2 capability and is outside the proposed V1 scope.
 
@@ -48,7 +50,7 @@ The repository now includes reusable Python forecasting, segmentation, return-ri
 
 Future work will begin with explicit problem definitions and dataset audits. Time-dependent problems will preserve temporal ordering, prevent leakage, and maintain separate train, validation, and final test periods. Simple baselines will precede more complex approaches, metrics will match the decision problem, and error analysis will inform methodology choices. Outputs will not be described as probabilities, causal effects, or business impact unless the evidence and estimator semantics justify those claims.
 
-See the [methodology principles](docs/methodology_principles.md), frozen [forecasting methodology](docs/forecasting_methodology.md), [segmentation methodology](docs/segmentation_methodology.md), [return-risk methodology](docs/return_risk_methodology.md), and [recommendation methodology](docs/recommendation_methodology.md) for the working standards.
+See the [methodology principles](docs/methodology_principles.md), frozen [forecasting methodology](docs/forecasting_methodology.md), [segmentation methodology](docs/segmentation_methodology.md), [return-risk methodology](docs/return_risk_methodology.md), [recommendation methodology](docs/recommendation_methodology.md), and [anomaly methodology](docs/anomaly_methodology.md) for the working standards.
 
 ## Deployment constraint
 

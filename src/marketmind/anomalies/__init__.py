@@ -1,2 +1,1 @@
-"""Sales anomaly detection functionality."""
-
+"""Leakage-safe methodology helpers for sales anomaly research."""
