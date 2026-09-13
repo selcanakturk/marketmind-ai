@@ -1,0 +1,13 @@
+{
+  "block": "anomaly_lockbox",
+  "forecast_origin": "d_1913",
+  "training_start": "d_1",
+  "training_end": "d_1913",
+  "score_start": "d_1914",
+  "score_end": "d_1941",
+  "training_rows": 513520,
+  "feature_specification": "forecasting-v1.0.0 Full Direct",
+  "feature_columns": "store_id|dept_id|state_id|event_name|event_type|forecast_horizon|lag_1|lag_7|lag_14|lag_28|lag_56|rolling_mean_7|rolling_std_7|rolling_mean_28|rolling_std_28|rolling_mean_56|rolling_std_56|day_of_week|day_of_month|month|year|day_index|snap",
+  "model_configuration": "{'loss': 'squared_error', 'learning_rate': 0.05, 'max_iter': 160, 'max_leaf_nodes': 63, 'max_depth': None, 'min_samples_leaf': 100, 'l2_regularization': 1.0, 'early_stopping': False, 'random_state': 42}",
+  "forecast_runtime_seconds": 15.90680145798251
+}

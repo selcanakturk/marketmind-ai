@@ -82,3 +82,9 @@ Written before IF validation scoring:
 After IF-3 was frozen, it was fit on the 9,800 prior seed/development rows and scored validation once. IF top-5/day overlapped robust top-5/day on 36/140 rows (25.71%) and included 14/25 robust-threshold alerts. Engineered rows entered the prior-training top 5% at 65.00% for 2× and 88.33% for 4× changes; direction correctness was 100%.
 
 **Final decision: C — Isolation Forest is useful only as a secondary diagnostic.** It adds complementary ranking signal at low compute cost but is less interpretable, trails the robust baseline's validation engineered sensitivity, and has no authentic labels to validate its disagreements. No ensemble, hybrid, or further detector family is authorized. Robust threshold 3 and top-5/day remain unchanged. The anomaly lockbox remains completely untouched.
+
+## Step 4 — FIRST AND FINAL ANOMALY LOCKBOX EVALUATION
+
+The frozen HGBR-4 expectation was fit through `d_1913`; one frozen robust reference used exactly 11,760 earlier OOS residuals. The 1,960-row `d_1914–d_1941` lockbox produced 60 threshold-3 alerts (3.0612%): 58 spikes and 2 drops across 30 series. All scores were defined. Robust engineered detection was 77.50% at 2× and 97.50% at 4×. IF-3 remained a responsive but concentrated secondary diagnostic.
+
+**Final primary assessment: STRONG GENERALIZATION**, with positive residual shift and spike imbalance documented as limitations. Detector/model search is closed, no setting changed, and the anomaly lockbox is **permanently consumed**.

@@ -1,0 +1,50 @@
+{
+  "evaluation_completed_at_utc": "2026-09-13T18:42:56.985350+00:00",
+  "forecast_training_cutoff": "d_1913",
+  "scored_start": "d_1914",
+  "scored_end": "d_1941",
+  "forecast_provenance": {
+    "block": "anomaly_lockbox",
+    "forecast_origin": "d_1913",
+    "training_start": "d_1",
+    "training_end": "d_1913",
+    "score_start": "d_1914",
+    "score_end": "d_1941",
+    "training_rows": 513520,
+    "feature_specification": "forecasting-v1.0.0 Full Direct",
+    "feature_columns": "store_id|dept_id|state_id|event_name|event_type|forecast_horizon|lag_1|lag_7|lag_14|lag_28|lag_56|rolling_mean_7|rolling_std_7|rolling_mean_28|rolling_std_28|rolling_mean_56|rolling_std_56|day_of_week|day_of_month|month|year|day_index|snap",
+    "model_configuration": "{'loss': 'squared_error', 'learning_rate': 0.05, 'max_iter': 160, 'max_leaf_nodes': 63, 'max_depth': None, 'min_samples_leaf': 100, 'l2_regularization': 1.0, 'early_stopping': False, 'random_state': 42}",
+    "forecast_runtime_seconds": 15.90680145798251
+  },
+  "robust_reference_blocks": [
+    "development_1_scale_seed",
+    "development_2",
+    "development_3",
+    "development_4",
+    "development_5",
+    "validation"
+  ],
+  "robust_reference_row_count": 11760,
+  "robust_threshold": 3,
+  "review_capacity": "top 5 absolute robust scores per day",
+  "if_config": "IF-3",
+  "if_parameters": {
+    "n_estimators": 300,
+    "max_samples": 1024,
+    "contamination": "auto",
+    "max_features": 1.0,
+    "bootstrap": false,
+    "random_state": 42,
+    "n_jobs": 1
+  },
+  "if_resource_profile": {
+    "fit_seconds": 0.29411654197610915,
+    "score_seconds": 0.03713908395729959,
+    "model_bytes": 10828205,
+    "training_rows": 11760,
+    "training_feature_bytes": 752772
+  },
+  "ordering_guarantees": "authentic robust artifact before synthetic; fixed whole-block scale; score desc then store/dept ties",
+  "configuration_mutable": false,
+  "lockbox_status": "consumed"
+}

@@ -16,11 +16,13 @@ from marketmind.forecasting.train import aggregate_core_series, load_training_so
 RESIDUAL_COLUMNS = ("block", "d", "date", "store_id", "dept_id", "state_id", "actual_sales", "expected_sales", "residual")
 
 
-def forecast_residual_block(data_dir: str | Path, block: AnomalyBlock):
+def forecast_residual_block(data_dir: str | Path, block: AnomalyBlock, *, authorize_final_lockbox: bool = False):
     """Fit only through block.train_end and forecast its complete 28-day block."""
     block.validate()
-    if block.score_end > 1913:
+    if block.score_end > 1913 and not authorize_final_lockbox:
         raise ValueError("baseline runner cannot access the anomaly lockbox")
+    if authorize_final_lockbox and not (block.train_end == 1913 and block.score_start == 1914 and block.score_end == 1941):
+        raise ValueError("final lockbox authorization is restricted to the frozen boundary")
     started = time.perf_counter()
     bundle, stats = train_frozen_model(data_dir, block.train_end)
     sales, calendar = load_training_sources(data_dir, block.train_end)
@@ -32,7 +34,8 @@ def forecast_residual_block(data_dir: str | Path, block: AnomalyBlock):
     ])
     expected = np.clip(bundle.estimator.predict(encoded), 0, None)
     score_days = [f"d_{day}" for day in block.score_days]
-    actual_raw = pd.read_csv(Path(data_dir) / "sales_train_validation.csv", usecols=["state_id", "store_id", "dept_id", *score_days])
+    sales_file = "sales_train_evaluation.csv" if block.score_end > 1913 else "sales_train_validation.csv"
+    actual_raw = pd.read_csv(Path(data_dir) / sales_file, usecols=["state_id", "store_id", "dept_id", *score_days])
     actual_core = actual_raw.groupby(["state_id", "store_id", "dept_id"], sort=True, observed=True)[score_days].sum().reset_index()
     actual = actual_core[score_days].to_numpy(float).reshape(-1)
     dates = calendar.loc[list(block.score_days), "date"].to_numpy()
