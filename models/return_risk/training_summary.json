@@ -1,0 +1,56 @@
+{
+  "model_version": "return-risk-extratrees-et2-2017-11-v1",
+  "training_rows": 17074,
+  "cohort_count": 8,
+  "cohorts": [
+    {
+      "snapshot_at": "2017-04-30T23:59:59",
+      "outcome_end": "2017-05-28T23:59:59",
+      "rows": 1777,
+      "positive_rows": 125
+    },
+    {
+      "snapshot_at": "2017-05-31T23:59:59",
+      "outcome_end": "2017-06-28T23:59:59",
+      "rows": 1970,
+      "positive_rows": 192
+    },
+    {
+      "snapshot_at": "2017-06-30T23:59:59",
+      "outcome_end": "2017-07-28T23:59:59",
+      "rows": 2085,
+      "positive_rows": 219
+    },
+    {
+      "snapshot_at": "2017-07-31T23:59:59",
+      "outcome_end": "2017-08-28T23:59:59",
+      "rows": 2172,
+      "positive_rows": 269
+    },
+    {
+      "snapshot_at": "2017-08-31T23:59:59",
+      "outcome_end": "2017-09-28T23:59:59",
+      "rows": 2219,
+      "positive_rows": 311
+    },
+    {
+      "snapshot_at": "2017-09-30T23:59:59",
+      "outcome_end": "2017-10-28T23:59:59",
+      "rows": 2247,
+      "positive_rows": 310
+    },
+    {
+      "snapshot_at": "2017-10-31T23:59:59",
+      "outcome_end": "2017-11-28T23:59:59",
+      "rows": 2282,
+      "positive_rows": 315
+    },
+    {
+      "snapshot_at": "2017-11-30T23:59:59",
+      "outcome_end": "2017-12-28T23:59:59",
+      "rows": 2322,
+      "positive_rows": 341
+    }
+  ],
+  "statement": "Final production retraining only; no performance metrics were calculated."
+}

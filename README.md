@@ -10,7 +10,7 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 2 — Customer Segmentation: Production engine complete**
 
-**Phase 3 — Customer Return Risk: Final lockbox evaluated and consumed; productionization pending**
+**Phase 3 — Customer Return Risk: Production engine complete**
 
 Demand Forecasting status:
 
@@ -20,7 +20,7 @@ Demand Forecasting status:
 - one-time final lockbox evaluation complete and consumed;
 - frozen HGBR forecasting pipeline, serialized bundle, metadata, CLI, and inference contract complete.
 
-M5 supports forecasting, later sales-anomaly work, and forecast input to inventory decision support; Complete Journey 2.0 supports the productionized household-segmentation engine and the frozen return-risk target/cohort design; RetailRocket supports future recommendation work. Olist remains documented rejection evidence. No Customer Return Risk model has been trained, Recommendation is not started, and no API, frontend, anomaly, or inventory implementation is claimed complete.
+M5 supports forecasting, later sales-anomaly work, and forecast input to inventory decision support; Complete Journey 2.0 supports the productionized household-segmentation and return-risk engines; RetailRocket supports future recommendation work. Olist remains documented rejection evidence. Recommendation is not started, and no API, frontend, anomaly, or inventory implementation is claimed complete.
 
 ## Planned modules
 
@@ -28,7 +28,7 @@ M5 supports forecasting, later sales-anomaly work, and forecast input to invento
 
 - Demand Forecasting
 - Customer Segmentation
-- Customer Return Risk (target/cohort design only)
+- Customer Return Risk
 - Recommendation Engine
 
 ### Decision Support
@@ -40,7 +40,7 @@ Price Intelligence is a possible V2 capability and is outside the proposed V1 sc
 
 ## Future architecture
 
-The repository now includes reusable Python forecasting and segmentation pipelines, versioned metadata, compact local model bundles, and validated inference/assignment contracts. Future phases may add API-based inference through FastAPI, relational storage using PostgreSQL or Supabase, and a React/TypeScript interface. Docker may support reproducible packaging. None of those application components are initialized yet.
+The repository now includes reusable Python forecasting, segmentation, and return-risk pipelines, versioned metadata, compact local model bundles, and validated inference/assignment contracts. Future phases may add API-based inference through FastAPI, relational storage using PostgreSQL or Supabase, and a React/TypeScript interface. Docker may support reproducible packaging. None of those application components are initialized yet.
 
 ## Methodology
 
@@ -56,8 +56,8 @@ The intended system should remain lightweight enough to preserve options for fre
 
 - `data/`: local raw, intermediate, and processed datasets (ignored by Git)
 - `notebooks/`: dataset audits and future experiments
-- `src/marketmind/`: reusable package code organized by capability; forecasting and segmentation engines plus return-risk cohort utilities are implemented
+- `src/marketmind/`: reusable package code organized by capability; forecasting, segmentation, and return-risk engines are implemented
 - `models/`: generated forecasting/segmentation bundles (ignored) and reviewable artifact metadata
 - `reports/`: research notes, decision records, and generated figures
 - `docs/`: scope, methodology, and dataset requirements
-- `tests/`: automated forecasting, segmentation, and return-risk cohort-contract tests
+- `tests/`: automated forecasting, segmentation, and return-risk production-contract tests

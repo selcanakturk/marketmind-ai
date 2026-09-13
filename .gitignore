@@ -51,6 +51,11 @@ models/segmentation/*
 !models/segmentation/metadata.json
 !models/segmentation/reference_profiles.csv
 !models/segmentation/monitoring_baseline.json
+!models/return_risk/
+models/return_risk/*
+!models/return_risk/README.md
+!models/return_risk/metadata.json
+!models/return_risk/training_summary.json
 
 # Generated report figures
 reports/figures/**

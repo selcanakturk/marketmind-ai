@@ -9,6 +9,7 @@ import pandas as pd
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.ensemble import ExtraTreesClassifier
 
+from marketmind.return_risk.config import ET2_PARAMETERS
 from marketmind.return_risk.features import BASELINE_FEATURE_ORDER
 
 TRAINING_SNAPSHOTS = (
@@ -59,9 +60,7 @@ EXTRA_TREES_CANDIDATE_PARAMETERS: Mapping[str, dict[str, object]] = {
         "random_state": 42,
     },
     "ET-2": {
-        "n_estimators": 300, "max_depth": 12, "min_samples_leaf": 10,
-        "max_features": "sqrt", "class_weight": None, "n_jobs": -1,
-        "random_state": 42,
+        **ET2_PARAMETERS,
     },
     "ET-3": {
         "n_estimators": 300, "max_depth": 12, "min_samples_leaf": 5,

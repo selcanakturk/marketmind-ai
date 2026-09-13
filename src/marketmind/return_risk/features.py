@@ -9,6 +9,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import RobustScaler
 
 from marketmind.return_risk.cohorts import EligibilityRule, household_eligibility
+from marketmind.return_risk.config import FROZEN_FEATURE_NAMES
 from marketmind.segmentation.snapshot import validate_snapshot_inputs
 
 CANDIDATE_FEATURE_ORDER = (
@@ -40,24 +41,7 @@ CANDIDATE_FEATURE_ORDER = (
 )
 
 # Frozen after the training-only audit in Phase 3 Step 2.
-BASELINE_FEATURE_ORDER = (
-    "recency_days",
-    "basket_frequency_lifetime",
-    "monetary_lifetime",
-    "average_basket_value",
-    "baskets_last_7d",
-    "baskets_last_28d",
-    "spend_last_28d",
-    "median_days_between_baskets",
-    "std_days_between_baskets",
-    "active_span_days",
-    "unique_departments",
-    "department_spend_hhi",
-    "discount_share_of_gross",
-    "coupon_basket_rate",
-    "baskets_28d_change",
-    "spend_28d_change",
-)
+BASELINE_FEATURE_ORDER = FROZEN_FEATURE_NAMES
 
 LOG1P_FEATURES = (
     "recency_days",
@@ -129,7 +113,10 @@ def build_candidate_features(
     tx = tx.loc[
         tx["transaction_timestamp"].le(snapshot)
         & tx["household_id"].isin(eligible_ids)
-    ].copy()
+    ].copy().sort_values(
+        ["household_id", "transaction_timestamp", "basket_id", "product_id"],
+        kind="mergesort",
+    )
     tx = tx.merge(
         product[["product_id", "department"]].drop_duplicates("product_id"),
         on="product_id",
@@ -215,7 +202,9 @@ def build_candidate_features(
     features["spend_28d_change"] = features["spend_last_28d"] - previous_spend
 
     features["std_days_between_baskets"] = features["std_days_between_baskets"].fillna(0)
-    result = features.loc[:, CANDIDATE_FEATURE_ORDER].astype(float)
+    # Canonicalize harmless floating summation noise so ranks/ties are invariant
+    # to the physical order of otherwise identical transaction input rows.
+    result = features.loc[:, CANDIDATE_FEATURE_ORDER].astype(float).round(12)
     result.index.name = "household_id"
     return result.sort_index()
 

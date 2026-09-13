@@ -109,6 +109,20 @@ Features and eligibility end at `T`; the target starts strictly after `T`. Disti
 | Model/policy change | none; no calibration, retuning, or new threshold |
 | Lockbox | **consumed permanently after first and final planned evaluation** |
 
+## Step 7 productionization decisions
+
+| Decision | Frozen outcome |
+|---|---|
+| Production model | exact ET-2 and unchanged 16-feature schema; no calibrator |
+| Final retraining data | eight fully labeled April–November 2017 cohorts; 17,074 household-snapshot rows |
+| Temporal limits | features end at each snapshot; last training snapshot 2017-11-30; labels observed through 2017-12-28 |
+| Artifact | validated model bundle plus metadata and aggregate training summary |
+| Inference | explicit snapshot, future rows excluded, all observed households returned with eligibility status/reason |
+| Policy | top 10% default; 5%/20% secondary; `ceil(N×c)` and household-ID tie-break; no fixed threshold |
+| Score semantics | uncalibrated relative-ranking score, never probability/confidence |
+| Lockbox | permanently consumed; included only as labeled historical production-training data and never re-evaluated |
+| New performance claim | none; productionization added no outcome-based evaluation |
+
 ## Open decisions
 
-Production artifact design, monitoring tolerances, operational integration, and future independent data strategy remain open. November cannot resolve or reopen any development choice and can never again be presented as fresh validation.
+Operational integration, quantitative monitoring tolerances, and a future independent-data strategy remain open. November cannot resolve or reopen any development choice and can never again be presented as fresh validation.
