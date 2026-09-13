@@ -38,3 +38,21 @@ Unresolved: Step 2 baseline family, limited event-weight candidates, and full-ca
 | Next question | whether a simple personalized collaborative baseline improves validation ranking and coverage |
 
 No collaborative model is selected, and event weighting remains unresolved.
+
+## Step 3 Item-CF experiment
+
+| Decision/evidence | Outcome |
+|---|---|
+| Representation | binary visitor-item interactions; repeat events collapsed; all events equal |
+| Similarity | exact sparse item cosine from training events only; self-similarity retained under seen-item policy |
+| Score | sum of retained similarities across distinct visitor history items |
+| Configurations | predeclared top 50/100/200 item neighbors; no grid expansion |
+| Selected | 50 neighbors by macro NDCG@10 |
+| Validation | NDCG@10 0.191470; HitRate@10 0.250773; HitRate@20 0.263640 |
+| Popularity comparison | +0.188349 absolute / +6,034.0% relative NDCG@10 |
+| Repeat/novel | NDCG@10 0.736489 / 0.006395; aggregate gain strongly repeat-driven |
+| Fallback | 0% complete fallback; 14.0047% partial popularity fill |
+| Coverage@20 | 50,103 items / 23.6441%, versus popularity 0.009438% |
+| Conclusion | **ITEM-CF CLEARLY JUSTIFIED** on validation, not final or production-ready |
+| Next step | one controlled latent-factor challenger justified, especially for novel discovery |
+| Lockbox | recommendation rankings and performance remain untouched |

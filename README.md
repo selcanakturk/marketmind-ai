@@ -12,7 +12,7 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 3 — Customer Return Risk: Production engine complete**
 
-**Phase 4 — Product Recommendation: Popularity baseline and full-catalog validation pipeline complete; no personalized model trained**
+**Phase 4 — Product Recommendation: First Item-CF personalization experiment complete; final selection pending**
 
 Demand Forecasting status:
 
@@ -31,7 +31,7 @@ M5 supports forecasting, later sales-anomaly work, and forecast input to invento
 - Demand Forecasting
 - Customer Segmentation
 - Customer Return Risk
-- Recommendation Engine (popularity baseline only; personalized modeling pending)
+- Recommendation Engine (Item-CF validated; one controlled challenger pending)
 
 ### Decision Support
 

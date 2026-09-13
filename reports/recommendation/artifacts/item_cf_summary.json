@@ -1,0 +1,135 @@
+{
+  "selected_neighbors": 50,
+  "matrix": {
+    "visitors": 1112110,
+    "items": 211905,
+    "nonzeros": 1695358,
+    "sparsity": 0.9999928059662684,
+    "retained_similarity_edges": 7666394
+  },
+  "overall_metrics": {
+    "hit_rate_at_5": 0.22974143263639737,
+    "recall_at_5": 0.22974143263639737,
+    "ndcg_at_5": 0.18460177489922727,
+    "mrr_at_5": 0.16941110973648396,
+    "precision_at_5": 0.045948286527279475,
+    "hit_rate_at_10": 0.2507732277619696,
+    "recall_at_10": 0.2507732277619696,
+    "ndcg_at_10": 0.1914702054352544,
+    "mrr_at_10": 0.17228540597648603,
+    "precision_at_10": 0.02507732277619696,
+    "hit_rate_at_20": 0.26363973772114313,
+    "recall_at_20": 0.26363973772114313,
+    "ndcg_at_20": 0.19470291382768393,
+    "mrr_at_20": 0.17316248381978872,
+    "precision_at_20": 0.013181986886057158
+  },
+  "comparison": {
+    "ndcg_at_10_absolute": 0.18834874827029885,
+    "ndcg_at_10_relative": 60.34000734813279,
+    "hit_rate_at_10_absolute": 0.24495855499195845,
+    "hit_rate_at_20_absolute": 0.25312384015835704,
+    "coverage_at_20_absolute": 0.2363464760151955
+  },
+  "coverage": {
+    "5": {
+      "unique_items": 25725,
+      "catalog_coverage": 0.12139874000141573
+    },
+    "10": {
+      "unique_items": 37435,
+      "catalog_coverage": 0.17665935206814373
+    },
+    "20": {
+      "unique_items": 50103,
+      "catalog_coverage": 0.2364408579316203
+    }
+  },
+  "personalization": {
+    "instances_with_nonzero_collaborative_score_rate": 1.0,
+    "complete_popularity_fallback_rate": 0.0,
+    "partial_popularity_fill_rate": 0.14004701224792776,
+    "average_collaboratively_scored_candidates": 163.03748608190028,
+    "average_collaborative_items_in_top20": 18.157862179883708,
+    "average_top20_overlap_with_popularity": 0.09433997278238278,
+    "different_from_popularity_rate": 1.0,
+    "unique_recommended_items_at_20": 50103
+  },
+  "cold_targets": 456,
+  "warm_targets": 7627,
+  "configuration_results": [
+    {
+      "neighbors": 50,
+      "hit_rate_at_5": 0.22974143263639737,
+      "recall_at_5": 0.22974143263639737,
+      "ndcg_at_5": 0.18460177489922727,
+      "mrr_at_5": 0.16941110973648396,
+      "precision_at_5": 0.045948286527279475,
+      "hit_rate_at_10": 0.2507732277619696,
+      "recall_at_10": 0.2507732277619696,
+      "ndcg_at_10": 0.1914702054352544,
+      "mrr_at_10": 0.17228540597648603,
+      "precision_at_10": 0.02507732277619696,
+      "hit_rate_at_20": 0.26363973772114313,
+      "recall_at_20": 0.26363973772114313,
+      "ndcg_at_20": 0.19470291382768393,
+      "mrr_at_20": 0.17316248381978872,
+      "precision_at_20": 0.013181986886057158,
+      "coverage_at_20": 0.2364408579316203,
+      "evaluation_seconds": 1.3337301660794765
+    },
+    {
+      "neighbors": 100,
+      "hit_rate_at_5": 0.22986514907831251,
+      "recall_at_5": 0.22986514907831251,
+      "ndcg_at_5": 0.18412045683853184,
+      "mrr_at_5": 0.16874922677223803,
+      "precision_at_5": 0.0459730298156625,
+      "hit_rate_at_10": 0.25151552641346037,
+      "recall_at_10": 0.25151552641346037,
+      "ndcg_at_10": 0.19115479833316812,
+      "mrr_at_10": 0.17167178224335222,
+      "precision_at_10": 0.025151552641346036,
+      "hit_rate_at_20": 0.2638871706049734,
+      "recall_at_20": 0.2638871706049734,
+      "ndcg_at_20": 0.19427316358606897,
+      "mrr_at_20": 0.17252253946791923,
+      "precision_at_20": 0.013194358530248671,
+      "coverage_at_20": 0.23665793633939738,
+      "evaluation_seconds": 2.0398133751004934
+    },
+    {
+      "neighbors": 200,
+      "hit_rate_at_5": 0.22912285042682173,
+      "recall_at_5": 0.22912285042682173,
+      "ndcg_at_5": 0.18395028554079756,
+      "mrr_at_5": 0.16874304095014228,
+      "precision_at_5": 0.04582457008536435,
+      "hit_rate_at_10": 0.2507732277619696,
+      "recall_at_10": 0.2507732277619696,
+      "ndcg_at_10": 0.19103730804988173,
+      "mrr_at_10": 0.17171768497080883,
+      "precision_at_10": 0.025077322776196957,
+      "hit_rate_at_20": 0.2641346034888037,
+      "recall_at_20": 0.2641346034888037,
+      "ndcg_at_20": 0.19442165113878995,
+      "mrr_at_20": 0.17265018810858623,
+      "precision_at_20": 0.013206730174440183,
+      "coverage_at_20": 0.23719119416719756,
+      "evaluation_seconds": 3.457785499980673
+    }
+  ],
+  "compute": {
+    "similarity_build_seconds": 6.389003708958626,
+    "selected_evaluation_seconds": 1.3337301660794765,
+    "total_seconds": 31.17085766606033,
+    "peak_rss_mb": 1735.1875
+  },
+  "error_category_counts": {
+    "popularity_miss_cf_hit": 2087,
+    "popularity_hit_cf_miss": 41,
+    "both_miss": 5911,
+    "both_hit": 44
+  },
+  "lockbox_status": "no recommendations or ranking performance generated"
+}
