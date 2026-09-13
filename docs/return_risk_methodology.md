@@ -1,6 +1,6 @@
 # Customer Return Risk Methodology
 
-This is the source of truth for MarketMind AI Customer Return Risk. Step 1 froze the temporal target and cohort contract; Step 2 completed leakage-safe behavioral and Logistic baselines; Step 3 evaluated HGB; Step 4 closed family search and selected Extra Trees / ET-2. No calibrated model, threshold, production artifact, or production service exists.
+This is the source of truth for MarketMind AI Customer Return Risk. Step 1 froze the target/cohorts; Step 2 completed baselines; Step 3 evaluated HGB; Step 4 selected Extra Trees / ET-2; Step 5 froze uncalibrated ranking and operating policy. No production artifact or service exists.
 
 Complete Journey 2.0 is a **grocery-retail household panel**, not contractual subscription data and not an individual e-commerce customer table. The outcome is therefore observed return behavior within a fixed window, never automatic “churn.”
 
@@ -102,11 +102,17 @@ Exactly five predeclared, unweighted `HistGradientBoostingClassifier` configurat
 
 Exactly three predeclared unweighted `ExtraTreesClassifier` candidates closed the model-family search. ET-2—300 estimators, depth 12, minimum leaf 10, `max_features="sqrt"`, random state 42—achieved pooled PR-AUC 0.4827 and passed the heuristic benchmark by 2.959% relative. Extra Trees / ET-2 is frozen as the learned ranking approach; the heuristic remains the simple benchmark/fallback and HGB-1 the learned research reference. No additional family or feature search is permitted absent a methodological defect.
 
+### Step 5 calibration and operating policy
+
+A temporal calibration study trained base ET-2 on April–July, used August only for sigmoid/isotonic fitting, and assessed September/October. Sigmoid improved Brier marginally but worsened log loss and ECE; isotonic improved Brier/ECE while materially degrading PR-AUC and log loss. Calibration is therefore rejected. The output is an **uncalibrated return-risk score**, never a calibrated probability or confidence.
+
+The primary policy is deterministic top-10% capacity among eligible households at each scoring run. Top 5% and top 20% are conservative and broad secondary scenarios. No fixed score threshold is frozen. Point-in-time segmentation may be used only for post-hoc performance/coverage monitoring and never as a predictive feature.
+
 ## Open decisions
 
 - whether the baseline feature set changes only through a separately predeclared nonlinear extension;
-- development-only calibration strategy for ET-2 and evidence required before probability language;
-- operating capacity, threshold, and cost policy;
+- one-time lockbox evaluation after explicit authorization;
+- production artifact, score/policy contract, and monitoring tolerances;
 - intervention capacity, costs, and operating threshold;
 - whether calibration is adequate for probability language and which calibrator is appropriate;
 - whether a household-disjoint sensitivity test or point-in-time segment-feature ablation adds useful evidence;

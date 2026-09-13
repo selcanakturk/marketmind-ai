@@ -1,6 +1,6 @@
 # Phase 3 Return Risk Decisions
 
-Status: Step 4 final family resolution complete; Extra Trees / ET-2 is frozen as the learned ranking approach, but no calibrated model, threshold, or production artifact exists.
+Status: Step 5 calibration and operating-policy design complete. ET-2 plus an uncalibrated top-10% ranking policy is frozen before lockbox; no production artifact exists.
 
 | Decision | Frozen outcome |
 |---|---|
@@ -78,6 +78,23 @@ Features and eligibility end at `T`; the target starts strictly after `T`. Disti
 | Threshold/calibration | both remain open; 0.5 diagnostics are not decisions |
 | Lockbox | November outcomes remain sealed |
 
-## Open modeling decisions
+## Step 5 calibration and policy decisions
 
-Development-only calibration strategy, intervention capacity/costs, operating threshold, monitoring, and production contracts remain unresolved. No further family/feature search is authorized absent a methodological defect. None may be resolved using the lockbox.
+| Decision | Frozen outcome |
+|---|---|
+| Calibration protocol | base ET-2 April–July; August-only calibration fit; September/October assessment |
+| Candidates | uncalibrated, sigmoid, isotonic only |
+| Calibration | none selected; sigmoid worsened log loss/ECE, isotonic damaged ranking/log loss |
+| Final score semantics | uncalibrated return-risk score for relative ranking; not probability or confidence |
+| Primary policy | deterministic top 10% of eligible households per scoring run |
+| Default validation performance | 453/4,529 flagged; precision 0.5298; recall 0.3840; lift 3.84× |
+| Secondary scenarios | top 5% conservative; top 20% broad |
+| Fixed threshold | none; displayed threshold grid is diagnostic only |
+| Segment use | point-in-time-safe post-hoc coverage monitoring only; never predictive input |
+| Coverage finding | Lower-Engagement Focused comprises 90.51% of top-10 flags; monitor concentration |
+| Bootstrap | PR-AUC `[0.4345,0.5294]`; ROC-AUC `[0.8400,0.8713]`; top-10 precision `[0.4735,0.5811]` |
+| Lockbox | November outcomes remain sealed |
+
+## Open decisions
+
+One-time lockbox authorization/evaluation, production artifact design, monitoring tolerances, and operational integration remain open. No further family/feature/calibration search is authorized absent a methodological defect. The lockbox may not resolve or reopen development choices.

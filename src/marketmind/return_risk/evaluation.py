@@ -73,6 +73,18 @@ def calibration_bins(y_true, scores, n_bins: int = 10) -> pd.DataFrame:
     return pd.DataFrame({"mean_score": predicted, "observed_rate": observed})
 
 
+def expected_calibration_error(y_true, scores, n_bins: int = 10) -> float:
+    """Return equal-width expected calibration error, weighted by bin size."""
+
+    frame = pd.DataFrame({"y": np.asarray(y_true, int), "score": np.asarray(scores, float)})
+    if frame.empty or frame.isna().any().any() or ((frame.score < 0) | (frame.score > 1)).any():
+        raise ValueError("calibration inputs must be complete scores in [0, 1]")
+    edges = np.linspace(0.0, 1.0, n_bins + 1)
+    frame["bin"] = pd.cut(frame.score, edges, include_lowest=True, labels=False)
+    grouped = frame.groupby("bin", observed=True).agg(n=("y", "size"), observed=("y", "mean"), predicted=("score", "mean"))
+    return float((grouped.n / len(frame) * (grouped.observed - grouped.predicted).abs()).sum())
+
+
 def clustered_bootstrap_auc(
     frame: pd.DataFrame,
     *,
