@@ -44,6 +44,7 @@ def engineered_cases(scored: pd.DataFrame, threshold: int, series_limit: int = 1
                             "window_position": position, "original_actual_sales": row.actual_sales,
                             "injected_actual_sales": injected_actual, "expected_sales": row.expected_sales,
                             "prior_robust_scale": row.prior_robust_scale,
+                            "prior_residual_median": row.prior_residual_median,
                             "prior_sales_robust_scale": row.prior_sales_robust_scale,
                             "score_before": row.anomaly_score, "score_after": injected_score,
                             "detected": abs(injected_score) >= threshold,

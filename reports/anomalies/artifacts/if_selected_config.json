@@ -1,0 +1,27 @@
+{
+  "status": "DEVELOPMENT-SELECTED IF CONFIGURATION — FROZEN BEFORE VALIDATION",
+  "selected_config": "IF-3",
+  "parameters": {
+    "n_estimators": 300,
+    "max_samples": 1024,
+    "contamination": "auto",
+    "max_features": 1.0,
+    "bootstrap": false,
+    "random_state": 42,
+    "n_jobs": 1
+  },
+  "feature_order": [
+    "robust_residual_score",
+    "residual",
+    "absolute_residual",
+    "expected_sales",
+    "day_of_week_sin",
+    "day_of_week_cos",
+    "event_present",
+    "snap"
+  ],
+  "score_semantics": "negative sklearn score_samples; higher means more anomalous; not a probability",
+  "selection_scope": "development_2 through development_5 only",
+  "validation_status_at_freeze": "not scored by Isolation Forest",
+  "anomaly_lockbox_status": "untouched"
+}

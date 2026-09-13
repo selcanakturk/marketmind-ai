@@ -59,3 +59,26 @@ These choices were written after inspecting only DEV-1 through DEV-4 and before 
 After the freeze above, validation `d_1886–d_1913` was scored once. All 1,960 scores were defined. The frozen threshold produced 25 authentic review candidates (1.2755%), comprising 19 spikes and 6 drops across 16 series. Threshold 4 produced 8 rows only as non-selected context. The exact engineered confirmation detected 74.17% of 2× rows and 97.50% of 4× rows, with 100% direction correctness in both groups. These results did not change the threshold, capacity, scoring rule, or scale policy.
 
 The interpretable baseline is established. One controlled Isolation Forest challenger is justified for Step 3 under the same temporal partitions, but not trained here. The anomaly lockbox remains completely untouched.
+
+## Step 3 — DEVELOPMENT-SELECTED IF CONFIGURATION
+
+Written before IF validation scoring:
+
+| Decision | Frozen outcome |
+|---|---|
+| Features | robust score, residual, absolute residual, expected sales, weekday sine/cosine, event-present, state SNAP; exact order frozen |
+| Identifiers/prices | excluded |
+| Configurations | IF-1 200/auto; IF-2 300/512; IF-3 300/1024; contamination auto, all features, no bootstrap, seed 42, one job |
+| Score | negative sklearn `score_samples`; higher means more anomalous, never a probability |
+| Selected challenger | **IF-3** |
+| Development basis | best engineered top-5%/top-2% entry rates at both magnitudes, broadest series coverage, lowest concentration, and highest robust-ranking overlap |
+| Complexity | maximum observed serialized model 11.84 MB; still lightweight |
+| Validation status | not IF-scored at selection freeze |
+| Existing policies | robust threshold 3 and robust top-5/day unchanged |
+| Lockbox | untouched |
+
+## Step 3 — VALIDATION EVIDENCE AND FINAL CHALLENGER DECISION
+
+After IF-3 was frozen, it was fit on the 9,800 prior seed/development rows and scored validation once. IF top-5/day overlapped robust top-5/day on 36/140 rows (25.71%) and included 14/25 robust-threshold alerts. Engineered rows entered the prior-training top 5% at 65.00% for 2× and 88.33% for 4× changes; direction correctness was 100%.
+
+**Final decision: C — Isolation Forest is useful only as a secondary diagnostic.** It adds complementary ranking signal at low compute cost but is less interpretable, trails the robust baseline's validation engineered sensitivity, and has no authentic labels to validate its disagreements. No ensemble, hybrid, or further detector family is authorized. Robust threshold 3 and top-5/day remain unchanged. The anomaly lockbox remains completely untouched.
