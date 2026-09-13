@@ -1,0 +1,76 @@
+{
+  "model_family": "item-item collaborative filtering",
+  "model_version": "retailrocket-item-cf-v1",
+  "version": "retailrocket-item-cf-v1",
+  "schema_version": "1.0",
+  "created_at_utc": "2026-09-13T17:46:26.134558+00:00",
+  "created_at": "2026-09-13T17:46:26.134571+00:00",
+  "training_cutoff": "2015-09-18T02:59:47.788000+00:00",
+  "training_event_count": 2756101,
+  "visitor_count": 1407580,
+  "item_count": 235061,
+  "binary_interaction_count": 2145179,
+  "neighbor_count": 50,
+  "similarity": "exact sparse cosine",
+  "aggregation": "sum",
+  "allow_seen_items": true,
+  "self_similarity": true,
+  "event_weighting": null,
+  "recency_weighting": null,
+  "default_k": 20,
+  "fallback": "all-event popularity through scoring snapshot",
+  "configuration": {
+    "representation": "binary visitor-item; repeated pairs collapsed",
+    "event_weighting": "none; all event types equal",
+    "similarity": "exact sparse cosine",
+    "neighbors": 50,
+    "visitor_score": "sum cosine similarity over distinct known history items",
+    "self_similarity": "retained",
+    "seen_items": "allowed",
+    "ranking_tie_break": "numeric item ID ascending",
+    "fallback": "all-event popularity through scoring snapshot",
+    "recency_weighting": "none",
+    "metadata_features": "none",
+    "session_features": "none",
+    "latent_factors": "none",
+    "reranking": "none"
+  },
+  "result_schema_version": "1.0",
+  "library_versions": {
+    "python": "3.13.2",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "scipy": "1.18.1",
+    "joblib": "1.6.0"
+  },
+  "research_metrics": {
+    "status": "historical evidence only; not recalculated during productionization",
+    "validation": {
+      "ndcg_at_10": 0.19147,
+      "hit_rate_at_10": 0.250773,
+      "hit_rate_at_20": 0.26364,
+      "coverage_at_20": 0.236441
+    },
+    "consumed_lockbox": {
+      "instances": 9085,
+      "ndcg_at_10": 0.171158,
+      "hit_rate_at_10": 0.223996,
+      "hit_rate_at_20": 0.235223,
+      "coverage_at_20": 0.242774,
+      "repeat_ndcg_at_10": 0.739078,
+      "novel_ndcg_at_10": 0.005979,
+      "assessment": "STRONG GENERALIZATION"
+    }
+  },
+  "research_validation_metrics_reference": "reports/recommendation/item_cf_results.md",
+  "research_lockbox_metrics_reference": "reports/recommendation/final_lockbox_results.md",
+  "lockbox_status": "consumed",
+  "lockbox_restriction": "permanently consumed; never fresh validation, tuning, calibration, selection, or policy evidence",
+  "artifact_contents": [
+    "ascending item ID mapping",
+    "CSR-style sparse top-50 neighbor graph",
+    "full-history popularity state",
+    "item first-seen timestamps",
+    "metadata"
+  ]
+}

@@ -75,7 +75,7 @@ Unresolved: Step 2 baseline family, limited event-weight candidates, and full-ca
 | Lockbox | **permanently consumed after first and final planned evaluation** |
 | Next question | whether a simple personalized collaborative baseline improves validation ranking and coverage |
 
-No collaborative model is selected, and event weighting remains unresolved.
+The final collaborative model is Item-CF. Event weighting is frozen as none for this production version.
 
 ## Step 3 Item-CF experiment
 
@@ -94,3 +94,16 @@ No collaborative model is selected, and event weighting remains unresolved.
 | Conclusion | **ITEM-CF CLEARLY JUSTIFIED** on validation, not final or production-ready |
 | Next step | one controlled latent-factor challenger justified, especially for novel discovery |
 | Lockbox | recommendation rankings and performance remain untouched |
+
+## Step 6 productionization
+
+| Decision/evidence | Final outcome |
+|---|---|
+| Status | productionization complete |
+| Specification | unchanged frozen Item-CF: binary pairs, exact cosine, top 50, summed distinct-history score, self and seen items retained |
+| Retraining | all 2,756,101 available historical interactions; no target construction or outcome evaluation |
+| Artifact | compact ascending item map plus CSR-style sparse neighbor graph, popularity, first-seen, cutoff, and configuration metadata; no dense persisted matrix |
+| Scoring | explicit snapshot, future rows excluded, score/item-ID deterministic order, current-snapshot popularity fill |
+| Cold start | unknown/no-known-history visitors fall back; partial history uses known items; new items have no fabricated similarity and may enter by popularity |
+| Serving | notebook-independent Python train/predict modules; no FastAPI endpoint yet |
+| Lockbox | **consumed**; prior metrics are references only and were not recalculated |

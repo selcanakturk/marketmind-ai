@@ -64,4 +64,8 @@ Model-family search is closed. Production artifact design, monitoring, metadata-
 
 Subsequent controlled research compared frozen popularity, Item-CF, and implicit ALS. Item-CF was selected and frozen with binary interactions, exact cosine, 50 neighbors, summed similarity, retained self-similarity, seen items allowed, and time-safe popularity fill. The model-search sequence and its validation history remain recorded rather than rewritten as an a priori decision.
 
-The final graph was refit on all history strictly before 2015-09-01, and target-free rankings were saved before the first and only lockbox target join. Lockbox NDCG@10 was 0.171158 versus 0.003090 for popularity, supporting strong generalization without changing the system. The recommendation lockbox is now permanently consumed and cannot be reused as fresh evidence. Production artifact design remains future work.
+The final graph was refit on all history strictly before 2015-09-01, and target-free rankings were saved before the first and only lockbox target join. Lockbox NDCG@10 was 0.171158 versus 0.003090 for popularity, supporting strong generalization without changing the system. The recommendation lockbox is now permanently consumed and cannot be reused as fresh evidence.
+
+## Production status
+
+After research closed, the unchanged winner was retrained on all available historical interactions and packaged as a compact production bundle. This later production operation does not alter the research chronology or add evaluation evidence. The serving contract is documented in [recommendation production](recommendation_production.md).

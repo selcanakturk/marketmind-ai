@@ -56,6 +56,11 @@ models/return_risk/*
 !models/return_risk/README.md
 !models/return_risk/metadata.json
 !models/return_risk/training_summary.json
+!models/recommendations/
+models/recommendations/*
+!models/recommendations/README.md
+!models/recommendations/metadata.json
+!models/recommendations/training_summary.json
 
 # Generated report figures
 reports/figures/**

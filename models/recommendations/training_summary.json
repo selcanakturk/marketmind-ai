@@ -1,0 +1,17 @@
+{
+  "raw_events": 2756101,
+  "visitors": 1407580,
+  "items": 235061,
+  "binary_visitor_item_pairs": 2145179,
+  "sparsity": 0.9999935164947027,
+  "neighbor_edges": 3426990,
+  "neighbor_graph_bytes": 29296416,
+  "graph_build_seconds": 8.915331917116418,
+  "production_training_seconds": 13.207572875078768,
+  "peak_process_rss_bytes": 1407942656,
+  "model_version": "retailrocket-item-cf-v1",
+  "training_cutoff": "2015-09-18T02:59:47.788000+00:00",
+  "serialized_artifact_bytes": 14344306,
+  "metadata_bytes": 2654,
+  "statement": "Final production retraining only; no recommendation quality or outcome metrics were calculated."
+}

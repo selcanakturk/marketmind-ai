@@ -1,6 +1,6 @@
 # Model Artifacts
 
-This directory contains generated model artifacts and their associated metadata. The production-retrained forecasting artifact lives under `models/forecasting/`; its binary bundle is ignored while its README and metadata remain reviewable.
+This directory contains generated model artifacts and their associated metadata. Production-retrained bundles live under capability subdirectories; binary bundles are ignored while their READMEs and metadata remain reviewable.
 
 Each artifact should be traceable through metadata that includes, where relevant:
 
