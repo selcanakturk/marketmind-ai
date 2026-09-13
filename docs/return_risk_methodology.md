@@ -1,6 +1,6 @@
 # Customer Return Risk Methodology
 
-This is the source of truth for MarketMind AI Customer Return Risk. Step 1 froze the target/cohorts; Step 2 completed baselines; Step 3 evaluated HGB; Step 4 selected Extra Trees / ET-2; Step 5 froze uncalibrated ranking and operating policy. No production artifact or service exists.
+This is the source of truth for MarketMind AI Customer Return Risk. Steps 1–5 froze the target, cohorts, ET-2 model family, uncalibrated ranking semantics, and top-10% policy. Step 6 completed the one-time November lockbox evaluation. No production artifact or service exists.
 
 Complete Journey 2.0 is a **grocery-retail household panel**, not contractual subscription data and not an individual e-commerce customer table. The outcome is therefore observed return behavior within a fixed window, never automatic “churn.”
 
@@ -108,10 +108,16 @@ A temporal calibration study trained base ET-2 on April–July, used August only
 
 The primary policy is deterministic top-10% capacity among eligible households at each scoring run. Top 5% and top 20% are conservative and broad secondary scenarios. No fixed score threshold is frozen. Point-in-time segmentation may be used only for post-hoc performance/coverage monitoring and never as a predictive feature.
 
+### Step 6 final evaluation
+
+Unchanged ET-2 was trained on April–August. November features, scores, deterministic ranks, and capacity flags were frozen before the complete `(2017-11-30 23:59:59, 2017-12-28 23:59:59]` outcome was joined. The 2,322-household lockbox contained 341 no-return positives. ET-2 achieved PR-AUC 0.4999, ROC-AUC 0.8691, Brier 0.0953, and log loss 0.2995. The unchanged top-10% policy flagged 233 households with precision 0.5536, recall 0.3783, and 3.77× lift.
+
+The assessment is STRONG GENERALIZATION under the predeclared qualitative rubric. ET-2, uncalibrated score semantics, and the capacity policy remain unchanged. **The November lockbox is consumed permanently** and may not be reused for development, selection, calibration, thresholding, or preprocessing decisions.
+
 ## Open decisions
 
 - whether the baseline feature set changes only through a separately predeclared nonlinear extension;
-- one-time lockbox evaluation after explicit authorization;
+- future independent evaluation data strategy;
 - production artifact, score/policy contract, and monitoring tolerances;
 - intervention capacity, costs, and operating threshold;
 - whether calibration is adequate for probability language and which calibrator is appropriate;

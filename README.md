@@ -10,7 +10,7 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 2 — Customer Segmentation: Production engine complete**
 
-**Phase 3 — Customer Return Risk: ET-2 and top-10% ranking policy frozen; lockbox/production pending**
+**Phase 3 — Customer Return Risk: Final lockbox evaluated and consumed; productionization pending**
 
 Demand Forecasting status:
 

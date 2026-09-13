@@ -1,6 +1,6 @@
 # Phase 3 Return Risk Decisions
 
-Status: Step 5 calibration and operating-policy design complete. ET-2 plus an uncalibrated top-10% ranking policy is frozen before lockbox; no production artifact exists.
+Status: Step 6 one-time final evaluation complete. ET-2 and the top-10% policy remained unchanged; the November lockbox is consumed. No production artifact exists.
 
 | Decision | Frozen outcome |
 |---|---|
@@ -95,6 +95,20 @@ Features and eligibility end at `T`; the target starts strictly after `T`. Disti
 | Bootstrap | PR-AUC `[0.4345,0.5294]`; ROC-AUC `[0.8400,0.8713]`; top-10 precision `[0.4735,0.5811]` |
 | Lockbox | November outcomes remain sealed |
 
+## Step 6 final lockbox result
+
+| Decision/evidence | Final outcome |
+|---|---|
+| Research fit | unchanged ET-2 trained on April–August, 10,223 rows |
+| Score ordering | November features/scores/ranks/flags frozen before target join |
+| Lockbox cohort | 2,322 eligible; 341 no-return positives; prevalence 14.6856% |
+| ET-2 metrics | PR-AUC 0.4999; ROC-AUC 0.8691; Brier 0.0953; log loss 0.2995 |
+| Heuristic context | PR-AUC 0.4994; ROC-AUC 0.8612; ET-2 remained slightly higher |
+| Top-10% policy | 233 flagged; 129 positives; precision 0.5536; recall 0.3783; lift 3.77× |
+| Generalization | STRONG under predeclared qualitative rubric |
+| Model/policy change | none; no calibration, retuning, or new threshold |
+| Lockbox | **consumed permanently after first and final planned evaluation** |
+
 ## Open decisions
 
-One-time lockbox authorization/evaluation, production artifact design, monitoring tolerances, and operational integration remain open. No further family/feature/calibration search is authorized absent a methodological defect. The lockbox may not resolve or reopen development choices.
+Production artifact design, monitoring tolerances, operational integration, and future independent data strategy remain open. November cannot resolve or reopen any development choice and can never again be presented as fresh validation.
