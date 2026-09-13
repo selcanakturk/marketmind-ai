@@ -35,6 +35,25 @@ Unresolved: Step 2 baseline family, limited event-weight candidates, and full-ca
 | Coverage | 5/10/20 unique items at K=5/10/20; 0.002360%/0.004719%/0.009438% |
 | Full catalog | feasible without dense matrix; approximately 9.76 seconds and 1,085 MB peak process RSS |
 | Lockbox | recommendation rankings and performance remain untouched |
+
+## Step 4 controlled implicit ALS challenger
+
+| Decision/evidence | Outcome |
+|---|---|
+| Dependency | `implicit==0.7.2`, CPU ALS, random seed 42, one thread |
+| Representation | unchanged binary training-period visitor-item matrix; alpha 1.0 |
+| Configurations | ALS-1 32/0.01/15; ALS-2 64/0.01/15; ALS-3 64/0.05/20 |
+| Selected ALS | ALS-3 by macro NDCG@10 |
+| ALS validation | NDCG@10 0.025085; HitRate@10 0.045899; HitRate@20 0.061487 |
+| Versus popularity | +0.021964 absolute / +703.64% relative NDCG@10 |
+| Versus Item-CF | −0.166385 absolute / −86.90% relative NDCG@10 |
+| Repeat/novel | ALS NDCG@10 0.083166 / 0.005362, below Item-CF 0.736489 / 0.006395 |
+| Coverage@20 | ALS 3,442 items / 1.6243%, below Item-CF 23.6441% |
+| Fallback | 100% ALS scored; no complete or partial popularity fallback at frozen `T` |
+| Compute | ALS-3 fit 86.06s; scoring 3.93s; temporary serialized estimator 323.2 MiB |
+| Family decision | **ITEM-CF REMAINS PREFERRED** |
+| Search policy | no further family search justified before explicit review |
+| Lockbox | recommendation rankings and performance remain completely untouched |
 | Next question | whether a simple personalized collaborative baseline improves validation ranking and coverage |
 
 No collaborative model is selected, and event weighting remains unresolved.
