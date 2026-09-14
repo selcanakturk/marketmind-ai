@@ -1,2 +1,2 @@
-"""Inventory decision-support functionality."""
+"""Inventory decision-support methodology contracts; no production engine yet."""
 

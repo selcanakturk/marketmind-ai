@@ -16,6 +16,8 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 5 — Sales Anomaly Detection: Research complete; strong one-time lockbox generalization; lockbox consumed; production engine complete**
 
+**Phase 6 — Inventory Decision Support: Methodology / feasibility design complete; production engine not started**
+
 Demand Forecasting status:
 
 - dataset research complete;
@@ -37,7 +39,7 @@ M5 supports the productionized forecasting and sales-anomaly engines and forecas
 
 ### Decision Support
 
-- Inventory Intelligence
+- Inventory Decision Support (methodology and feasibility contract complete; scenario engine not yet built)
 - Sales Anomaly Detection (frozen robust production engine complete; lockbox consumed)
 
 Price Intelligence is a possible V2 capability and is outside the proposed V1 scope.
@@ -50,7 +52,7 @@ The repository now includes reusable Python forecasting, segmentation, return-ri
 
 Future work will begin with explicit problem definitions and dataset audits. Time-dependent problems will preserve temporal ordering, prevent leakage, and maintain separate train, validation, and final test periods. Simple baselines will precede more complex approaches, metrics will match the decision problem, and error analysis will inform methodology choices. Outputs will not be described as probabilities, causal effects, or business impact unless the evidence and estimator semantics justify those claims.
 
-See the [methodology principles](docs/methodology_principles.md), frozen [forecasting methodology](docs/forecasting_methodology.md), [segmentation methodology](docs/segmentation_methodology.md), [return-risk methodology](docs/return_risk_methodology.md), [recommendation methodology](docs/recommendation_methodology.md), and [anomaly methodology](docs/anomaly_methodology.md) for the working standards.
+See the [methodology principles](docs/methodology_principles.md), frozen [forecasting methodology](docs/forecasting_methodology.md), [segmentation methodology](docs/segmentation_methodology.md), [return-risk methodology](docs/return_risk_methodology.md), [recommendation methodology](docs/recommendation_methodology.md), [anomaly methodology](docs/anomaly_methodology.md), and [inventory methodology](docs/inventory_methodology.md) for the working standards.
 
 ## Deployment constraint
 
