@@ -1,0 +1,13 @@
+scenario,inventory_position,target_stock,unconstrained_order_quantity,pre_max_constrained_quantity,recommended_order_quantity,constraint_warning,replenishment_needed,recent_anomaly_context,verification_note,verification_passed,numeric_matches_without_context
+sufficient_stock,10000.0,474.69664957529204,0.0,0.0,0.0,,False,,,,
+mild_need,464.69664957529204,474.69664957529204,10.0,10.0,10.0,,True,,,,
+negative_position,-85.0,474.69664957529204,559.696649575292,560.0,560.0,,True,,,,
+high_service_target,50.0,613.367858653264,563.367858653264,564.0,564.0,,True,,safety_stock_at_0.99_not_below_0.95,True,
+protection_period_28_boundary,100.0,753.3325411102132,653.3325411102132,654.0,654.0,,True,,lead_plus_review_28_accepted,True,
+unsupported_protection_period_29,,,,,,,,,rejected_by_contract,True,
+moq,0.0,40.0,40.0,100.0,100.0,,True,,,,
+case_pack,0.0,101.0,101.0,120.0,120.0,,True,,,,
+moq_then_case_pack,0.0,40.0,40.0,120.0,120.0,,True,,,,
+maximum,0.0,240.0,240.0,240.0,200.0,maximum_order_prevented_full_calculated_recommendation,True,,,,
+zero_forecast_demand,0.0,0.0,0.0,0.0,0.0,,False,,zero_order_and_days_of_cover_undefined,True,
+anomaly_context_independence,50.0,474.69664957529204,424.69664957529204,425.0,425.0,,True,review recent residual,,,True

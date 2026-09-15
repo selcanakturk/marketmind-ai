@@ -37,7 +37,7 @@ Step 2 will compare three transparent safety-stock candidates without reopening 
 2. Empirical comparable-horizon residual-sum quantile: fewer distributional assumptions, but needs enough same-horizon chronological OOS windows and careful treatment of research-block gaps.
 3. User-specified demand-buffer days: clearest scenario control, but wholly business supplied and not statistical uncertainty.
 
-Selection remains open for Step 2. The planning `service_level_target` is a cycle-service safety-factor parameter, not a guaranteed probability of avoiding stockout. V1 accepts `[0.50, 0.999]`; candidate A uses a statistical inverse-normal function, never hard-coded approximations. No probabilistic demand forecast is claimed.
+Step 2 selected candidate A as primary because it alone provides deterministic, monotone per-series coverage for every horizon and integrates with the service parameter. Positive dependence and long-horizon scale mismatch remain explicit limitations; no correction factor was fitted. Candidate C is an optional explicit scenario override and is never blended. Candidate B is diagnostic only because tail evidence is insufficient. The planning `service_level_target` is a cycle-service safety-factor parameter, not a guaranteed probability of avoiding stockout. V1 accepts `[0.50, 0.999]`; candidate A uses a statistical inverse-normal function. No probabilistic forecast is claimed.
 
 ## Periodic-review target policy
 
@@ -57,7 +57,7 @@ Positive raw need below MOQ is raised to MOQ; zero remains zero. Next, positive 
 
 Stable proposed fields: `snapshot_date`, `store_id`, `dept_id`, `on_hand_inventory`, `on_order_inventory`, `backorders`, `inventory_position`, `lead_time_days`, `review_period_days`, `protection_period_days`, `forecast_lead_time_demand`, `forecast_protection_demand`, `expected_daily_demand`, `forecast_uncertainty`, `uncertainty_method`, `service_level_target`, `safety_stock`, `target_stock`, `unconstrained_order_quantity`, `recommended_order_quantity`, `replenishment_needed`, `days_of_cover`, `constraint_warning`, and optional `recent_anomaly_context`.
 
-Every recommendation decomposes as forecast protection demand + safety stock = target stock; target stock − inventory position, floored at zero = unconstrained need; MOQ → case-pack ceiling → maximum cap → upward whole-unit rounding = recommendation.
+Every recommendation decomposes as forecast protection demand + safety stock = target stock; target stock − inventory position, floored at zero = unconstrained need; MOQ → case-pack ceiling → upward whole-unit rounding → maximum cap = recommendation.
 
 ## Scenario verification
 
@@ -71,5 +71,4 @@ Prohibited claims include historical stockout reduction, fill-rate improvement, 
 
 ## Limitations and open decisions
 
-Recommendations inherit forecast bias, the 28-day limit, and department-store aggregation. V1 has no SKU inventory, supplier uncertainty, lead-time distribution, warehouse capacity, or observed inventory history. Safety-stock candidate selection, empirical window construction, residual dependence diagnostics using existing OOS state, and exact warning vocabulary remain open for Step 2. Production engine, persistence, API, and dashboard are later work.
-
+Recommendations inherit forecast bias, the 28-day limit, and department-store aggregation. V1 has no SKU inventory, supplier uncertainty, lead-time distribution, warehouse capacity, or observed inventory history. Safety-stock selection, continuity-safe windows, and dependence assessment were resolved in Step 2. Production batch schema and warning presentation remain for Step 3; persistence, API, and dashboard are later work.

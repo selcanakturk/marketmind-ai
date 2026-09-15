@@ -1,0 +1,18 @@
+{
+  "primary_method": "robust_normal_scale",
+  "formula": "max(0, norm.ppf(service_level_target) * (1.4826 * per-series daily residual MAD) * sqrt(protection_period_days))",
+  "uncertainty_source": "complete finalized legitimate OOS forecast residual corpus",
+  "optional_secondary_method": "user_buffer_days_explicit_scenario_override",
+  "empirical_method_role": "diagnostic_reference_only",
+  "assumptions": [
+    "normal upper-tail approximation",
+    "sqrt-time scaling",
+    "daily scale treated as sufficiently stable",
+    "serial dependence and skew may cause mismatch"
+  ],
+  "edge_cases": {
+    "zero_mad": "zero safety stock with explicit zero-uncertainty warning",
+    "negative_result": "floor at zero"
+  },
+  "decision_order": "frozen before scenario verification"
+}

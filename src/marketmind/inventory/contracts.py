@@ -121,25 +121,14 @@ def target_and_unconstrained_order(protection_demand: float, safety_stock: float
 def apply_order_constraints(raw_quantity: float, minimum_order_quantity: float | None = None,
                             case_pack_size: float | None = None, maximum_order_quantity: float | None = None) -> tuple[int, str | None]:
     """Frozen adjustment order: MOQ, case-pack ceiling, maximum clip, final units."""
-    if not isfinite(raw_quantity) or raw_quantity < 0:
-        raise ValueError("raw quantity must be finite and nonnegative")
-    for value in (minimum_order_quantity, case_pack_size, maximum_order_quantity):
-        if value is not None and (not isfinite(value) or value <= 0):
-            raise ValueError("optional constraints must be finite and positive")
-    if raw_quantity == 0:
-        return 0, None
-    adjusted = max(raw_quantity, minimum_order_quantity or 0)
-    if case_pack_size is not None:
-        adjusted = ceil(adjusted / case_pack_size) * case_pack_size
-    warning = None
-    if maximum_order_quantity is not None and adjusted > maximum_order_quantity:
-        adjusted = maximum_order_quantity
-        warning = "maximum_order_quantity_clips_unmet_calculated_need"
-    return ceil(adjusted), warning
+    from marketmind.inventory.policy import apply_operational_constraints
+    if case_pack_size is not None and float(case_pack_size).is_integer(): case_pack_size=int(case_pack_size)
+    if maximum_order_quantity is not None and float(maximum_order_quantity).is_integer(): maximum_order_quantity=int(maximum_order_quantity)
+    result=apply_operational_constraints(raw_quantity,minimum_order_quantity,case_pack_size,maximum_order_quantity)
+    return result["recommended_order_quantity"],result["constraint_warning"]
 
 
 def days_of_cover(position: float, expected_daily_demand: float) -> float | None:
     if not isfinite(position) or not isfinite(expected_daily_demand):
         raise ValueError("coverage inputs must be finite")
     return None if expected_daily_demand <= 0 else float(position / expected_daily_demand)
-

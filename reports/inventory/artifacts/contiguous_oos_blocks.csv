@@ -1,0 +1,8 @@
+block,start_date,end_date,dates,rows
+development_1_scale_seed,2015-02-02,2015-03-01,28,1960
+development_2,2015-04-27,2015-05-24,28,1960
+development_3,2015-07-20,2015-08-16,28,1960
+development_4,2015-10-12,2015-11-08,28,1960
+development_5,2016-01-04,2016-01-31,28,1960
+validation,2016-03-28,2016-04-24,28,1960
+anomaly_lockbox,2016-04-25,2016-05-22,28,1960

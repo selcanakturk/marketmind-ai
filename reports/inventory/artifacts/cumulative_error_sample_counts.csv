@@ -1,0 +1,8 @@
+horizon,total_valid_windows,min_per_series,median_per_series,max_per_series,overlapping_windows_not_independent
+1,13720,196,196.0,196,False
+2,13230,189,189.0,189,True
+3,12740,182,182.0,182,True
+7,10780,154,154.0,154,True
+14,7350,105,105.0,105,True
+21,3920,56,56.0,56,True
+28,490,7,7.0,7,True
