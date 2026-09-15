@@ -48,3 +48,7 @@ Method C remains the only optional secondary method as an explicit user buffer-d
 ## POST-FREEZE SCENARIO VERIFICATION
 
 After the decision artifact was written, deterministic scenarios confirmed: sufficient stock → zero; mild need → positive; negative position increases need; raw 40 + MOQ 100 → 100; raw 101 + case pack 24 → 120; raw 40 + MOQ 100 + case pack 24 → 120; pre-max 240 + maximum 200 → 200 with warning; anomaly context leaves all numeric results unchanged. The 28-day boundary is accepted, 29 days rejected, service/horizon monotonicity holds for Method A, and zero demand yields undefined days of cover.
+
+## STEP 3 — productionization
+
+The frozen Method A formula, Method C explicit override, service semantics, 28-day bound, policy equations, and constraint ordering are implemented without change. A compact 70-row uncertainty bundle uses only residual median/MAD/scale and provenance; it embeds neither residual histories nor upstream models. `recommend_inventory` supports independently parameterized series, strict forecast/snapshot alignment, structured explainability, deterministic row ordering, explicit robust-normal limitations, and informational-only anomaly context. Serialization, frozen-scenario regressions, and operational smoke testing passed. No inventory history/KPI, method comparison, retuning, FastAPI endpoint, or upstream change occurred.

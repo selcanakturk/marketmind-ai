@@ -67,6 +67,12 @@ models/anomalies/*
 !models/anomalies/metadata.json
 !models/anomalies/training_summary.json
 !models/anomalies/robust_residual_state.csv
+!models/inventory/
+models/inventory/*
+!models/inventory/README.md
+!models/inventory/metadata.json
+!models/inventory/build_summary.json
+!models/inventory/uncertainty_state.csv
 
 # Generated report figures
 reports/figures/**

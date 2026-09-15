@@ -1,0 +1,15 @@
+{
+  "source_residual_rows": 13720,
+  "series_count": 70,
+  "residual_count_per_series": 196,
+  "date_coverage": [
+    "2015-02-02",
+    "2016-05-22"
+  ],
+  "zero_mad_series_count": 0,
+  "build_seconds": 0.11081508290953934,
+  "artifact_sizes_bytes": {
+    "inventory_bundle.joblib": 3244,
+    "uncertainty_state.csv": 6858
+  }
+}

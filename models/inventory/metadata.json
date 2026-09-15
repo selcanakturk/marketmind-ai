@@ -1,0 +1,48 @@
+{
+  "version": "inventory-decision-support-v1",
+  "schema_version": "1.0",
+  "module": "inventory_decision_support",
+  "planning_grain": [
+    "store_id",
+    "dept_id"
+  ],
+  "forecast_dependency": "unchanged Phase 1 HGBR-4 production forecast",
+  "forecast_horizon": 28,
+  "residual_source": {
+    "source": "finalized legitimate point-in-time OOS forecast residual corpus",
+    "source_artifacts": [
+      "reports/anomalies/artifacts/oos_residual_blocks.csv",
+      "reports/anomalies/artifacts/lockbox_robust_scores_authentic.csv"
+    ],
+    "rows": 13720,
+    "series": 70,
+    "dates": 196,
+    "start": "2015-02-02",
+    "end": "2016-05-22",
+    "consumed_lockbox_role": "historical forecast-error evidence only"
+  },
+  "residual_rows": 13720,
+  "residual_series": 70,
+  "residual_dates": 196,
+  "mad_multiplier": 1.4826,
+  "primary_safety_stock_method": "robust_normal",
+  "service_level_range": [
+    0.5,
+    0.999
+  ],
+  "optional_buffer_method": "user_buffer_days",
+  "protection_period_rule": "lead_time_days + review_period_days",
+  "maximum_protection_period": 28,
+  "constraint_order": [
+    "minimum_order_quantity",
+    "case_pack_ceiling",
+    "whole_unit_ceiling",
+    "maximum_order_cap"
+  ],
+  "price_policy": "excluded; no EOQ or cost optimization",
+  "anomaly_policy": "optional informational context only; never changes quantities",
+  "inventory_history_available": false,
+  "historical_inventory_kpi_available": false,
+  "robust_normal_limitation": "Safety stock uses the frozen robust-normal planning approximation; historical forecast errors showed positive serial dependence, particularly at longer horizons.",
+  "created_at": "2026-09-15T18:37:26.152266+00:00"
+}
