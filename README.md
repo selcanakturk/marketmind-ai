@@ -18,6 +18,8 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 6 — Inventory Decision Support: Methodology complete; safety-stock method frozen; production engine complete**
 
+**Phase 7 — FastAPI Backend: Architecture / integration design complete; application routes not yet implemented**
+
 Demand Forecasting status:
 
 - dataset research complete;
@@ -46,7 +48,7 @@ Price Intelligence is a possible V2 capability and is outside the proposed V1 sc
 
 ## Future architecture
 
-The repository now includes reusable Python forecasting, segmentation, return-risk, recommendation, and sales-anomaly pipelines, versioned metadata, compact local model bundles, and validated inference/assignment contracts. Future phases may add API-based inference through FastAPI, relational storage using PostgreSQL or Supabase, and a React/TypeScript interface. Docker may support reproducible packaging. None of those application components are initialized yet.
+The repository now includes reusable Python forecasting, segmentation, return-risk, recommendation, sales-anomaly, and inventory pipelines, versioned metadata, compact local model bundles, and validated inference contracts. The FastAPI service architecture and endpoint contracts are frozen; route implementation is not yet started. Later phases may add relational storage and a React/TypeScript interface. Docker may support reproducible packaging. None of those application components is claimed complete.
 
 ## Methodology
 
