@@ -18,7 +18,7 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 6 — Inventory Decision Support: Methodology complete; safety-stock method frozen; production engine complete**
 
-**Phase 7 — FastAPI Backend: Architecture / integration design complete; application routes not yet implemented**
+**Phase 7 — FastAPI Backend: Architecture complete; V1 backend implemented; not deployed**
 
 Demand Forecasting status:
 
@@ -48,7 +48,7 @@ Price Intelligence is a possible V2 capability and is outside the proposed V1 sc
 
 ## Future architecture
 
-The repository now includes reusable Python forecasting, segmentation, return-risk, recommendation, sales-anomaly, and inventory pipelines, versioned metadata, compact local model bundles, and validated inference contracts. The FastAPI service architecture and endpoint contracts are frozen; route implementation is not yet started. Later phases may add relational storage and a React/TypeScript interface. Docker may support reproducible packaging. None of those application components is claimed complete.
+The repository now includes reusable Python forecasting, segmentation, return-risk, recommendation, sales-anomaly, and inventory pipelines, versioned metadata, compact local model bundles, validated inference contracts, and an implemented FastAPI V1 backend. Start locally with `PYTHONPATH=src .venv/bin/uvicorn marketmind.api.main:app --reload`. The service is not deployed; persistence and a React/TypeScript interface remain future work.
 
 ## Methodology
 

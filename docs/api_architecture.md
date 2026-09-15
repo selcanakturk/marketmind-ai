@@ -90,3 +90,6 @@ Implementation adds `fastapi`, `uvicorn` (standard extras for local serving), an
 
 Open implementation details are exact Pydantic field aliases/envelopes, body-byte middleware limit, threadpool capacity, and whether optional IF output defaults on or off. These do not reopen module methodology.
 
+## Step 2 implementation status
+
+The V1 application now implements the frozen endpoint map with FastAPI lifespan, a partial-readiness registry, explicit Pydantic schemas, thin routers, service adapters, UUID/access middleware, CORS, sanitized exception handlers, OpenAPI, logical request limits, and synchronous inference. Recommendation graph validation/popularity ordering is warmed once; compact-history parity is regression-tested. Anomaly routes call only pure preview scoring and state non-mutation is tested. Optional IF defaults off and is explicitly requested. No body-byte middleware ceiling was added; logical row/item limits are authoritative for V1.

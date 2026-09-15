@@ -37,3 +37,7 @@
 - Exact FastAPI/Uvicorn compatible version pins after environment installation.
 
 These are integration details. No implementation choice may modify production engine logic or frozen model semantics.
+
+## STEP 2 — implementation status
+
+The complete frozen V1 route map is implemented with FastAPI/Pydantic schemas, thin synchronous routers, service adapters, lifespan load-once registry, partial readiness, UUID middleware, explicit CORS, standardized sanitized errors, structured warnings, OpenAPI, and logical payload limits. All six real artifacts load successfully. Recommendation compact-history service warms the item map and popularity order once and preserves frozen ranking parity without scanning raw events. Anomaly HTTP calls are proven non-mutating. Optional IF defaults off. No database, upload, authentication, frontend, deployment, retraining, or lockbox access was added.
