@@ -59,3 +59,16 @@ Create a new `frontend/` Vite React TypeScript application and implement in this
 8. stop before deployment and report any contract blocker rather than modifying backend semantics.
 
 No React application, frontend dependency, backend change, model operation, or lockbox access occurred in Step 1.
+
+## Step 2 — implementation decisions
+
+- Created an isolated `frontend/` Vite application and pinned all direct dependencies.
+- Kept a single typed API client and exact runtime endpoint paths, including `/api/v1/inventory/recommend`.
+- Used JSON row editors for large schema-first inputs plus structured scalar controls; no multipart/file behavior was implied.
+- Added route-level lazy loading after the first production build identified a large combined chart/application chunk.
+- Conservatively labeled all bundled request demos synthetic/illustrative because new authentic extraction would require additional provenance review. No stored outputs exist.
+- Used TanStack Query for operational queries and inference lifecycle; inference retry remains disabled.
+- Implemented light theme only and no global state library.
+- Deferred explicit cross-page forecast transfer until a reviewed draft-transfer mechanism is designed; users can copy explicit payloads today.
+- Kept test fixtures as MSW UI-state mocks, clearly separate from demo inputs and authentic model results.
+- No backend/model/business changes, persistence, lockbox access, or deployment occurred.

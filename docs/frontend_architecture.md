@@ -328,3 +328,7 @@ A separate opt-in suite points `VITE_MARKETMIND_API_BASE_URL` to a locally start
 ## Implementation boundaries for Step 2
 
 Step 2 may scaffold the frontend, implement the frozen pages/components/client, add compact curated input fixtures, and test the presentation contract. It may not change backend schemas, ML/business semantics, model artifacts, lockboxes, anomaly state, or inventory calculations. Any discovered contract blocker is documented and reviewed before backend change.
+
+## Step 2 implementation status
+
+The frozen architecture is implemented under `frontend/` with strict React/TypeScript/Vite, lazy routes, the responsive shell, centralized typed API client, TanStack Query lifecycles, all six inference workflows, Overview, System / Models, shared semantic states, Recharts visualizations, input-only demo fixtures, MSW isolation tests, and accessibility smoke coverage. CSS Modules were not necessary for the compact shared component set; global design tokens and deliberately scoped semantic class names implement the same frozen CSS-custom-property direction without a runtime styling dependency. Cross-page payload transfer is deferred; no hidden orchestration or global state was introduced.

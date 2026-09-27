@@ -20,7 +20,7 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 7 — FastAPI Backend: Architecture complete; V1 backend implemented; not deployed**
 
-**Phase 8 — Frontend Dashboard: Step 1 product UX, information architecture, API mapping, and frontend contracts frozen; React implementation not started**
+**Phase 8 — Frontend Dashboard: Step 1 contracts frozen; Step 2 working React/Vite dashboard implemented and tested; not deployed**
 
 Demand Forecasting status:
 
@@ -50,7 +50,7 @@ Price Intelligence is a possible V2 capability and is outside the proposed V1 sc
 
 ## Future architecture
 
-The repository now includes reusable Python forecasting, segmentation, return-risk, recommendation, sales-anomaly, and inventory pipelines, versioned metadata, compact local model bundles, validated inference contracts, and an implemented FastAPI V1 backend. Phase 8 Step 1 freezes the frontend product architecture in [`docs/frontend_architecture.md`](docs/frontend_architecture.md). Start the API locally with `PYTHONPATH=src .venv/bin/uvicorn marketmind.api.main:app --reload`. The service is not deployed; persistence and React/TypeScript implementation remain future work.
+The repository now includes reusable Python forecasting, segmentation, return-risk, recommendation, sales-anomaly, and inventory pipelines, versioned metadata, compact local model bundles, a FastAPI V1 backend, and an implemented React/TypeScript dashboard. The frontend architecture is in [`docs/frontend_architecture.md`](docs/frontend_architecture.md), with local setup in [`frontend/README.md`](frontend/README.md). Start the API with `PYTHONPATH=src .venv/bin/uvicorn marketmind.api.main:app --reload`, then run `npm install && npm run dev` inside `frontend/`. The applications are not deployed; persistence remains future work.
 
 ## Methodology
 
@@ -71,3 +71,4 @@ The intended system should remain lightweight enough to preserve options for fre
 - `reports/`: research notes, decision records, and generated figures
 - `docs/`: scope, methodology, and dataset requirements
 - `tests/`: automated forecasting, segmentation, return-risk, recommendation, and anomaly contract tests
+- `frontend/`: React/TypeScript dashboard, typed API client, responsive UX, demo inputs, and isolated frontend tests
