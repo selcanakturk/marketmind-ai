@@ -50,6 +50,16 @@ No outputs or quality metrics are bundled. No consumed lockbox was touched.
 
 The test environment emits only harmless zero-size Recharts notices under jsdom; browser layout supplies real dimensions.
 
-## Scope deliberately deferred
+## Scope deliberately deferred after Step 2
 
-Explicit Forecast → Inventory/Anomaly transfer is deferred to the next iteration because a robust reviewed transfer needs URL/session state or a small dedicated cross-page draft provider. No global state library was added for this convenience. Authentication, persistence, file uploads, product catalog enrichment, dark mode, deployment, and historical KPI integrations remain absent.
+Step 2 deferred explicit Forecast → Inventory/Anomaly transfer pending a reviewed draft-transfer mechanism. Authentication, persistence, file uploads, product catalog enrichment, dark mode, deployment, and historical KPI integrations remained absent.
+
+## Step 3 — transfer, polish, and final verification
+
+A small `ForecastDraftContext` now holds one in-memory draft per destination. Forecast results expose two explicit actions. Inventory receives 28 forecast rows only, shows an import notice, leaves its business-input array empty, and requires review and manual submission. Anomalies receives 28 expected-sales rows and exactly date-matched request calendar context, shows an import notice, leaves actual sales empty, and likewise requires manual submission. Both drafts are editable and clearable; clearing does not substitute demo data.
+
+No demo fixture was relabeled or replaced: all remain input-only and retain their exact illustrative/synthetic provenance, including the prominent synthetic inventory-state label. No backend, schema, model, artifact, or lockbox changed.
+
+Final gates used Node 23.9.0 because Node 24 was not installed. Vitest remains 3.2.7. Strict type checking passed; 21 frontend tests passed; the Vite production build passed; and all 213 Python tests passed with three existing deprecation/platform warnings. The dependency audit passed the high-severity gate and reported two moderate development-only findings in Vitest/`@vitest/mocker`; the offered force fix is a breaking downgrade, so it was not applied.
+
+FastAPI and Vite both ran locally. `/health`, `/ready`, and `/api/v1/models` were healthy/ready, all six modules reported ready, the frontend root and `/forecasting` returned HTTP 200, and the repository smoke client exercised all nine API routes using existing production artifacts. Browser/computer-use permission was unavailable, so no rendered viewport or route visual inspection is claimed. Static responsive review plus DOM and axe coverage found no new transfer-specific issue; real desktop/tablet/mobile visual sign-off remains a pre-deployment limitation.

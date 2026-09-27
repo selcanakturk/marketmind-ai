@@ -20,7 +20,7 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 7 — FastAPI Backend: Architecture complete; V1 backend implemented; not deployed**
 
-**Phase 8 — Frontend Dashboard: Step 1 contracts frozen; Step 2 working React/Vite dashboard implemented and tested; not deployed**
+**Phase 8 — Frontend Dashboard: Complete; React/Vite dashboard, explicit forecast draft transfers, and regression verification complete; not deployed**
 
 Demand Forecasting status:
 
@@ -30,7 +30,7 @@ Demand Forecasting status:
 - one-time final lockbox evaluation complete and consumed;
 - frozen HGBR forecasting pipeline, serialized bundle, metadata, CLI, and inference contract complete.
 
-M5 supports the productionized forecasting and sales-anomaly engines and forecast input to inventory decision support; Complete Journey 2.0 supports the productionized household-segmentation and return-risk engines; RetailRocket supports the productionized Item-CF recommendation engine. Olist remains documented rejection evidence. The FastAPI V1 backend and inventory engine are implemented; no frontend or deployment is claimed complete.
+M5 supports the productionized forecasting and sales-anomaly engines and forecast input to inventory decision support; Complete Journey 2.0 supports the productionized household-segmentation and return-risk engines; RetailRocket supports the productionized Item-CF recommendation engine. Olist remains documented rejection evidence. The FastAPI V1 backend, inventory engine, and frontend dashboard are implemented; deployment and public-production security are not complete.
 
 ## Planned modules
 

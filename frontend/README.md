@@ -43,7 +43,7 @@ The production output is written to `frontend/dist/`. Deployment is not part of 
 - `src/test`: MSW handlers, test setup, client, route, workflow, and accessibility tests
 - `src/types`: TypeScript mirrors of authoritative Pydantic contracts
 
-The app has no global state library. TanStack Query owns server-request lifecycle; page-local React state owns forms/results. Cross-module automatic orchestration is deliberately absent.
+The app has no global state library. TanStack Query owns server-request lifecycle; page-local React state owns forms/results. A small in-memory React context owns one explicit, reviewable Forecast draft per supported destination. Cross-module automatic orchestration remains deliberately absent.
 
 ## Demo input limitations
 
@@ -54,7 +54,15 @@ The bundled examples are small schema-shaped illustrative inputs. Forecast sales
 - no authentication, persistence, saved scenarios, uploads, or deployment;
 - JSON editors favor truthful contract visibility over spreadsheet-scale editing;
 - recommendation V1 exposes item IDs, not catalog titles or imagery;
-- direct Forecast → Inventory/Anomaly transfer is deferred to avoid hidden orchestration/global state;
+- Forecast drafts are intentionally in-memory only and disappear on refresh;
 - no business KPI history exists in V1;
 - light theme only.
 - the Node 23-compatible Vitest line retains a moderate development-only mocker advisory; move to Vitest 4.1.11+ when the project runtime moves to Node 24.
+
+## Phase 8 Step 3 verification
+
+Forecasting now exposes explicit actions to populate, but never submit, an Inventory forecast draft or an Anomaly expected-sales draft. Inventory assumptions and anomaly actual sales remain empty and user-supplied; imported drafts are editable and clearable. The bundled demos and provenance labels are unchanged because no safer authentic-derived replacement was established without additional source-data review.
+
+Strict type checking, the production build, 21 Vitest/MSW/Testing Library tests (including axe transfer coverage), and all 213 Python tests pass. The authentic local API and Vite server started successfully; health, readiness, six model statuses, and all inference routes were smoke-tested against existing artifacts. Node 23.9.0 was used because Node 24 was unavailable. `npm audit --audit-level=high` passes its high-severity gate but reports two moderate, development-only Vitest mocker findings.
+
+No real-browser viewport inspection is claimed: the available computer-use integration had no usable browser permission. Static responsive review and automated DOM/accessibility checks found no transfer-specific clipping or overflow defect. Desktop (>=1200px), tablet (768–1199px), and mobile (<768px) behavior still requires final visual sign-off on an enabled browser before deployment.

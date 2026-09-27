@@ -72,3 +72,14 @@ No React application, frontend dependency, backend change, model operation, or l
 - Deferred explicit cross-page forecast transfer until a reviewed draft-transfer mechanism is designed; users can copy explicit payloads today.
 - Kept test fixtures as MSW UI-state mocks, clearly separate from demo inputs and authentic model results.
 - No backend/model/business changes, persistence, lockbox access, or deployment occurred.
+
+## Step 3 — final frontend decisions
+
+- Implemented the previously deferred transfers with a dependency-free, in-memory React context holding one current draft per destination.
+- Transfers are explicit navigation actions after a successful forecast; they never invoke destination inference.
+- Inventory receives forecast identity and predicted sales only. Inventory state, lead time, review period, and service assumptions remain user inputs.
+- Anomalies receives expected sales and exactly matching submitted calendar context only. Observed actual sales remain empty and required.
+- Destination drafts remain editable, can be cleared, and are intentionally not retained across refresh.
+- Retained all conservative illustrative/synthetic demo fixtures and their provenance labels; no lockbox or unreviewed source extraction was used.
+- Retained Vitest 3.2.7 on Node 23.9.0 because Node 24 was unavailable. The two moderate development-only mocker advisories remain documented; no broad or forced downgrade was accepted.
+- Real-browser visual QA remains explicitly unclaimed because computer-use permission was unavailable. Static responsive review and automated accessibility/DOM coverage were used instead.
