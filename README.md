@@ -20,6 +20,8 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 7 — FastAPI Backend: Architecture complete; V1 backend implemented; not deployed**
 
+**Phase 8 — Frontend Dashboard: Step 1 product UX, information architecture, API mapping, and frontend contracts frozen; React implementation not started**
+
 Demand Forecasting status:
 
 - dataset research complete;
@@ -28,7 +30,7 @@ Demand Forecasting status:
 - one-time final lockbox evaluation complete and consumed;
 - frozen HGBR forecasting pipeline, serialized bundle, metadata, CLI, and inference contract complete.
 
-M5 supports the productionized forecasting and sales-anomaly engines and forecast input to inventory decision support; Complete Journey 2.0 supports the productionized household-segmentation and return-risk engines; RetailRocket supports the productionized Item-CF recommendation engine. Olist remains documented rejection evidence. No API, frontend, or inventory implementation is claimed complete.
+M5 supports the productionized forecasting and sales-anomaly engines and forecast input to inventory decision support; Complete Journey 2.0 supports the productionized household-segmentation and return-risk engines; RetailRocket supports the productionized Item-CF recommendation engine. Olist remains documented rejection evidence. The FastAPI V1 backend and inventory engine are implemented; no frontend or deployment is claimed complete.
 
 ## Planned modules
 
@@ -48,7 +50,7 @@ Price Intelligence is a possible V2 capability and is outside the proposed V1 sc
 
 ## Future architecture
 
-The repository now includes reusable Python forecasting, segmentation, return-risk, recommendation, sales-anomaly, and inventory pipelines, versioned metadata, compact local model bundles, validated inference contracts, and an implemented FastAPI V1 backend. Start locally with `PYTHONPATH=src .venv/bin/uvicorn marketmind.api.main:app --reload`. The service is not deployed; persistence and a React/TypeScript interface remain future work.
+The repository now includes reusable Python forecasting, segmentation, return-risk, recommendation, sales-anomaly, and inventory pipelines, versioned metadata, compact local model bundles, validated inference contracts, and an implemented FastAPI V1 backend. Phase 8 Step 1 freezes the frontend product architecture in [`docs/frontend_architecture.md`](docs/frontend_architecture.md). Start the API locally with `PYTHONPATH=src .venv/bin/uvicorn marketmind.api.main:app --reload`. The service is not deployed; persistence and React/TypeScript implementation remain future work.
 
 ## Methodology
 
