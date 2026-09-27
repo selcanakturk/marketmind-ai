@@ -22,6 +22,8 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 8 — Frontend Dashboard: Complete; React/Vite dashboard, explicit forecast draft transfers, and regression verification complete; not deployed**
 
+**Phase 9 — Deployment, Security & Production Readiness: Step 1 architecture audit complete; implementation and deployment not started**
+
 Demand Forecasting status:
 
 - dataset research complete;
@@ -50,7 +52,7 @@ Price Intelligence is a possible V2 capability and is outside the proposed V1 sc
 
 ## Future architecture
 
-The repository now includes reusable Python forecasting, segmentation, return-risk, recommendation, sales-anomaly, and inventory pipelines, versioned metadata, compact local model bundles, a FastAPI V1 backend, and an implemented React/TypeScript dashboard. The frontend architecture is in [`docs/frontend_architecture.md`](docs/frontend_architecture.md), with local setup in [`frontend/README.md`](frontend/README.md). Start the API with `PYTHONPATH=src .venv/bin/uvicorn marketmind.api.main:app --reload`, then run `npm install && npm run dev` inside `frontend/`. The applications are not deployed; persistence remains future work.
+The repository now includes reusable Python forecasting, segmentation, return-risk, recommendation, sales-anomaly, and inventory pipelines, versioned metadata, compact local model bundles, a FastAPI V1 backend, and an implemented React/TypeScript dashboard. The frontend architecture is in [`docs/frontend_architecture.md`](docs/frontend_architecture.md), local setup is in [`frontend/README.md`](frontend/README.md), and the frozen public-demo deployment design is in [`docs/deployment_architecture.md`](docs/deployment_architecture.md). Start the API with `PYTHONPATH=src .venv/bin/uvicorn marketmind.api.main:app --reload`, then run `npm install && npm run dev` inside `frontend/`. The applications are not deployed; Phase 9 Step 2 production-readiness implementation and deployment approval remain outstanding.
 
 ## Methodology
 
