@@ -225,3 +225,8 @@ Frontend fixtures contain small illustrative/synthetic inputs only: no private u
 
 Step 2 is limited to repository production-readiness implementation: reproducible runtime/dependency pins, reviewed artifact packaging and integrity verification, request-body/rate/concurrency controls, production-safe CORS/config/logging/headers, narrow Node/Vitest remediation, safe environment examples, CI checks, focused tests, clean-clone/local production smoke and updated runbooks. It must stop before cloud project creation or deployment.
 
+## Step 2 implementation status
+
+The plan is implemented in repository configuration and code. Six frozen binaries are narrowly packaged with SHA-256 verification; Python 3.13.2 and Node 24 policies are recorded; production configuration rejects unsafe origins; request bodies, rates, inference concurrency and queueing are bounded; CORS credentials are off; safe security headers and JSON production logs are active; CI and production verification scripts are present. No cloud deployment occurred.
+
+Maximum-contract payloads remain below the 16 MiB ceiling, with return risk largest at 9,216,819 bytes. All six maximum-contract requests completed locally. The non-Linux harness peaked at 497.16 MiB, so the 512 MB candidate is no longer recommended for initial deployment; use the next practical 2 GB Render class and measure real Linux RSS before any downgrade. Node 24 was unavailable locally, so the configured policy and Vitest 4 migration require CI/Step 3 verification.

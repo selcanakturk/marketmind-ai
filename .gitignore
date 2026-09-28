@@ -41,38 +41,45 @@ data/processed/**
 # Generated model artifacts (retain documentation)
 models/**
 !models/README.md
+!models/artifact_manifest.json
 !models/forecasting/
 models/forecasting/*
 !models/forecasting/README.md
 !models/forecasting/metadata.json
+!models/forecasting/model.joblib
 !models/segmentation/
 models/segmentation/*
 !models/segmentation/README.md
 !models/segmentation/metadata.json
 !models/segmentation/reference_profiles.csv
 !models/segmentation/monitoring_baseline.json
+!models/segmentation/model.joblib
 !models/return_risk/
 models/return_risk/*
 !models/return_risk/README.md
 !models/return_risk/metadata.json
 !models/return_risk/training_summary.json
+!models/return_risk/model.joblib
 !models/recommendations/
 models/recommendations/*
 !models/recommendations/README.md
 !models/recommendations/metadata.json
 !models/recommendations/training_summary.json
+!models/recommendations/model.joblib
 !models/anomalies/
 models/anomalies/*
 !models/anomalies/README.md
 !models/anomalies/metadata.json
 !models/anomalies/training_summary.json
 !models/anomalies/robust_residual_state.csv
+!models/anomalies/model.joblib
 !models/inventory/
 models/inventory/*
 !models/inventory/README.md
 !models/inventory/metadata.json
 !models/inventory/build_summary.json
 !models/inventory/uncertainty_state.csv
+!models/inventory/inventory_bundle.joblib
 
 # Generated report figures
 reports/figures/**

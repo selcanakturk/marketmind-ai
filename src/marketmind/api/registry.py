@@ -1,10 +1,12 @@
 """Load-once artifact registry with independent module readiness."""
 from __future__ import annotations
 import json
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any,Callable
 from marketmind.api.contracts import ARTIFACTS
+from marketmind.api.artifacts import ArtifactVerifier,ArtifactVerificationError
 from marketmind.api.settings import APISettings
 from marketmind.forecasting.bundle import load_bundle as load_forecast
 from marketmind.segmentation.bundle import load_bundle as load_segments
@@ -25,10 +27,17 @@ class ArtifactRegistry:
         self.settings=settings; self.loaders=loaders or LOADERS; self.modules={name:ModuleState() for name in ARTIFACTS}
     def load_all(self):
         paths=self.settings.artifact_paths()
+        logger=logging.getLogger("marketmind.api")
+        try: verifier=ArtifactVerifier(self.settings.artifact_root)
+        except ArtifactVerificationError:
+            verifier=None
         for name in self.modules:
             state=self.modules[name]
             try:
-                state.load_count+=1; bundle=self.loaders[name](paths[name]); metadata_path=self.settings.artifact_root/METADATA_FILES[name]
+                state.load_count+=1
+                if verifier is None: raise ArtifactVerificationError("ARTIFACT_MANIFEST_INVALID")
+                verifier.verify(name,ARTIFACTS[name])
+                bundle=self.loaders[name](paths[name]); metadata_path=self.settings.artifact_root/METADATA_FILES[name]
                 metadata=json.loads(metadata_path.read_text())
                 bundle_version=getattr(bundle,"model_version",getattr(bundle,"residual_state",None) and bundle.residual_state.model_version)
                 metadata_version=metadata.get("model_version") or metadata.get("version")
@@ -37,8 +46,13 @@ class ArtifactRegistry:
                     _=bundle.item_to_index
                     bundle._api_popularity_order=tuple(sorted(zip(map(int,bundle.popularity_item_ids),map(int,bundle.popularity_counts)),key=lambda x:(-x[1],x[0])))
                 state.bundle=bundle; state.metadata=metadata; state.ready=True; state.reason_code=None
-            except Exception:
+                fields={"event":"artifact_startup","module":name,"status":"ready","reason_code":"none"}
+                logger.info(json.dumps(fields,separators=(",",":")) if self.settings.environment=="production" else "artifact_startup module=%s status=ready reason_code=none",*([] if self.settings.environment=="production" else [name]))
+            except Exception as exc:
                 state.bundle=None; state.metadata=None; state.ready=False; state.reason_code="ARTIFACT_LOAD_FAILED"
+                reason=exc.code if isinstance(exc,ArtifactVerificationError) else state.reason_code
+                fields={"event":"artifact_startup","module":name,"status":"unavailable","reason_code":reason}
+                logger.error(json.dumps(fields,separators=(",",":")) if self.settings.environment=="production" else "artifact_startup module=%s status=unavailable reason_code=%s",*([] if self.settings.environment=="production" else [name,reason]))
         return self
     def require(self,name):
         state=self.modules[name]

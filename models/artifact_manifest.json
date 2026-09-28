@@ -1,0 +1,59 @@
+{
+  "manifest_version": "1.0",
+  "artifacts": [
+    {
+      "module": "forecasting",
+      "path": "models/forecasting/model.joblib",
+      "sha256": "1a07b04afb0ed49466bc85f772074c134b68f9313b2672784ce86c1619cf429f",
+      "size_bytes": 535711,
+      "version": "1.0.0",
+      "artifact_role": "production_retrained_artifact",
+      "immutable": true
+    },
+    {
+      "module": "segmentation",
+      "path": "models/segmentation/model.joblib",
+      "sha256": "a368119e9e5fc4aad8d700f7203d1e53840517595a671c408e464beb1a0a0b90",
+      "size_bytes": 3492,
+      "version": "segmentation-kmeans3-2017-09-v1",
+      "artifact_role": "production_bundle",
+      "immutable": true
+    },
+    {
+      "module": "return_risk",
+      "path": "models/return_risk/model.joblib",
+      "sha256": "00d5cc9cd449adc052257b8cc5b1dcfa2de746bf0ec8ff0e88f3ee34a753f54e",
+      "size_bytes": 11248815,
+      "version": "return-risk-extratrees-et2-2017-11-v1",
+      "artifact_role": "production_bundle",
+      "immutable": true
+    },
+    {
+      "module": "recommendations",
+      "path": "models/recommendations/model.joblib",
+      "sha256": "623b1b048c2c4660cf602d9226c6c6870343491c3a55f7af0788166e323396ba",
+      "size_bytes": 14344306,
+      "version": "retailrocket-item-cf-v1",
+      "artifact_role": "production_bundle",
+      "immutable": true
+    },
+    {
+      "module": "anomalies",
+      "path": "models/anomalies/model.joblib",
+      "sha256": "b1bd5cc855346ef5f5075bf979768fd4d2593ab1cd85eb4977a942cc84e680e1",
+      "size_bytes": 3369626,
+      "version": "m5-robust-residual-anomaly-v1",
+      "artifact_role": "production_bundle",
+      "immutable": true
+    },
+    {
+      "module": "inventory",
+      "path": "models/inventory/inventory_bundle.joblib",
+      "sha256": "dfcc8228b603aed389bd86dc8ad3a3bba2bc497d2823147810b58c98498fc565",
+      "size_bytes": 3244,
+      "version": "inventory-decision-support-v1",
+      "artifact_role": "production_decision_bundle",
+      "immutable": true
+    }
+  ]
+}

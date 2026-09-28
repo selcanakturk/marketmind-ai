@@ -45,3 +45,17 @@ Cloud resource creation, deployment, custom DNS, Docker unless native deployment
 
 Phase 9 Step 2 may begin only after this freeze is reviewed and approved.
 
+## Step 2 — implementation decisions
+
+- Packaged only the six existing production binaries; added exact size/hash/version/role entries and a path-safe verifier invoked before each module load.
+- Pinned Python 3.13.2 and exact top-level dependencies without changing ML library versions.
+- Froze Node 24/npm 11 in repository configuration. Retained Vitest 3.2.7 because Node 24 is unavailable locally; CI must verify the narrow Vitest 4 migration before it is accepted.
+- Kept the 16 MiB body ceiling after measuring every maximum contract; return risk is largest at 9,216,819 bytes.
+- Implemented dependency-free, single-process fixed-window rate limiting. The app uses the normalized socket peer and does not trust request-provided forwarding headers.
+- Applied rate limiting only in production. Inference concurrency is two with a finite queue-acquisition timeout; health/readiness/model GETs bypass inference capacity.
+- Disabled CORS credentials and made production HTTPS origin validation mandatory.
+- Added minimal API security headers without blocking public OpenAPI documentation.
+- Added JSON production logs and human-readable development logs; neither includes payloads or paths.
+- Added two-job CI with no deployment credentials or provider actions.
+- Maximum-contract macOS peak RSS reached 497.16 MiB. The 512 MB candidate is marginal/unsafe; Step 3 should start at 2 GB and validate Linux RSS.
+- No Docker/provider manifest was added because dashboard-native configuration remains simpler and no technical blocker emerged.

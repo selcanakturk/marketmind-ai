@@ -22,7 +22,7 @@ MarketMind AI is a production-oriented ML engineering portfolio project for turn
 
 **Phase 8 — Frontend Dashboard: Complete; React/Vite dashboard, explicit forecast draft transfers, and regression verification complete; not deployed**
 
-**Phase 9 — Deployment, Security & Production Readiness: Step 1 architecture audit complete; implementation and deployment not started**
+**Phase 9 — Deployment, Security & Production Readiness: Step 2 production hardening implemented and locally verified; actual deployment not started**
 
 Demand Forecasting status:
 
