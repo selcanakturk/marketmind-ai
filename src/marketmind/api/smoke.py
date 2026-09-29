@@ -6,7 +6,10 @@ from fastapi.testclient import TestClient
 from marketmind.api.main import app
 
 def payloads(client):
-    cal=pd.read_csv("data/raw/m5/calendar.csv"); cal=cal[cal.d.isin([f"d_{x}" for x in range(1886,1970)])].copy(); cal["event_name_1"]=cal.event_name_1.fillna("none"); cal["event_type_1"]=cal.event_type_1.fillna("none")
+    # Operational/API contract smoke inputs must work from a clean checkout.
+    # These dates and day identifiers cover the bundle's required 56-day
+    # history plus 28-day horizon without depending on the untracked M5 data.
+    cal=pd.DataFrame({"d":[f"d_{x}" for x in range(1886,1970)],"date":pd.date_range("2016-03-28",periods=84).strftime("%Y-%m-%d"),"event_name_1":"none","event_type_1":"none","snap_CA":0,"snap_TX":0,"snap_WI":0})
     history=[{"d":r.d,"date":r.date,"store_id":"CA_1","dept_id":"FOODS_1","state_id":"CA","sales":100.} for r in cal.iloc[:56].itertuples()]
     future=[{"d":r.d,"date":r.date,"event_name":r.event_name_1,"event_type":r.event_type_1,"snap_CA":r.snap_CA,"snap_TX":r.snap_TX,"snap_WI":r.snap_WI} for r in cal.iloc[56:84].itertuples()]
     segment={"snapshot_at":"2017-09-30T23:59:59","feature_rows":[{"household_id":1,"recency_days":10,"basket_frequency":10,"monetary_value":500,"avg_basket_value":50,"unique_departments":5,"department_spend_hhi":.25,"discount_share_of_gross":.1,"coupon_basket_rate":.1,"private_label_spend_share":.2}]}
