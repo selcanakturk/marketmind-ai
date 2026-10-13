@@ -1,14 +1,27 @@
-# Notebook Workflow
+# Research notebook workflow
 
-Notebooks will support transparent dataset auditing and experimentation while reusable logic moves into `src/marketmind/`. Each notebook should state its purpose, inputs, outputs, assumptions, and validation boundaries, and should be reproducible from documented data sources and package code.
+Status: **completed research and historical evaluation evidence**.
 
-Possible future naming:
+The notebooks document MarketMind's dataset audits and controlled experiments. Reusable methodology and production inference live in `src/marketmind/`; the finished application loads frozen artifacts from `models/` and does not execute notebooks at runtime.
 
-- `00_dataset_audit_*.ipynb`
-- `01_eda_*.ipynb`
-- `02_baseline_*.ipynb`
-- `03_experiments_*.ipynb`
-- `04_error_analysis_*.ipynb`
+## Organization
 
-No notebooks are created during repository initialization. Module-specific notebook structure will be finalized only after dataset selection.
+| Range | Purpose |
+|---|---|
+| `00_*` | Olist, M5, RetailRocket, and Complete Journey dataset feasibility audits |
+| `01_*`–`05_*` | Forecast baselines, learned models, controlled comparison, and final lockbox evaluation |
+| `06_*`–`08_*` | Segmentation features, clustering, temporal stability, and semantic naming |
+| `09_*`–`13_*` | Re-engagement target design, model selection, calibration policy, and final lockbox evaluation |
+| `14_*`–`17_*` | Popularity, Item-CF, ALS comparison, and final recommendation lockbox evaluation |
+| `18_*`–`20_*` | Robust residual anomalies, Isolation Forest diagnostic, and final lockbox evaluation |
+| `21_*` | Inventory safety-stock assessment and decision-policy evidence |
 
+Each experiment is paired with reviewable results or decision records under `reports/`. Production contracts, artifacts, and limitations are documented under `docs/`, `models/`, and the module-specific production reports.
+
+## Reproduction boundary
+
+Running the production/demo application does **not** require raw datasets. Re-running these notebooks does: datasets must be acquired separately from the sources documented in [`docs/dataset_requirements.md`](../docs/dataset_requirements.md), stored in ignored local data directories, and used according to their source terms.
+
+Final evaluation intervals marked **consumed** are immutable historical evidence. Re-execution may confirm recorded results, but those targets must never be treated as fresh validation data or used to change features, models, hyperparameters, thresholds, ranking policies, or business semantics.
+
+For current project navigation, see the root [`README.md`](../README.md) and [`docs/README.md`](../docs/README.md).

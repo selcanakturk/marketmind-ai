@@ -1,10 +1,10 @@
 # MarketMind frontend
 
-React/TypeScript dashboard for the existing MarketMind FastAPI V1. The client presents explicit inference requests and authentic API responses; it contains no model logic or stored model outcomes.
+React/TypeScript decision workspace for the MarketMind FastAPI V1. The client presents explicit inference requests and authentic API responses; it contains no model logic, persisted customer state, or hardcoded model outcomes.
 
 ## Local development
 
-From the repository root, start the API:
+Use Node 24 and npm 11 as pinned by the repository. Start the API from the repository root:
 
 ```bash
 PYTHONPATH=src .venv/bin/uvicorn marketmind.api.main:app --reload
@@ -14,55 +14,60 @@ In another terminal:
 
 ```bash
 cd frontend
-npm install
+npm ci
 cp .env.example .env.local
 npm run dev
 ```
 
-Open `http://localhost:5173`. `VITE_MARKETMIND_API_BASE_URL` defaults centrally to `http://localhost:8000`; set it in `.env.local` when the API lives elsewhere. Vite variables are public browser configuration—never put secrets in them.
+Open `http://localhost:5173`. `VITE_MARKETMIND_API_BASE_URL` is normalized centrally; the example local environment points it to `http://localhost:8000`. Vite variables are public browser configuration—never put secrets in them.
 
 ## Quality commands
 
 ```bash
+npm audit --audit-level=high
+npm test -- --reporter=dot
 npm run typecheck
-npm test
-npm run build
+VITE_MARKETMIND_API_BASE_URL=https://api.example.invalid npm run build
 ```
 
-The production output is written to `frontend/dist/`. Deployment is not part of Phase 8 Step 2.
+The accepted portfolio checkpoint passes 5 Vitest/MSW/Testing Library files with 32 tests, including axe accessibility checks, strict TypeScript type checking, npm's high-severity audit gate, and the production Vite build under the repository's Node 24 CI policy. The output is written to `frontend/dist/` and is not tracked.
 
 ## Architecture
 
-- `src/app`: query provider and lazy route tree
-- `src/api`: base configuration, typed client, normalized errors, query/mutation hooks
+- `src/app`: query provider, route tree, and explicit in-memory Forecast draft transfers
+- `src/api`: base configuration, typed client, normalized errors, and query/mutation hooks
 - `src/components`: shared accessible UI and JSON editor
 - `src/features`: Overview, Forecasting, Customers, Recommendations, Anomalies, Inventory, and System pages
-- `src/layouts`: responsive application shell/navigation
-- `src/demo`: compact input-only fixtures and explicit provenance labels
+- `src/layouts`: responsive application shell and navigation
+- `src/demo`: deterministic input-only fixtures with explicit provenance labels
 - `src/styles`: design tokens and responsive implementation
-- `src/test`: MSW handlers, test setup, client, route, workflow, and accessibility tests
-- `src/types`: TypeScript mirrors of authoritative Pydantic contracts
+- `src/test`: MSW handlers, client, route, workflow, transfer, and accessibility tests
+- `src/types`: TypeScript mirrors of the authoritative Pydantic contracts
 
-The app has no global state library. TanStack Query owns server-request lifecycle; page-local React state owns forms/results. A small in-memory React context owns one explicit, reviewable Forecast draft per supported destination. Cross-module automatic orchestration remains deliberately absent.
+TanStack Query owns server-request lifecycle; page-local React state owns forms and results. A small in-memory context holds one explicit, reviewable Forecast draft per supported destination. Transfers populate editable input but never submit automatically. Cross-module hidden orchestration and persistent client state remain deliberately absent.
 
-## Demo input limitations
+## Product behavior and evidence boundaries
 
-The bundled examples are small schema-shaped illustrative inputs. Forecast sales, prepared customer features, return-risk transactions, recommendation IDs, and anomaly rows are explicitly labeled synthetic rather than claimed authentic records. Inventory state is prominently labeled **SYNTHETIC BUSINESS INVENTORY STATE** because M5 contains no inventory balances. The API generates all displayed model outputs live; none are hardcoded as authentic outcomes.
+- All six workflows expose a guided business view plus **Advanced input** for the real payload and **Technical details** for full results.
+- Raw JSON is hidden by default but never replaced with a simplified contract.
+- Readiness is live and partial failures preserve unaffected workflows.
+- Loading, validation, network, unavailable-module, empty, and successful-zero states are distinct.
+- Forecast output can populate an Inventory forecast draft or Anomaly expected-sales draft. Inventory assumptions and observed anomaly sales remain user-supplied.
+- The frontend does not recalculate inventory policy, anomaly thresholds, model scores, or recommendation rankings.
+
+## Demo-input limitations
+
+Bundled examples are small schema-shaped illustrative inputs. Forecast sales, prepared customer features, return-risk transactions, recommendation IDs, and anomaly rows are explicitly labeled synthetic rather than claimed authentic records. The anomaly example uses one aligned date, matching the production contract. Inventory state is prominently labeled **synthetic business inventory state** because M5 contains no inventory balances.
+
+The API generates every displayed model output live from the committed frozen artifacts. Recommendation V1 intentionally exposes authentic item IDs without invented titles or imagery.
 
 ## Current limitations
 
 - no authentication, persistence, saved scenarios, uploads, or deployment;
 - JSON editors favor truthful contract visibility over spreadsheet-scale editing;
-- recommendation V1 exposes item IDs, not catalog titles or imagery;
-- Forecast drafts are intentionally in-memory only and disappear on refresh;
-- no business KPI history exists in V1;
+- recommendation V1 exposes item IDs rather than catalog metadata;
+- Forecast drafts are in memory and disappear on refresh;
+- no historical business KPI layer exists;
 - light theme only.
-- the Node 23-compatible Vitest line retains a moderate development-only mocker advisory; move to Vitest 4.1.11+ when the project runtime moves to Node 24.
 
-## Phase 8 Step 3 verification
-
-Forecasting now exposes explicit actions to populate, but never submit, an Inventory forecast draft or an Anomaly expected-sales draft. Inventory assumptions and anomaly actual sales remain empty and user-supplied; imported drafts are editable and clearable. The bundled demos and provenance labels are unchanged because no safer authentic-derived replacement was established without additional source-data review.
-
-Strict type checking, the production build, 21 Vitest/MSW/Testing Library tests (including axe transfer coverage), and all 213 Python tests pass. The authentic local API and Vite server started successfully; health, readiness, six model statuses, and all inference routes were smoke-tested against existing artifacts. Node 23.9.0 was used because Node 24 was unavailable. `npm audit --audit-level=high` passes its high-severity gate but reports two moderate, development-only Vitest mocker findings.
-
-No real-browser viewport inspection is claimed: the available computer-use integration had no usable browser permission. Static responsive review and automated DOM/accessibility checks found no transfer-specific clipping or overflow defect. Desktop (>=1200px), tablet (768–1199px), and mobile (<768px) behavior still requires final visual sign-off on an enabled browser before deployment.
+Manual browser QA of the accepted redesign covered the supported desktop, tablet, and mobile layouts and the six workflow journeys. Deployment remains intentionally deferred.
