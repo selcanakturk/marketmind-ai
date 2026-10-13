@@ -1,5 +1,4 @@
-import type { Environment } from 'vitest'
-import { builtinEnvironments } from 'vitest/environments'
+import { builtinEnvironments, type Environment } from 'vitest/runtime'
 
 const environment: Environment = {
   name: 'node-abort-jsdom',
